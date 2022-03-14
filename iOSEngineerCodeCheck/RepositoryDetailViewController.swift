@@ -1,5 +1,5 @@
 //
-//  ViewController2.swift
+//  RepositoryDetailViewController.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by 史 翔新 on 2020/04/21.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController2: UIViewController {
+class RepositoryDetailViewController: UIViewController {
 
     @IBOutlet weak var avatarImageView: UIImageView!
 
@@ -21,12 +21,12 @@ class ViewController2: UIViewController {
     @IBOutlet weak var forksLabel: UILabel!
     @IBOutlet weak var openIssuesLabel: UILabel!
 
-    var vc1: ViewController!
+    var searchVC: RepositorySearchViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let repository = vc1.repositories[vc1.selectedIndex]
+        let repository = searchVC.repositories[searchVC.selectedIndex]
 
         languageLabel.text = "Written in \(repository["language"] as? String ?? "")"
         starsLabel.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
@@ -37,7 +37,7 @@ class ViewController2: UIViewController {
     }
 
     func getImage() {
-        let repository = vc1.repositories[vc1.selectedIndex]
+        let repository = searchVC.repositories[searchVC.selectedIndex]
 
         titleLabel.text = repository["full_name"] as? String
 

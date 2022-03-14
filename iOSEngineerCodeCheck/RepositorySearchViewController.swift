@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  RepositorySearchViewController.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by 史 翔新 on 2020/04/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UITableViewController, UISearchBarDelegate {
+class RepositorySearchViewController: UITableViewController, UISearchBarDelegate {
 
     @IBOutlet weak var searchBar: UISearchBar!
 
@@ -56,8 +56,8 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Detail" {
-            let vc2 = segue.destination as! ViewController2
-            vc2.vc1 = self
+            let detailVC = segue.destination as! RepositoryDetailViewController
+            detailVC.searchVC = self
         }
     }
 
