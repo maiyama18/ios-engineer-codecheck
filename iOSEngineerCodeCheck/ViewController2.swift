@@ -34,11 +34,9 @@ class ViewController2: UIViewController {
         FrksLbl.text = "\(repo["forks_count"] as? Int ?? 0) forks"
         IsssLbl.text = "\(repo["open_issues_count"] as? Int ?? 0) open issues"
         getImage()
-
     }
 
     func getImage() {
-
         let repo = vc1.repo[vc1.idx]
 
         TtlLbl.text = repo["full_name"] as? String
@@ -53,7 +51,6 @@ class ViewController2: UIViewController {
                 }.resume()
             }
         }
-
     }
 
 }

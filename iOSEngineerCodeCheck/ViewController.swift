@@ -21,13 +21,12 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         SchBr.text = "GitHubのリポジトリを検索できるよー"
         SchBr.delegate = self
     }
 
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        // ↓こうすれば初期のテキストを消せる
+        // Placeholder として初期値を入れているので、タップ時に空文字に戻す
         searchBar.text = ""
         return true
     }
@@ -37,7 +36,6 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-
         word = searchBar.text!
 
         if word.count != 0 {
@@ -52,19 +50,15 @@ class ViewController: UITableViewController, UISearchBarDelegate {
                     }
                 }
             }
-            // これ呼ばなきゃリストが更新されません
             task?.resume()
         }
-
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
         if segue.identifier == "Detail" {
             let dtl = segue.destination as! ViewController2
             dtl.vc1 = self
         }
-
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -74,21 +68,18 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
         -> UITableViewCell
     {
-
         let cell = UITableViewCell()
         let rp = repo[indexPath.row]
         cell.textLabel?.text = rp["full_name"] as? String ?? ""
         cell.detailTextLabel?.text = rp["language"] as? String ?? ""
         cell.tag = indexPath.row
         return cell
-
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 画面遷移時に呼ばれる
+        // idx は画面遷移先で使われるので遷移前に値を設定しておく必要がある
         idx = indexPath.row
         performSegue(withIdentifier: "Detail", sender: self)
-
     }
 
 }
