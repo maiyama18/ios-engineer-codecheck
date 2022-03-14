@@ -21,6 +21,8 @@ class RepositorySearchViewController: UITableViewController {
         super.viewDidLoad()
         searchBar.text = "GitHubのリポジトリを検索できるよー"
         searchBar.delegate = self
+
+        setupTableView()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -37,7 +39,9 @@ class RepositorySearchViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
         -> UITableViewCell
     {
-        let cell = UITableViewCell()
+        let cell =
+            tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            as! SubtitleTableViewCell
         let repository = repositories[indexPath.row]
         cell.textLabel?.text = repository["full_name"] as? String ?? ""
         cell.detailTextLabel?.text = repository["language"] as? String ?? ""
@@ -49,6 +53,10 @@ class RepositorySearchViewController: UITableViewController {
         // selectedIndex は画面遷移先で使われるので遷移前に値を設定しておく必要がある
         selectedIndex = indexPath.row
         performSegue(withIdentifier: "Detail", sender: self)
+    }
+
+    private func setupTableView() {
+        tableView.register(SubtitleTableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
 }
