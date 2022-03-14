@@ -38,16 +38,18 @@ class RepositoryDetailViewController: UIViewController {
     }
 
     func setupAvatarImage(repository: [String: Any]) {
-        if let owner = repository["owner"] as? [String: Any] {
-            if let avatarURL = owner["avatar_url"] as? String {
-                URLSession.shared.dataTask(with: URL(string: avatarURL)!) { (data, res, err) in
-                    let image = UIImage(data: data!)!
-                    DispatchQueue.main.async {
-                        self.avatarImageView.image = image
-                    }
-                }.resume()
-            }
+        guard let owner = repository["owner"] as? [String: Any],
+            let avatarURL = owner["avatar_url"] as? String
+        else {
+            return
         }
+
+        URLSession.shared.dataTask(with: URL(string: avatarURL)!) { (data, res, err) in
+            let image = UIImage(data: data!)!
+            DispatchQueue.main.async {
+                self.avatarImageView.image = image
+            }
+        }.resume()
     }
 
 }
