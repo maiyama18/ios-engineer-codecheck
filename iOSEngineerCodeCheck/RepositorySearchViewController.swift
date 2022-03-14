@@ -53,9 +53,9 @@ class RepositorySearchViewController: UITableViewController {
         selectedIndex = indexPath.row
         performSegue(withIdentifier: "Detail", sender: self)
     }
-    
+
     private func setupSearchBar() {
-        searchBar.placeholder = "GitHubのリポジトリを検索できるよー"
+        searchBar.placeholder = "Search..."
         searchBar.delegate = self
     }
 
