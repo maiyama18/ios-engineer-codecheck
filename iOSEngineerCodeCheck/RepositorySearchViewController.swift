@@ -25,13 +25,6 @@ class RepositorySearchViewController: UITableViewController {
         setupTableView()
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Detail" {
-            let detailVC = segue.destination as! RepositoryDetailViewController
-            detailVC.repository = repositories[selectedIndex]
-        }
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return repositories.count
     }
@@ -50,9 +43,13 @@ class RepositorySearchViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // selectedIndex は画面遷移先で使われるので遷移前に値を設定しておく必要がある
-        selectedIndex = indexPath.row
-        performSegue(withIdentifier: "Detail", sender: self)
+        guard let detailVC =
+            UIStoryboard(name: "RepositoryDetail", bundle: nil).instantiateInitialViewController()
+                as? RepositoryDetailViewController else {
+                    return
+                }
+        detailVC.repository = repositories[indexPath.row]
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 
     private func setupNavigationBar() {

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		38EC924D27DF471C0077BD1F /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 38EC924C27DF471C0077BD1F /* README.md */; };
 		38EC925027DF807C0077BD1F /* SubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC924F27DF807C0077BD1F /* SubtitleTableViewCell.swift */; };
+		38EC925327E009CD0077BD1F /* RepositoryDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38EC925127E009CD0077BD1F /* RepositoryDetail.storyboard */; };
 		BF0A658D244F2A3B00280FA6 /* RepositoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */; };
 		BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945DE244DC5E80012785A /* AppDelegate.swift */; };
 		BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945E0244DC5E80012785A /* SceneDelegate.swift */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		38EC924C27DF471C0077BD1F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		38EC924F27DF807C0077BD1F /* SubtitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTableViewCell.swift; sourceTree = "<group>"; };
+		38EC925227E009CD0077BD1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/RepositoryDetail.storyboard; sourceTree = "<group>"; };
 		BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailViewController.swift; sourceTree = "<group>"; };
 		BFD945DB244DC5E80012785A /* iOSEngineerCodeCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSEngineerCodeCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFD945DE244DC5E80012785A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 		BFD945DD244DC5E80012785A /* iOSEngineerCodeCheck */ = {
 			isa = PBXGroup;
 			children = (
+				38EC925127E009CD0077BD1F /* RepositoryDetail.storyboard */,
 				BFD945DE244DC5E80012785A /* AppDelegate.swift */,
 				BFD945E0244DC5E80012785A /* SceneDelegate.swift */,
 				BFD945E2244DC5E80012785A /* RepositorySearchViewController.swift */,
@@ -245,6 +248,7 @@
 				BFD945EB244DC5EB0012785A /* LaunchScreen.storyboard in Resources */,
 				BFD945E8244DC5EB0012785A /* Assets.xcassets in Resources */,
 				38EC924D27DF471C0077BD1F /* README.md in Resources */,
+				38EC925327E009CD0077BD1F /* RepositoryDetail.storyboard in Resources */,
 				BFD945E6244DC5E80012785A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,6 +335,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		38EC925127E009CD0077BD1F /* RepositoryDetail.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				38EC925227E009CD0077BD1F /* Base */,
+			);
+			name = RepositoryDetail.storyboard;
+			sourceTree = "<group>";
+		};
 		BFD945E4244DC5E80012785A /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
