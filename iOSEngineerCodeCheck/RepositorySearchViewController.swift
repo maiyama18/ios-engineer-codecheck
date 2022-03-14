@@ -20,6 +20,7 @@ class RepositorySearchViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupNavigationBar()
         setupSearchBar()
         setupTableView()
     }
@@ -52,6 +53,10 @@ class RepositorySearchViewController: UITableViewController {
         // selectedIndex は画面遷移先で使われるので遷移前に値を設定しておく必要がある
         selectedIndex = indexPath.row
         performSegue(withIdentifier: "Detail", sender: self)
+    }
+
+    private func setupNavigationBar() {
+        title = "Search Repositories"
     }
 
     private func setupSearchBar() {
