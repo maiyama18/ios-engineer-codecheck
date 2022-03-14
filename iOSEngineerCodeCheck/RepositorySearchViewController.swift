@@ -10,12 +10,12 @@ import UIKit
 
 class RepositorySearchViewController: UITableViewController, UISearchBarDelegate {
 
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak private var searchBar: UISearchBar!
 
-    var repositories: [[String: Any]] = []
+    private(set) var repositories: [[String: Any]] = []
+    private(set) var selectedIndex: Int!
 
-    var task: URLSessionTask?
-    var selectedIndex: Int!
+    private var task: URLSessionTask?
 
     override func viewDidLoad() {
         super.viewDidLoad()

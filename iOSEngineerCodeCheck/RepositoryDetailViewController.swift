@@ -10,16 +10,16 @@ import UIKit
 
 class RepositoryDetailViewController: UIViewController {
 
-    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak private var avatarImageView: UIImageView!
 
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak private var titleLabel: UILabel!
 
-    @IBOutlet weak var languageLabel: UILabel!
+    @IBOutlet weak private var languageLabel: UILabel!
 
-    @IBOutlet weak var starsLabel: UILabel!
-    @IBOutlet weak var watchersLabel: UILabel!
-    @IBOutlet weak var forksLabel: UILabel!
-    @IBOutlet weak var openIssuesLabel: UILabel!
+    @IBOutlet weak private var starsLabel: UILabel!
+    @IBOutlet weak private var watchersLabel: UILabel!
+    @IBOutlet weak private var forksLabel: UILabel!
+    @IBOutlet weak private var openIssuesLabel: UILabel!
 
     var searchVC: RepositorySearchViewController!
 
