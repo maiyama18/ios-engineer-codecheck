@@ -77,6 +77,8 @@ extension RepositorySearchViewController: UISearchBarDelegate {
         let query = searchBar.text!
         guard !query.isEmpty else { return }
 
+        searchBar.resignFirstResponder()
+
         let url = "https://api.github.com/search/repositories?q=\(query)"
         task = URLSession.shared.dataTask(with: URL(string: url)!) { (data, res, err) in
             guard let obj = try! JSONSerialization.jsonObject(with: data!) as? [String: Any],
