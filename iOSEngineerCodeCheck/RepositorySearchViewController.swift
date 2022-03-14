@@ -19,9 +19,8 @@ class RepositorySearchViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.text = "GitHubのリポジトリを検索できるよー"
-        searchBar.delegate = self
 
+        setupSearchBar()
         setupTableView()
     }
 
@@ -54,6 +53,11 @@ class RepositorySearchViewController: UITableViewController {
         selectedIndex = indexPath.row
         performSegue(withIdentifier: "Detail", sender: self)
     }
+    
+    private func setupSearchBar() {
+        searchBar.placeholder = "GitHubのリポジトリを検索できるよー"
+        searchBar.delegate = self
+    }
 
     private func setupTableView() {
         tableView.register(SubtitleTableViewCell.self, forCellReuseIdentifier: "cell")
@@ -62,12 +66,6 @@ class RepositorySearchViewController: UITableViewController {
 }
 
 extension RepositorySearchViewController: UISearchBarDelegate {
-
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        // Placeholder として初期値を入れているので、タップ時に空文字に戻す
-        searchBar.text = ""
-        return true
-    }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         task?.cancel()
