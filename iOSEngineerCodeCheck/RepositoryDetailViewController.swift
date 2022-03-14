@@ -21,12 +21,10 @@ class RepositoryDetailViewController: UIViewController {
     @IBOutlet weak private var forksLabel: UILabel!
     @IBOutlet weak private var openIssuesLabel: UILabel!
 
-    var searchVC: RepositorySearchViewController!
+    var repository: [String: Any]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let repository = searchVC.repositories[searchVC.selectedIndex]
 
         titleLabel.text = repository["full_name"] as? String
         if let language = repository["language"] as? String {
