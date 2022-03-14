@@ -29,7 +29,11 @@ class RepositoryDetailViewController: UIViewController {
         let repository = searchVC.repositories[searchVC.selectedIndex]
 
         titleLabel.text = repository["full_name"] as? String
-        languageLabel.text = "Written in \(repository["language"] as? String ?? "")"
+        if let language = repository["language"] as? String {
+            languageLabel.text = "Written in \(language)"
+        } else {
+            languageLabel.text = nil
+        }
         starsLabel.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
         watchersLabel.text = "\(repository["watchers_count"] as? Int ?? 0) watchers"
         forksLabel.text = "\(repository["forks_count"] as? Int ?? 0) forks"
