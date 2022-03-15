@@ -51,7 +51,8 @@ class RepositorySearchViewController: UITableViewController {
             return
         }
         let detailVC = StoryboardScene.RepositoryDetail.initialScene.instantiate { coder in
-            RepositoryDetailViewController(coder: coder, repository: repository)
+            let viewModel = RepositoryDetailViewModel(repository: repository)
+            return RepositoryDetailViewController(coder: coder, viewModel: viewModel)
         }
         navigationController?.pushViewController(detailVC, animated: true)
     }

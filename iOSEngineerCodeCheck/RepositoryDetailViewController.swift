@@ -6,6 +6,7 @@
 //  Copyright © 2020 YUMEMI Inc. All rights reserved.
 //
 
+import Combine
 import GitHub
 import UIKit
 
@@ -22,10 +23,12 @@ class RepositoryDetailViewController: UIViewController {
     @IBOutlet weak private var forksLabel: UILabel!
     @IBOutlet weak private var openIssuesLabel: UILabel!
 
-    private let repository: Repository
+    private var cancellables: [AnyCancellable] = []
 
-    init?(coder: NSCoder, repository: Repository) {
-        self.repository = repository
+    private let viewModel: RepositoryDetailViewModel
+
+    init?(coder: NSCoder, viewModel: RepositoryDetailViewModel) {
+        self.viewModel = viewModel
         super.init(coder: coder)
     }
 
@@ -36,34 +39,32 @@ class RepositoryDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        titleLabel.text = repository.fullName
-        if let language = repository.language {
-            languageLabel.text = "Written in \(language)"
-        } else {
-            languageLabel.text = nil
-        }
-        starsLabel.text = "\(repository.starsCount) stars"
-        watchersLabel.text = "\(repository.watchersCount) watchers"
-        forksLabel.text = "\(repository.forksCount) forks"
-        openIssuesLabel.text = "\(repository.openIssuesCount) open issues"
-        setupAvatarImage(repository: repository)
+        setupTexts()
+        subscribe()
+        viewModel.onViewLoaded()
     }
 
-    func setupAvatarImage(repository: Repository) {
-        guard let avatarURL = URL(string: repository.owner.avatarURL) else {
-            return
-        }
+    private func setupTexts() {
+        titleLabel.text = viewModel.titleText
+        languageLabel.text = viewModel.languageText
+        starsLabel.text = viewModel.starsText
+        watchersLabel.text = viewModel.watchersText
+        forksLabel.text = viewModel.forksText
+        openIssuesLabel.text = viewModel.openIssuesText
+    }
 
-        Task {
-            do {
-                let (data, _) = try await URLSession.shared.data(from: avatarURL, delegate: nil)
-                await MainActor.run {
-                    self.avatarImageView.image = UIImage(data: data)
+    private func subscribe() {
+        viewModel.events
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] event in
+                guard let self = self else { return }
+
+                switch event {
+                case .avatarImageLoaded(let image):
+                    self.avatarImageView.image = image
                 }
-            } catch {
-                // TODO: エラーハンドリング
             }
-        }
+            .store(in: &cancellables)
     }
 
 }
