@@ -19,8 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = UIStoryboard(name: "RepositorySearch", bundle: nil)
-            .instantiateInitialViewController()
+        window.rootViewController = StoryboardScene.RepositorySearch.initialScene.instantiate()
         self.window = window
         window.makeKeyAndVisible()
     }
