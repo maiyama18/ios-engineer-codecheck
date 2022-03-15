@@ -15,9 +15,9 @@ public protocol GitHubClientProtocol {
 public final class GitHubClient: GitHubClientProtocol {
     public static let shared = GitHubClient(session: URLSession.shared)
 
-    private let session: URLSession
+    private let session: Networking
 
-    init(session: URLSession) {
+    init(session: Networking) {
         self.session = session
     }
 
