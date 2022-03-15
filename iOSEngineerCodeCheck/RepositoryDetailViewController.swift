@@ -21,7 +21,7 @@ class RepositoryDetailViewController: UIViewController {
     @IBOutlet weak private var forksLabel: UILabel!
     @IBOutlet weak private var openIssuesLabel: UILabel!
 
-    private let repository: [String: Any]!
+    private let repository: [String: Any]
 
     init?(coder: NSCoder, repository: [String: Any]) {
         self.repository = repository
@@ -50,13 +50,18 @@ class RepositoryDetailViewController: UIViewController {
 
     func setupAvatarImage(repository: [String: Any]) {
         guard let owner = repository["owner"] as? [String: Any],
-            let avatarURL = owner["avatar_url"] as? String
+            let avatarURLString = owner["avatar_url"] as? String,
+            let avatarURL = URL(string: avatarURLString)
         else {
             return
         }
 
-        URLSession.shared.dataTask(with: URL(string: avatarURL)!) { (data, res, err) in
-            let image = UIImage(data: data!)!
+        URLSession.shared.dataTask(with: avatarURL) { (data, res, err) in
+            guard let data = data,
+                let image = UIImage(data: data)
+            else {
+                return
+            }
             DispatchQueue.main.async {
                 self.avatarImageView.image = image
             }
