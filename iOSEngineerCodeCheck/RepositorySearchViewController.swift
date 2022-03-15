@@ -6,15 +6,18 @@
 //  Copyright © 2020 YUMEMI Inc. All rights reserved.
 //
 
+import GitHub
 import UIKit
 
 class RepositorySearchViewController: UITableViewController {
 
     @IBOutlet weak private var searchBar: UISearchBar!
 
-    private(set) var repositories: [[String: Any]] = []
+    private(set) var repositories: [Repository] = []
 
-    private var task: URLSessionTask?
+    private var task: Task<Void, Never>?
+
+    private let githubClient: GitHubClientProtocol = GitHubClient.shared
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +38,8 @@ class RepositorySearchViewController: UITableViewController {
             tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             as! SubtitleTableViewCell
         let repository = repositories[indexPath.row]
-        cell.textLabel?.text = repository["full_name"] as? String ?? ""
-        cell.detailTextLabel?.text = repository["language"] as? String ?? ""
+        cell.textLabel?.text = repository.fullName
+        cell.detailTextLabel?.text = repository.language
         cell.tag = indexPath.row
         return cell
     }
@@ -71,28 +74,18 @@ extension RepositorySearchViewController: UISearchBarDelegate {
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        let query = searchBar.text ?? ""
-        guard !query.isEmpty else { return }
-
         searchBar.resignFirstResponder()
 
-        guard let url = URL(string: "https://api.github.com/search/repositories?q=\(query)") else {
-            return
-        }
-        task = URLSession.shared.dataTask(with: url) { (data, res, err) in
-            guard let data = data,
-                let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                let items = obj["items"] as? [[String: Any]]
-            else {
-                return
-            }
-
-            self.repositories = items
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+        task = Task {
+            do {
+                repositories = try await githubClient.search(query: searchBar.text ?? "")
+                await MainActor.run {
+                    self.tableView.reloadData()
+                }
+            } catch {
+                // TODO: エラーハンドリング
             }
         }
-        task?.resume()
     }
 
 }

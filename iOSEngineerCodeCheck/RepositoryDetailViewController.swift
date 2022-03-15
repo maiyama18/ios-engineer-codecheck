@@ -6,6 +6,7 @@
 //  Copyright © 2020 YUMEMI Inc. All rights reserved.
 //
 
+import GitHub
 import UIKit
 
 class RepositoryDetailViewController: UIViewController {
@@ -21,9 +22,9 @@ class RepositoryDetailViewController: UIViewController {
     @IBOutlet weak private var forksLabel: UILabel!
     @IBOutlet weak private var openIssuesLabel: UILabel!
 
-    private let repository: [String: Any]
+    private let repository: Repository
 
-    init?(coder: NSCoder, repository: [String: Any]) {
+    init?(coder: NSCoder, repository: Repository) {
         self.repository = repository
         super.init(coder: coder)
     }
@@ -35,24 +36,21 @@ class RepositoryDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        titleLabel.text = repository["full_name"] as? String
-        if let language = repository["language"] as? String {
+        titleLabel.text = repository.fullName
+        if let language = repository.language {
             languageLabel.text = "Written in \(language)"
         } else {
             languageLabel.text = nil
         }
-        starsLabel.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
-        watchersLabel.text = "\(repository["watchers_count"] as? Int ?? 0) watchers"
-        forksLabel.text = "\(repository["forks_count"] as? Int ?? 0) forks"
-        openIssuesLabel.text = "\(repository["open_issues_count"] as? Int ?? 0) open issues"
+        starsLabel.text = "\(repository.starsCount) stars"
+        watchersLabel.text = "\(repository.watchersCount) watchers"
+        forksLabel.text = "\(repository.forksCount) forks"
+        openIssuesLabel.text = "\(repository.openIssuesCount) open issues"
         setupAvatarImage(repository: repository)
     }
 
-    func setupAvatarImage(repository: [String: Any]) {
-        guard let owner = repository["owner"] as? [String: Any],
-            let avatarURLString = owner["avatar_url"] as? String,
-            let avatarURL = URL(string: avatarURLString)
-        else {
+    func setupAvatarImage(repository: Repository) {
+        guard let avatarURL = URL(string: repository.owner.avatarURL) else {
             return
         }
 
