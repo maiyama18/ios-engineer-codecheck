@@ -23,6 +23,19 @@ public struct Repository: Decodable {
     public let forksCount: Int
     public let openIssuesCount: Int
 
+    public init(
+        fullName: String, language: String?, owner: User, starsCount: Int, watchersCount: Int,
+        forksCount: Int, openIssuesCount: Int
+    ) {
+        self.fullName = fullName
+        self.language = language
+        self.owner = owner
+        self.starsCount = starsCount
+        self.watchersCount = watchersCount
+        self.forksCount = forksCount
+        self.openIssuesCount = openIssuesCount
+    }
+
     private enum CodingKeys: String, CodingKey {
         case fullName = "full_name"
         case language
@@ -36,6 +49,10 @@ public struct Repository: Decodable {
 
 public struct User: Decodable {
     public let avatarURL: String
+
+    public init(avatarURL: String) {
+        self.avatarURL = avatarURL
+    }
 
     private enum CodingKeys: String, CodingKey {
         case avatarURL = "avatar_url"
