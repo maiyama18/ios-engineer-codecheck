@@ -54,16 +54,16 @@ class RepositoryDetailViewController: UIViewController {
             return
         }
 
-        URLSession.shared.dataTask(with: avatarURL) { (data, res, err) in
-            guard let data = data,
-                let image = UIImage(data: data)
-            else {
-                return
+        Task {
+            do {
+                let (data, _) = try await URLSession.shared.data(from: avatarURL, delegate: nil)
+                await MainActor.run {
+                    self.avatarImageView.image = UIImage(data: data)
+                }
+            } catch {
+                // TODO: エラーハンドリング
             }
-            DispatchQueue.main.async {
-                self.avatarImageView.image = image
-            }
-        }.resume()
+        }
     }
 
 }
