@@ -297,7 +297,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH=$PATH:/opt/homebrew/bin\n\nif which mint >/dev/null; then\n  git diff --name-only '*.swift' | while read filename; do\n    mint run swift-format format --in-place \"$filename\"\n    mint run swift-format lint \"$filename\" || true\n  done\n  \nelse\n  echo \"warning: mint not installed. swift-format lint skipped\"\nfi\n";
+			shellScript = "PATH=$PATH:/opt/homebrew/bin\n\nif which mint >/dev/null; then\n  git diff --name-only '*.swift' | grep -v 'Generated' | while read filename; do\n    mint run swift-format format --in-place \"$filename\"\n    mint run swift-format lint \"$filename\" || true\n  done\n  \nelse\n  echo \"warning: mint not installed. swift-format lint skipped\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
