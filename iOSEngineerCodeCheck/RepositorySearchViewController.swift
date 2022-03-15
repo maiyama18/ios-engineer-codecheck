@@ -10,7 +10,7 @@ import Combine
 import GitHub
 import UIKit
 
-class RepositorySearchViewController: UITableViewController {
+class RepositorySearchViewController: UITableViewController, RepositoryDetailRouting {
 
     @IBOutlet weak private var searchBar: UISearchBar!
 
@@ -50,11 +50,7 @@ class RepositorySearchViewController: UITableViewController {
         guard let repository = viewModel.repository(index: indexPath.row) else {
             return
         }
-        let detailVC = StoryboardScene.RepositoryDetail.initialScene.instantiate { coder in
-            let viewModel = RepositoryDetailViewModel(repository: repository)
-            return RepositoryDetailViewController(coder: coder, viewModel: viewModel)
-        }
-        navigationController?.pushViewController(detailVC, animated: true)
+        pushRepositoryDetail(from: self, repository: repository)
     }
 
     private func setupNavigationBar() {
