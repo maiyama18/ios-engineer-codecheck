@@ -192,6 +192,37 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		38EC928A27E04D460077BD1F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				38EC928C27E04D720077BD1F /* RepositoryDetail */,
+				38EC928B27E04D5F0077BD1F /* RepositorySearch */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		38EC928B27E04D5F0077BD1F /* RepositorySearch */ = {
+			isa = PBXGroup;
+			children = (
+				BFD945E2244DC5E80012785A /* RepositorySearchViewController.swift */,
+				38EC928127E043760077BD1F /* RepositorySearchViewModel.swift */,
+				38EC924F27DF807C0077BD1F /* SubtitleTableViewCell.swift */,
+				BFD945E4244DC5E80012785A /* RepositorySearch.storyboard */,
+			);
+			path = RepositorySearch;
+			sourceTree = "<group>";
+		};
+		38EC928C27E04D720077BD1F /* RepositoryDetail */ = {
+			isa = PBXGroup;
+			children = (
+				BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */,
+				38EC928827E04C350077BD1F /* RepositoryDetailRouting.swift */,
+				38EC928627E047D80077BD1F /* RepositoryDetailViewModel.swift */,
+				38EC925127E009CD0077BD1F /* RepositoryDetail.storyboard */,
+			);
+			path = RepositoryDetail;
+			sourceTree = "<group>";
+		};
 		BFD945D2244DC5E80012785A = {
 			isa = PBXGroup;
 			children = (
@@ -220,18 +251,11 @@
 		BFD945DD244DC5E80012785A /* iOSEngineerCodeCheck */ = {
 			isa = PBXGroup;
 			children = (
+				38EC928A27E04D460077BD1F /* Views */,
 				38EC928327E046030077BD1F /* Extensions */,
 				38EC925427E011420077BD1F /* Generated */,
-				38EC925127E009CD0077BD1F /* RepositoryDetail.storyboard */,
 				BFD945DE244DC5E80012785A /* AppDelegate.swift */,
 				BFD945E0244DC5E80012785A /* SceneDelegate.swift */,
-				BFD945E2244DC5E80012785A /* RepositorySearchViewController.swift */,
-				38EC928127E043760077BD1F /* RepositorySearchViewModel.swift */,
-				38EC924F27DF807C0077BD1F /* SubtitleTableViewCell.swift */,
-				BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */,
-				38EC928827E04C350077BD1F /* RepositoryDetailRouting.swift */,
-				38EC928627E047D80077BD1F /* RepositoryDetailViewModel.swift */,
-				BFD945E4244DC5E80012785A /* RepositorySearch.storyboard */,
 				BFD945E7244DC5EB0012785A /* Assets.xcassets */,
 				BFD945E9244DC5EB0012785A /* LaunchScreen.storyboard */,
 				BFD945EC244DC5EB0012785A /* Info.plist */,
