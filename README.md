@@ -31,6 +31,14 @@ Mintfile に書かれている CLI がインストールされます。インス
 mint bootstrap
 ```
 
+## アーキテクチャ
+
+各画面のロジックを ViewModel が持つ MVVM アーキテクチャを採用しています。各コンポーネントの役割は以下です。
+
+- ViewController: 画面表示に関わる細かい処理を行う。また、ライフサイクルイベントやユーザインタラクションを ViewModel に伝える
+- ViewModel: 画面の主なロジックを受け持つ。Model を操作して、Combine Publisher を通じて ViewController に伝える
+- Routing: 画面遷移処理を行う protocol。デフォルト実装をしておき、遷移元の ViewController に準拠させることによって容易に画面遷移の追加をできるようにする
+
 ## トラブルシューティング
 
 #### SwiftGen
