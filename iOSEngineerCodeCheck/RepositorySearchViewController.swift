@@ -13,7 +13,6 @@ class RepositorySearchViewController: UITableViewController {
     @IBOutlet weak private var searchBar: UISearchBar!
 
     private(set) var repositories: [[String: Any]] = []
-    private(set) var selectedIndex: Int!
 
     private var task: URLSessionTask?
 
