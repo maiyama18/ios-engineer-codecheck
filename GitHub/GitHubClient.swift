@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// @mockable
 public protocol GitHubClientProtocol {
     func search(query: String) async throws -> [Repository]
 }

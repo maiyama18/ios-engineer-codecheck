@@ -24,3 +24,20 @@ class NetworkingMock: Networking {
     }
 }
 
+public class GitHubClientProtocolMock: GitHubClientProtocol {
+    public init() { }
+
+
+    public private(set) var searchCallCount = 0
+    public var searchArgValues = [String]()
+    public var searchHandler: ((String) async throws -> ([Repository]))?
+    public func search(query: String) async throws -> [Repository] {
+        searchCallCount += 1
+        searchArgValues.append(query)
+        if let searchHandler = searchHandler {
+            return try await searchHandler(query)
+        }
+        return [Repository]()
+    }
+}
+
