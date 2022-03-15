@@ -18,6 +18,8 @@
 		38EC927C27E01E7D0077BD1F /* GitHubEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC927B27E01E7D0077BD1F /* GitHubEntities.swift */; };
 		38EC927E27E01FB20077BD1F /* GitHubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC927D27E01FB20077BD1F /* GitHubClient.swift */; };
 		38EC928027E020100077BD1F /* GitHubError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC927F27E020100077BD1F /* GitHubError.swift */; };
+		38EC928227E043760077BD1F /* RepositorySearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC928127E043760077BD1F /* RepositorySearchViewModel.swift */; };
+		38EC928527E0460E0077BD1F /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC928427E0460E0077BD1F /* Collection+Extension.swift */; };
 		BF0A658D244F2A3B00280FA6 /* RepositoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */; };
 		BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945DE244DC5E80012785A /* AppDelegate.swift */; };
 		BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945E0244DC5E80012785A /* SceneDelegate.swift */; };
@@ -92,6 +94,8 @@
 		38EC927B27E01E7D0077BD1F /* GitHubEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubEntities.swift; sourceTree = "<group>"; };
 		38EC927D27E01FB20077BD1F /* GitHubClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubClient.swift; sourceTree = "<group>"; };
 		38EC927F27E020100077BD1F /* GitHubError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubError.swift; sourceTree = "<group>"; };
+		38EC928127E043760077BD1F /* RepositorySearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositorySearchViewModel.swift; sourceTree = "<group>"; };
+		38EC928427E0460E0077BD1F /* Collection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
 		BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailViewController.swift; sourceTree = "<group>"; };
 		BFD945DB244DC5E80012785A /* iOSEngineerCodeCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSEngineerCodeCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFD945DE244DC5E80012785A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -176,6 +180,14 @@
 			path = GitHubTests;
 			sourceTree = "<group>";
 		};
+		38EC928327E046030077BD1F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				38EC928427E0460E0077BD1F /* Collection+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		BFD945D2244DC5E80012785A = {
 			isa = PBXGroup;
 			children = (
@@ -204,11 +216,13 @@
 		BFD945DD244DC5E80012785A /* iOSEngineerCodeCheck */ = {
 			isa = PBXGroup;
 			children = (
+				38EC928327E046030077BD1F /* Extensions */,
 				38EC925427E011420077BD1F /* Generated */,
 				38EC925127E009CD0077BD1F /* RepositoryDetail.storyboard */,
 				BFD945DE244DC5E80012785A /* AppDelegate.swift */,
 				BFD945E0244DC5E80012785A /* SceneDelegate.swift */,
 				BFD945E2244DC5E80012785A /* RepositorySearchViewController.swift */,
+				38EC928127E043760077BD1F /* RepositorySearchViewModel.swift */,
 				38EC924F27DF807C0077BD1F /* SubtitleTableViewCell.swift */,
 				BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */,
 				BFD945E4244DC5E80012785A /* RepositorySearch.storyboard */,
@@ -484,8 +498,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFD945E3244DC5E80012785A /* RepositorySearchViewController.swift in Sources */,
+				38EC928527E0460E0077BD1F /* Collection+Extension.swift in Sources */,
 				BF0A658D244F2A3B00280FA6 /* RepositoryDetailViewController.swift in Sources */,
 				38EC925027DF807C0077BD1F /* SubtitleTableViewCell.swift in Sources */,
+				38EC928227E043760077BD1F /* RepositorySearchViewModel.swift in Sources */,
 				BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */,
 				BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */,
 				38EC925627E011710077BD1F /* StoryboardScenes.swift in Sources */,

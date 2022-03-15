@@ -6,6 +6,7 @@
 //  Copyright © 2020 YUMEMI Inc. All rights reserved.
 //
 
+import Combine
 import GitHub
 import UIKit
 
@@ -13,11 +14,9 @@ class RepositorySearchViewController: UITableViewController {
 
     @IBOutlet weak private var searchBar: UISearchBar!
 
-    private(set) var repositories: [Repository] = []
+    private var cancellables: [AnyCancellable] = []
 
-    private var task: Task<Void, Never>?
-
-    private let githubClient: GitHubClientProtocol = GitHubClient.shared
+    private let viewModel = RepositorySearchViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,10 +24,11 @@ class RepositorySearchViewController: UITableViewController {
         setupNavigationBar()
         setupSearchBar()
         setupTableView()
+        subscribe()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return repositories.count
+        return viewModel.repositoriesCount()
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
@@ -37,7 +37,9 @@ class RepositorySearchViewController: UITableViewController {
         let cell =
             tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             as! SubtitleTableViewCell
-        let repository = repositories[indexPath.row]
+        guard let repository = viewModel.repository(index: indexPath.row) else {
+            return UITableViewCell()
+        }
         cell.textLabel?.text = repository.fullName
         cell.detailTextLabel?.text = repository.language
         cell.tag = indexPath.row
@@ -45,7 +47,9 @@ class RepositorySearchViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let repository = repositories[indexPath.row]
+        guard let repository = viewModel.repository(index: indexPath.row) else {
+            return
+        }
         let detailVC = StoryboardScene.RepositoryDetail.initialScene.instantiate { coder in
             RepositoryDetailViewController(coder: coder, repository: repository)
         }
@@ -65,27 +69,32 @@ class RepositorySearchViewController: UITableViewController {
         tableView.register(SubtitleTableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
+    private func subscribe() {
+        viewModel.events
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] event in
+                guard let self = self else { return }
+
+                switch event {
+                case .unfocusFromSearchBar:
+                    self.searchBar.resignFirstResponder()
+                case .reloadData:
+                    self.tableView.reloadData()
+                }
+            }
+            .store(in: &cancellables)
+    }
+
 }
 
 extension RepositorySearchViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        task?.cancel()
+        viewModel.onSearchTextChanged()
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-
-        task = Task {
-            do {
-                repositories = try await githubClient.search(query: searchBar.text ?? "")
-                await MainActor.run {
-                    self.tableView.reloadData()
-                }
-            } catch {
-                // TODO: エラーハンドリング
-            }
-        }
+        viewModel.onSearchButtonTapped(query: searchBar.text ?? "")
     }
 
 }
