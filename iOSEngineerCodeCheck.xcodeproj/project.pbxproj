@@ -10,6 +10,7 @@
 		38EC924D27DF471C0077BD1F /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 38EC924C27DF471C0077BD1F /* README.md */; };
 		38EC925027DF807C0077BD1F /* SubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC924F27DF807C0077BD1F /* SubtitleTableViewCell.swift */; };
 		38EC925327E009CD0077BD1F /* RepositoryDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38EC925127E009CD0077BD1F /* RepositoryDetail.storyboard */; };
+		38EC925627E011710077BD1F /* StoryboardScenes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC925527E011710077BD1F /* StoryboardScenes.swift */; };
 		BF0A658D244F2A3B00280FA6 /* RepositoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */; };
 		BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945DE244DC5E80012785A /* AppDelegate.swift */; };
 		BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945E0244DC5E80012785A /* SceneDelegate.swift */; };
@@ -42,6 +43,7 @@
 		38EC924C27DF471C0077BD1F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		38EC924F27DF807C0077BD1F /* SubtitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTableViewCell.swift; sourceTree = "<group>"; };
 		38EC925227E009CD0077BD1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/RepositoryDetail.storyboard; sourceTree = "<group>"; };
+		38EC925527E011710077BD1F /* StoryboardScenes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardScenes.swift; sourceTree = "<group>"; };
 		BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailViewController.swift; sourceTree = "<group>"; };
 		BFD945DB244DC5E80012785A /* iOSEngineerCodeCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSEngineerCodeCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFD945DE244DC5E80012785A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +86,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		38EC925427E011420077BD1F /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				38EC925527E011710077BD1F /* StoryboardScenes.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
 		BFD945D2244DC5E80012785A = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +118,7 @@
 		BFD945DD244DC5E80012785A /* iOSEngineerCodeCheck */ = {
 			isa = PBXGroup;
 			children = (
+				38EC925427E011420077BD1F /* Generated */,
 				38EC925127E009CD0077BD1F /* RepositoryDetail.storyboard */,
 				BFD945DE244DC5E80012785A /* AppDelegate.swift */,
 				BFD945E0244DC5E80012785A /* SceneDelegate.swift */,
@@ -286,7 +297,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH=$PATH:/opt/homebrew/bin\n\nif which mint >/dev/null; then\n  git diff --name-only '*.swift' | while read filename; do\n    mint run swift-format format --in-place \"$filename\"\n    mint run swift-format lint \"$filename\" || true\n  done\n  \nelse\n  echo \"warning: mint not installed. swift-format lint skipped\"\nfi\n";
+			shellScript = "PATH=$PATH:/opt/homebrew/bin\n\nif which mint >/dev/null; then\n  git diff --name-only '*.swift' | grep -v 'Generated' | while read filename; do\n    mint run swift-format format --in-place \"$filename\"\n    mint run swift-format lint \"$filename\" || true\n  done\n  \nelse\n  echo \"warning: mint not installed. swift-format lint skipped\"\nfi\n";
+		};
+		38EC925727E013CB0077BD1F /* Execute SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Execute SwiftGen";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH=$PATH:/opt/homebrew/bin\n\nif which mint >/dev/null; then\n  mint run swiftgen\nelse\n  echo \"error: mint not installed. failed to execute swiftgen\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -300,6 +329,7 @@
 				38EC925027DF807C0077BD1F /* SubtitleTableViewCell.swift in Sources */,
 				BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */,
 				BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */,
+				38EC925627E011710077BD1F /* StoryboardScenes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

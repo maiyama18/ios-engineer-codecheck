@@ -43,15 +43,8 @@ class RepositorySearchViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let repository = repositories[indexPath.row]
-        guard
-            let detailVC = UIStoryboard(
-                name: "RepositoryDetail",
-                bundle: nil
-            ).instantiateInitialViewController(creator: { coder in
-                RepositoryDetailViewController(coder: coder, repository: repository)
-            })
-        else {
-            return
+        let detailVC = StoryboardScene.RepositoryDetail.initialScene.instantiate { coder in
+            RepositoryDetailViewController(coder: coder, repository: repository)
         }
         navigationController?.pushViewController(detailVC, animated: true)
     }
