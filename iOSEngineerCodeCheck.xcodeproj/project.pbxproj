@@ -28,6 +28,10 @@
 		38EC929827E158930077BD1F /* search_failure_internal_server_error.json in Resources */ = {isa = PBXBuildFile; fileRef = 38EC929527E158930077BD1F /* search_failure_internal_server_error.json */; };
 		38EC929927E158930077BD1F /* search_failure_too_many_request.json in Resources */ = {isa = PBXBuildFile; fileRef = 38EC929627E158930077BD1F /* search_failure_too_many_request.json */; };
 		38EC929A27E158930077BD1F /* search_failure_invalid_input.json in Resources */ = {isa = PBXBuildFile; fileRef = 38EC929727E158930077BD1F /* search_failure_invalid_input.json */; };
+		38EC929E27E15E5B0077BD1F /* XCTestCase+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC929D27E15E5B0077BD1F /* XCTestCase+Extension.swift */; };
+		38EC92A027E15E7D0077BD1F /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC929F27E15E7D0077BD1F /* String+Extension.swift */; };
+		38EC92A427E16DEF0077BD1F /* Repository+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC92A327E16DEF0077BD1F /* Repository+Extension.swift */; };
+		38EC92A827E1D2E00077BD1F /* RepositoryDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC92A727E1D2E00077BD1F /* RepositoryDetailViewModelTests.swift */; };
 		BF0A658D244F2A3B00280FA6 /* RepositoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */; };
 		BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945DE244DC5E80012785A /* AppDelegate.swift */; };
 		BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945E0244DC5E80012785A /* SceneDelegate.swift */; };
@@ -35,7 +39,7 @@
 		BFD945E6244DC5E80012785A /* RepositorySearch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFD945E4244DC5E80012785A /* RepositorySearch.storyboard */; };
 		BFD945E8244DC5EB0012785A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFD945E7244DC5EB0012785A /* Assets.xcassets */; };
 		BFD945EB244DC5EB0012785A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFD945E9244DC5EB0012785A /* LaunchScreen.storyboard */; };
-		BFD945F6244DC5EB0012785A /* iOSEngineerCodeCheckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945F5244DC5EB0012785A /* iOSEngineerCodeCheckTests.swift */; };
+		BFD945F6244DC5EB0012785A /* RepositorySearchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945F5244DC5EB0012785A /* RepositorySearchViewModelTests.swift */; };
 		BFD94601244DC5EC0012785A /* iOSEngineerCodeCheckUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD94600244DC5EC0012785A /* iOSEngineerCodeCheckUITests.swift */; };
 /* End PBXBuildFile section */
 
@@ -112,6 +116,10 @@
 		38EC929527E158930077BD1F /* search_failure_internal_server_error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = search_failure_internal_server_error.json; sourceTree = "<group>"; };
 		38EC929627E158930077BD1F /* search_failure_too_many_request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = search_failure_too_many_request.json; sourceTree = "<group>"; };
 		38EC929727E158930077BD1F /* search_failure_invalid_input.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = search_failure_invalid_input.json; sourceTree = "<group>"; };
+		38EC929D27E15E5B0077BD1F /* XCTestCase+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Extension.swift"; sourceTree = "<group>"; };
+		38EC929F27E15E7D0077BD1F /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		38EC92A327E16DEF0077BD1F /* Repository+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repository+Extension.swift"; sourceTree = "<group>"; };
+		38EC92A727E1D2E00077BD1F /* RepositoryDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailViewModelTests.swift; sourceTree = "<group>"; };
 		BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailViewController.swift; sourceTree = "<group>"; };
 		BFD945DB244DC5E80012785A /* iOSEngineerCodeCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSEngineerCodeCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFD945DE244DC5E80012785A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -122,7 +130,7 @@
 		BFD945EA244DC5EB0012785A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BFD945EC244DC5EB0012785A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFD945F1244DC5EB0012785A /* iOSEngineerCodeCheckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSEngineerCodeCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BFD945F5244DC5EB0012785A /* iOSEngineerCodeCheckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSEngineerCodeCheckTests.swift; sourceTree = "<group>"; };
+		BFD945F5244DC5EB0012785A /* RepositorySearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositorySearchViewModelTests.swift; sourceTree = "<group>"; };
 		BFD945F7244DC5EB0012785A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFD945FC244DC5EB0012785A /* iOSEngineerCodeCheckUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSEngineerCodeCheckUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFD94600244DC5EC0012785A /* iOSEngineerCodeCheckUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSEngineerCodeCheckUITests.swift; sourceTree = "<group>"; };
@@ -257,6 +265,16 @@
 			path = MockResponses;
 			sourceTree = "<group>";
 		};
+		38EC929C27E15E4F0077BD1F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				38EC929D27E15E5B0077BD1F /* XCTestCase+Extension.swift */,
+				38EC929F27E15E7D0077BD1F /* String+Extension.swift */,
+				38EC92A327E16DEF0077BD1F /* Repository+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		BFD945D2244DC5E80012785A = {
 			isa = PBXGroup;
 			children = (
@@ -300,7 +318,9 @@
 		BFD945F4244DC5EB0012785A /* iOSEngineerCodeCheckTests */ = {
 			isa = PBXGroup;
 			children = (
-				BFD945F5244DC5EB0012785A /* iOSEngineerCodeCheckTests.swift */,
+				38EC929C27E15E4F0077BD1F /* Extensions */,
+				BFD945F5244DC5EB0012785A /* RepositorySearchViewModelTests.swift */,
+				38EC92A727E1D2E00077BD1F /* RepositoryDetailViewModelTests.swift */,
 				BFD945F7244DC5EB0012785A /* Info.plist */,
 			);
 			path = iOSEngineerCodeCheckTests;
@@ -373,6 +393,7 @@
 				BFD945D8244DC5E80012785A /* Frameworks */,
 				BFD945D9244DC5E80012785A /* Resources */,
 				38EC924E27DF4CCE0077BD1F /* Execute Format & Lint */,
+				38EC929B27E15D680077BD1F /* Generate Mocks */,
 				38EC927427E01CEC0077BD1F /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -540,6 +561,24 @@
 			shellPath = /bin/sh;
 			shellScript = "PATH=$PATH:/opt/homebrew/bin\n\nif which mint >/dev/null; then\n  git diff --name-only '*.swift' | grep -v 'Generated' | while read filename; do\n    mint run swift-format format --in-place \"$filename\"\n    mint run swift-format lint \"$filename\" || true\n  done\n  \nelse\n  echo \"warning: mint not installed. swift-format lint skipped\"\nfi\n";
 		};
+		38EC929B27E15D680077BD1F /* Generate Mocks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Mocks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH=$PATH:/opt/homebrew/bin\n\nif which mint >/dev/null; then\n  mint run mockolo --sourcedirs GitHub --destination GitHub/Generated/GeneratedMocks.swift --enable-args-history\nelse\n  echo \"warning: mint not installed. generating mock skipped\"\nfi\n\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -584,7 +623,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFD945F6244DC5EB0012785A /* iOSEngineerCodeCheckTests.swift in Sources */,
+				38EC92A027E15E7D0077BD1F /* String+Extension.swift in Sources */,
+				38EC92A427E16DEF0077BD1F /* Repository+Extension.swift in Sources */,
+				38EC929E27E15E5B0077BD1F /* XCTestCase+Extension.swift in Sources */,
+				38EC92A827E1D2E00077BD1F /* RepositoryDetailViewModelTests.swift in Sources */,
+				BFD945F6244DC5EB0012785A /* RepositorySearchViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

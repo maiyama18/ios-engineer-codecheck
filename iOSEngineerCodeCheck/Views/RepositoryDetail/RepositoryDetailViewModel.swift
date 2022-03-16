@@ -20,9 +20,11 @@ final class RepositoryDetailViewModel {
     var events: AnyPublisher<Event, Never> { eventSubject.eraseToAnyPublisher() }
 
     private let repository: Repository
+    private let session: Networking
 
-    init(repository: Repository) {
+    init(repository: Repository, session: Networking = URLSession.shared) {
         self.repository = repository
+        self.session = session
     }
 
     var titleText: String {
@@ -62,7 +64,8 @@ final class RepositoryDetailViewModel {
 
         Task {
             do {
-                let (data, _) = try await URLSession.shared.data(from: avatarURL, delegate: nil)
+                let (data, _) = try await session.data(
+                    for: URLRequest(url: avatarURL), delegate: nil)
                 guard let image = UIImage(data: data) else { return }
                 eventSubject.send(.avatarImageLoaded(image: image))
             } catch {
