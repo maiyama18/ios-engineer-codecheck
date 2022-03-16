@@ -33,8 +33,9 @@ class RepositoryDetailViewModelTests: XCTestCase {
         viewModel = RepositoryDetailViewModel(
             repository: Repository(
                 fullName: "apple/swift",
-                language: "C++",
-                owner: User(avatarURL: "https://example.com"),
+                description: "Swift compiler",
+                language: Language(name: "C++", colorCode: "6866fb"),
+                avatarURL: URL(string: "http://example.com"),
                 starsCount: 50000,
                 watchersCount: 10000,
                 forksCount: 2000,

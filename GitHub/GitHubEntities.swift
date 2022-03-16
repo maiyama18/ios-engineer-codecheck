@@ -2,63 +2,43 @@
 //  GitHubEntities.swift
 //  GitHub
 //
-//  Created by maiyama on 2022/03/15.
+//  Created by maiyama on 2022/03/16.
 //  Copyright © 2022 YUMEMI Inc. All rights reserved.
 //
 
 import Foundation
 
-// ref: https://docs.github.com/ja/rest/reference/search#search-repositories
-
-struct RepositorySearchResponse: Decodable {
-    public let items: [Repository]
-}
-
-public struct Repository: Decodable {
+public struct Repository {
     public let fullName: String
     public let description: String
-    public let language: String?
-    public let owner: User
+    public let language: Language?
+    public let avatarURL: URL?
     public let starsCount: Int
     public let watchersCount: Int
     public let forksCount: Int
     public let openIssuesCount: Int
 
     public init(
-        fullName: String, description: String, language: String?, owner: User, starsCount: Int,
-        watchersCount: Int,
-        forksCount: Int, openIssuesCount: Int
+        fullName: String, description: String, language: Language?, avatarURL: URL?,
+        starsCount: Int, watchersCount: Int, forksCount: Int, openIssuesCount: Int
     ) {
         self.fullName = fullName
         self.description = description
         self.language = language
-        self.owner = owner
+        self.avatarURL = avatarURL
         self.starsCount = starsCount
         self.watchersCount = watchersCount
         self.forksCount = forksCount
         self.openIssuesCount = openIssuesCount
     }
-
-    private enum CodingKeys: String, CodingKey {
-        case fullName = "full_name"
-        case description
-        case language
-        case owner
-        case starsCount = "stargazers_count"
-        case watchersCount = "watchers_count"
-        case forksCount = "forks_count"
-        case openIssuesCount = "open_issues_count"
-    }
 }
 
-public struct User: Decodable {
-    public let avatarURL: String
+public struct Language: Equatable {
+    public let name: String
+    public let colorCode: String?
 
-    public init(avatarURL: String) {
-        self.avatarURL = avatarURL
-    }
-
-    private enum CodingKeys: String, CodingKey {
-        case avatarURL = "avatar_url"
+    public init(name: String, colorCode: String?) {
+        self.name = name
+        self.colorCode = colorCode
     }
 }

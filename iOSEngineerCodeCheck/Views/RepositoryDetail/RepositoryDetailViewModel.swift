@@ -33,7 +33,7 @@ final class RepositoryDetailViewModel {
 
     var languageText: String? {
         if let language = repository.language {
-            return "Written in \(language)"
+            return "Written in \(language.name)"
         } else {
             return nil
         }
@@ -60,7 +60,7 @@ final class RepositoryDetailViewModel {
     }
 
     private func loadAvatarImage() {
-        guard let avatarURL = URL(string: repository.owner.avatarURL) else { return }
+        guard let avatarURL = repository.avatarURL else { return }
 
         Task {
             do {

@@ -28,13 +28,12 @@ class GitHubClientTests: XCTestCase {
 
         let first = repositories[0]
         XCTAssertEqual(first.fullName, "apple/swift")
-        XCTAssertEqual(first.language, "C++")
+        XCTAssertEqual(first.language, Language(name: "C++", colorCode: "f34b7d"))
         XCTAssertEqual(first.starsCount, 58955)
         XCTAssertEqual(first.watchersCount, 58955)
         XCTAssertEqual(first.forksCount, 9465)
         XCTAssertEqual(first.openIssuesCount, 505)
-        XCTAssertEqual(
-            first.owner.avatarURL, "https://avatars.githubusercontent.com/u/10639145?v=4")
+        XCTAssertEqual(first.avatarURL?.absoluteString, "https://avatars.githubusercontent.com/u/10639145?v=4")
     }
 
     func testSearchFailureInvalidInput() async throws {
