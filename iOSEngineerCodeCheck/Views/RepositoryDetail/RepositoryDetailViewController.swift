@@ -14,7 +14,11 @@ class RepositoryDetailViewController: UIViewController {
 
     @IBOutlet weak private var avatarImageView: UIImageView!
 
-    @IBOutlet weak private var titleLabel: UILabel!
+    @IBOutlet weak private var titleLabel: UILabel! {
+        didSet {
+            titleLabel.accessibilityLabel = "DetailTitleLabel"
+        }
+    }
 
     @IBOutlet weak private var languageLabel: UILabel!
 
