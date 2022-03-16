@@ -16,6 +16,7 @@ struct RepositorySearchResponse: Decodable {
 
 public struct Repository: Decodable {
     public let fullName: String
+    public let description: String
     public let language: String?
     public let owner: User
     public let starsCount: Int
@@ -24,10 +25,12 @@ public struct Repository: Decodable {
     public let openIssuesCount: Int
 
     public init(
-        fullName: String, language: String?, owner: User, starsCount: Int, watchersCount: Int,
+        fullName: String, description: String, language: String?, owner: User, starsCount: Int,
+        watchersCount: Int,
         forksCount: Int, openIssuesCount: Int
     ) {
         self.fullName = fullName
+        self.description = description
         self.language = language
         self.owner = owner
         self.starsCount = starsCount
@@ -38,6 +41,7 @@ public struct Repository: Decodable {
 
     private enum CodingKeys: String, CodingKey {
         case fullName = "full_name"
+        case description
         case language
         case owner
         case starsCount = "stargazers_count"
