@@ -7,14 +7,18 @@
 import Foundation
 
 
-class NetworkingMock: Networking {
-    init() { }
+public class NetworkingMock: Networking {
+    public init() { }
 
 
-    private(set) var dataCallCount = 0
-    var dataArgValues = [(URLRequest, URLSessionTaskDelegate?)]()
-    var dataHandler: ((URLRequest, URLSessionTaskDelegate?) async throws -> (Data, URLResponse))?
-    func data(for request: URLRequest, delegate: URLSessionTaskDelegate?) async throws -> (Data, URLResponse) {
+    public private(set) var dataCallCount = 0
+    public var dataArgValues = [(URLRequest, URLSessionTaskDelegate?)]()
+    public var dataHandler: ((URLRequest, URLSessionTaskDelegate?) async throws -> (
+        Data, URLResponse
+    ))?
+    public func data(for request: URLRequest, delegate: URLSessionTaskDelegate?) async throws -> (
+        Data, URLResponse
+    ) {
         dataCallCount += 1
         dataArgValues.append((request, delegate))
         if let dataHandler = dataHandler {
