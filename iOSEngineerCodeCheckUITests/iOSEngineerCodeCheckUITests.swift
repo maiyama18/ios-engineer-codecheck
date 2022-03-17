@@ -13,15 +13,14 @@ class iOSEngineerCodeCheckUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        let searchField = app.searchFields["Search..."]
+        let searchField = app.textFields["Search..."]
         searchField.tap()
         searchField.typeText("swift\n")
 
-        XCTAssertTrue(app.cells["SubtitleCell"].waitForExistence(timeout: 3))
-        let cells = app.cells.matching(identifier: "SubtitleCell")
-        XCTAssertEqual(cells.count, 30)
+        XCTAssertTrue(app.staticTexts["listRepositoryTitle"].waitForExistence(timeout: 3))
+        let titles = app.staticTexts.matching(identifier: "listRepositoryTitle")
 
-        cells.element(boundBy: 0).tap()
+        titles.element(boundBy: 0).tap()
 
         XCTAssertTrue(app.staticTexts["organizationText"].waitForExistence(timeout: 3))
     }

@@ -26,6 +26,7 @@ struct RepositoryListItemView: View {
                     .bold()
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
+                    .accessibilityIdentifier("listRepositoryTitle")
             }
 
             HStack(spacing: 12) {
