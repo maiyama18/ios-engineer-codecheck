@@ -12,13 +12,6 @@ import UIKit
 
 final class RepositoryDetailViewModel {
 
-    enum Event {
-        case avatarImageLoaded(image: UIImage)
-    }
-
-    private let eventSubject: PassthroughSubject<Event, Never> = .init()
-    var events: AnyPublisher<Event, Never> { eventSubject.eraseToAnyPublisher() }
-
     private let repository: Repository
     private let session: Networking
 
@@ -27,51 +20,40 @@ final class RepositoryDetailViewModel {
         self.session = session
     }
 
-    var titleText: String {
-        repository.fullName
+    var avatarURL: URL? {
+        repository.avatarURL
     }
 
-    var languageText: String? {
-        if let language = repository.language {
-            return "Written in \(language.name)"
-        } else {
-            return nil
-        }
+    var organization: String {
+        String(repository.fullName.split(separator: "/")[safe: 0] ?? "")
     }
 
-    var starsText: String {
-        "\(repository.starsCount) stars"
+    var repositoryName: String {
+        String(repository.fullName.split(separator: "/")[safe: 1] ?? "")
     }
 
-    var watchersText: String {
-        "\(repository.watchersCount) watchers"
+    var description: String {
+        repository.description
     }
 
-    var forksText: String {
-        "\(repository.forksCount) forks"
+    var language: Language? {
+        repository.language
     }
 
-    var openIssuesText: String {
-        "\(repository.openIssuesCount) open issues"
+    var starsCount: String {
+        String(repository.starsCount)
     }
 
-    func onViewLoaded() {
-        loadAvatarImage()
+    var watchesCount: String {
+        String(repository.watchersCount)
     }
 
-    private func loadAvatarImage() {
-        guard let avatarURL = repository.avatarURL else { return }
+    var forksCount: String {
+        String(repository.forksCount)
+    }
 
-        Task {
-            do {
-                let (data, _) = try await session.data(
-                    for: URLRequest(url: avatarURL), delegate: nil)
-                guard let image = UIImage(data: data) else { return }
-                eventSubject.send(.avatarImageLoaded(image: image))
-            } catch {
-                // TODO: エラーハンドリング
-            }
-        }
+    var issuesCount: String {
+        String(repository.openIssuesCount)
     }
 
 }

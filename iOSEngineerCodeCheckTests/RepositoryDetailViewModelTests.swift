@@ -44,58 +44,14 @@ class RepositoryDetailViewModelTests: XCTestCase {
             session: session
         )
 
-        XCTAssertEqual(viewModel.titleText, "apple/swift")
-        XCTAssertEqual(viewModel.languageText, "Written in C++")
-        XCTAssertEqual(viewModel.starsText, "50000 stars")
-        XCTAssertEqual(viewModel.watchersText, "10000 watchers")
-        XCTAssertEqual(viewModel.forksText, "2000 forks")
-        XCTAssertEqual(viewModel.openIssuesText, "200 open issues")
-
-        try await asyncTest(
-            operation: {
-                self.viewModel.onViewLoaded()
-            },
-            assertions: {
-                let events = try await nextValues(of: viewModel.events, count: 1)
-                guard case .avatarImageLoaded(let image) = events[0] else {
-                    XCTFail("event not expected type")
-                    return
-                }
-                XCTAssertEqual(
-                    image.pngData()!,
-                    UIImage(data: mockImageData)?.pngData()!
-                )
-
-                try await XCTAssertAwaitTrue(
-                    try await noNextValue(of: viewModel.events)
-                )
-            }
-        )
+        XCTAssertEqual(viewModel.organization, "apple")
+        XCTAssertEqual(viewModel.repositoryName, "swift")
+        XCTAssertEqual(viewModel.language, Language(name: "C++", colorCode: "6866fb"))
+        XCTAssertEqual(viewModel.avatarURL, URL(string: "http://example.com"))
+        XCTAssertEqual(viewModel.starsCount, "50000")
+        XCTAssertEqual(viewModel.watchesCount, "10000")
+        XCTAssertEqual(viewModel.forksCount, "2000")
+        XCTAssertEqual(viewModel.issuesCount, "200")
     }
 
-    func testImageLoadFailure() async throws {
-        session.dataHandler = { request, _ in
-            (
-                "error".data(using: .utf8)!,
-                HTTPURLResponse(
-                    url: request.url!, statusCode: 500, httpVersion: nil, headerFields: nil)!
-            )
-        }
-
-        viewModel = RepositoryDetailViewModel(
-            repository: .mock(fullName: "apple/swift"),
-            session: session
-        )
-
-        try await asyncTest(
-            operation: {
-                self.viewModel.onViewLoaded()
-            },
-            assertions: {
-                try await XCTAssertAwaitTrue(
-                    try await noNextValue(of: viewModel.events)
-                )
-            }
-        )
-    }
 }
