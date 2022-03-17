@@ -36,6 +36,7 @@
 		38EC92AC27E20E070077BD1F /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC92AB27E20E070077BD1F /* UIView+Extension.swift */; };
 		38EC92BB27E2297E0077BD1F /* GitHubEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC92BA27E2297E0077BD1F /* GitHubEntities.swift */; };
 		38EC92BD27E22CE40077BD1F /* GitHubColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC92BC27E22CE40077BD1F /* GitHubColors.swift */; };
+		38EC92BF27E2B4EC0077BD1F /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC92BE27E2B4EC0077BD1F /* Color+Extension.swift */; };
 		BF0A658D244F2A3B00280FA6 /* RepositoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */; };
 		BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945DE244DC5E80012785A /* AppDelegate.swift */; };
 		BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945E0244DC5E80012785A /* SceneDelegate.swift */; };
@@ -128,6 +129,7 @@
 		38EC92AB27E20E070077BD1F /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		38EC92BA27E2297E0077BD1F /* GitHubEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubEntities.swift; sourceTree = "<group>"; };
 		38EC92BC27E22CE40077BD1F /* GitHubColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubColors.swift; sourceTree = "<group>"; };
+		38EC92BE27E2B4EC0077BD1F /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailViewController.swift; sourceTree = "<group>"; };
 		BFD945DB244DC5E80012785A /* iOSEngineerCodeCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSEngineerCodeCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFD945DE244DC5E80012785A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				38EC928427E0460E0077BD1F /* Collection+Extension.swift */,
 				38EC92A927E20DD80077BD1F /* UIViewController+Extension.swift */,
 				38EC92AB27E20E070077BD1F /* UIView+Extension.swift */,
+				38EC92BE27E2B4EC0077BD1F /* Color+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 				BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */,
 				38EC928727E047D80077BD1F /* RepositoryDetailViewModel.swift in Sources */,
 				38EC925627E011710077BD1F /* StoryboardScenes.swift in Sources */,
+				38EC92BF27E2B4EC0077BD1F /* Color+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
