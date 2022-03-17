@@ -27,13 +27,16 @@ class RepositorySearchViewController: UIViewController, RepositoryDetailRouting 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupNavigationBar()
         subscribe()
         hostSwiftUIView(RepositorySearchScreen(viewModel: viewModel))
     }
 
-    private func setupNavigationBar() {
-        title = "Search Repositories"
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        DispatchQueue.main.async {
+            self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        }
     }
 
     private func subscribe() {
