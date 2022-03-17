@@ -45,7 +45,25 @@ public final class GitHubClient: GitHubClientProtocol {
         switch response.statusCode {
         case 200:
             let response = try JSONDecoder().decode(RepositorySearchResponse.self, from: data)
-            return response.items
+            return response.items.map { item in
+                let language: Language?
+                if let lang = item.language {
+                    language = Language(name: lang, colorCode: githubColors[lang])
+                } else {
+                    language = nil
+                }
+
+                return Repository(
+                    fullName: item.fullName,
+                    description: item.description,
+                    language: language,
+                    avatarURL: URL(string: item.owner.avatarURL),
+                    starsCount: item.starsCount,
+                    watchersCount: item.watchersCount,
+                    forksCount: item.forksCount,
+                    openIssuesCount: item.openIssuesCount
+                )
+            }
         case 400..<500:
             // ref: https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limit-http-headers
             if let rateLimitRemainingString = response.allHeaderFields["x-ratelimit-remaining"]

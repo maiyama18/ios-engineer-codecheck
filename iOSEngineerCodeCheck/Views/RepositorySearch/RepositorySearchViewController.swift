@@ -41,7 +41,7 @@ class RepositorySearchViewController: UITableViewController, RepositoryDetailRou
             return UITableViewCell()
         }
         cell.textLabel?.text = repository.fullName
-        cell.detailTextLabel?.text = repository.language
+        cell.detailTextLabel?.text = repository.language?.name
         cell.tag = indexPath.row
         return cell
     }

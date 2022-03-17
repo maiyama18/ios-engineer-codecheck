@@ -6,14 +6,16 @@
 //  Copyright © 2022 YUMEMI Inc. All rights reserved.
 //
 
+import Foundation
 import GitHub
 
 extension Repository {
     static func mock(fullName: String) -> Repository {
         .init(
             fullName: fullName,
-            language: "Swift",
-            owner: User(avatarURL: "http://example.com/avatars/1"),
+            description: "Description",
+            language: Language(name: "Swift", colorCode: "F05138"),
+            avatarURL: URL(string: "http://example.com/avatars/1"),
             starsCount: 100,
             watchersCount: 50,
             forksCount: 10,
