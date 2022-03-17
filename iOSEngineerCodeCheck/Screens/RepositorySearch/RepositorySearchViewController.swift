@@ -10,11 +10,17 @@ import Combine
 import GitHub
 import UIKit
 
-class RepositorySearchViewController: UITableViewController, RepositoryDetailRouting {
-
-    @IBOutlet weak private var searchBar: UISearchBar!
+class RepositorySearchViewController: UIViewController, RepositoryDetailRouting {
 
     private var cancellables: [AnyCancellable] = []
+
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     private let viewModel = RepositorySearchViewModel()
 
@@ -22,48 +28,12 @@ class RepositorySearchViewController: UITableViewController, RepositoryDetailRou
         super.viewDidLoad()
 
         setupNavigationBar()
-        setupSearchBar()
-        setupTableView()
         subscribe()
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.repositoriesCount()
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
-        -> UITableViewCell
-    {
-        let cell =
-            tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            as! SubtitleTableViewCell
-        guard let repository = viewModel.repository(index: indexPath.row) else {
-            return UITableViewCell()
-        }
-        cell.textLabel?.text = repository.fullName
-        cell.detailTextLabel?.text = repository.language?.name
-        cell.tag = indexPath.row
-        return cell
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let repository = viewModel.repository(index: indexPath.row) else {
-            return
-        }
-        pushRepositoryDetail(from: self, repository: repository)
+        hostSwiftUIView(RepositorySearchScreen(viewModel: viewModel))
     }
 
     private func setupNavigationBar() {
         title = "Search Repositories"
-    }
-
-    private func setupSearchBar() {
-        searchBar.placeholder = "Search..."
-        searchBar.delegate = self
-    }
-
-    private func setupTableView() {
-        tableView.register(SubtitleTableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
     private func subscribe() {
@@ -73,25 +43,11 @@ class RepositorySearchViewController: UITableViewController, RepositoryDetailRou
                 guard let self = self else { return }
 
                 switch event {
-                case .unfocusFromSearchBar:
-                    self.searchBar.resignFirstResponder()
-                case .reloadData:
-                    self.tableView.reloadData()
+                case .navigateToDetail(let repository):
+                    self.pushRepositoryDetail(from: self, repository: repository)
                 }
             }
             .store(in: &cancellables)
-    }
-
-}
-
-extension RepositorySearchViewController: UISearchBarDelegate {
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        viewModel.onSearchTextChanged()
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        viewModel.onSearchButtonTapped(query: searchBar.text ?? "")
     }
 
 }
