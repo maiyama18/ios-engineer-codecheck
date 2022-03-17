@@ -23,6 +23,6 @@ class iOSEngineerCodeCheckUITests: XCTestCase {
 
         cells.element(boundBy: 0).tap()
 
-        XCTAssertTrue(app.staticTexts["DetailTitleLabel"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["organizationText"].waitForExistence(timeout: 3))
     }
 }

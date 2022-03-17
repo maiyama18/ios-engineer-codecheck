@@ -40,6 +40,7 @@ struct RepositoryDetailHeaderSection: View {
                     .bold()
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
+                    .accessibilityIdentifier("organizationText")
             }
 
             Text(repositoryName)
