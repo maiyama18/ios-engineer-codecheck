@@ -15,10 +15,9 @@ protocol RepositoryDetailRouting {
 
 extension RepositoryDetailRouting {
     func pushRepositoryDetail(from originVC: UIViewController, repository: Repository) {
-        let detailVC = StoryboardScene.RepositoryDetail.initialScene.instantiate { coder in
-            let viewModel = RepositoryDetailViewModel(repository: repository)
-            return RepositoryDetailViewController(coder: coder, viewModel: viewModel)
-        }
+        let detailVC = RepositoryDetailViewController(
+            viewModel: RepositoryDetailViewModel(repository: repository)
+        )
         originVC.navigationController?.pushViewController(detailVC, animated: true)
     }
 }
