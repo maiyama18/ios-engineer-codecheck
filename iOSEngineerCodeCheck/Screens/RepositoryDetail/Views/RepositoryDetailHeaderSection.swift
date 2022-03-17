@@ -19,20 +19,9 @@ struct RepositoryDetailHeaderSection: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 8) {
-                AsyncImage(
-                    url: avatarURL,
-                    content: { image in
-                        image
-                            .resizable()
-                            .frame(width: 32, height: 32)
-                            .cornerRadius(8)
-                    },
-                    placeholder: {
-                        Rectangle()
-                            .fill(.gray.opacity(0.2))
-                            .frame(width: 32, height: 32)
-                            .cornerRadius(8)
-                    }
+                AvatarImage(
+                    avatarURL: avatarURL,
+                    size: 32
                 )
 
                 Text(organization)
@@ -56,16 +45,7 @@ struct RepositoryDetailHeaderSection: View {
             }
 
             if let language = language {
-                HStack(spacing: 4) {
-                    if let colorCode = language.colorCode {
-                        Circle()
-                            .fill(Color(hex: colorCode))
-                            .frame(width: 16, height: 16)
-                    }
-
-                    Text(language.name)
-                        .font(.callout)
-                }
+                LanguageLabel(language: language)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
