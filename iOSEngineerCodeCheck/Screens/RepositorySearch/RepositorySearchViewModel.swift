@@ -9,14 +9,13 @@
 import Combine
 import GitHub
 
-final class RepositorySearchViewModel {
+final class RepositorySearchViewModel: ObservableObject {
 
     enum Event {
-        case unfocusFromSearchBar
-        case reloadData
+        case navigateToDetail(repository: Repository)
     }
 
-    private var repositories: [Repository] = []
+    @MainActor @Published var repositories: [Repository] = []
 
     private var task: Task<Void, Never>?
 
@@ -29,29 +28,22 @@ final class RepositorySearchViewModel {
         self.githubClient = githubClient
     }
 
-    func repositoriesCount() -> Int {
-        repositories.count
-    }
-
-    func repository(index: Int) -> Repository? {
-        repositories[safe: index]
-    }
-
     func onSearchTextChanged() {
         task?.cancel()
     }
 
     func onSearchButtonTapped(query: String) {
-        eventSubject.send(.unfocusFromSearchBar)
-
-        task = Task {
+        task = Task { @MainActor in
             do {
                 repositories = try await githubClient.search(query: query)
-                eventSubject.send(.reloadData)
             } catch {
                 // TODO: エラーハンドリング
             }
         }
+    }
+
+    func onRepositoryTapped(repository: Repository) {
+        eventSubject.send(.navigateToDetail(repository: repository))
     }
 
 }

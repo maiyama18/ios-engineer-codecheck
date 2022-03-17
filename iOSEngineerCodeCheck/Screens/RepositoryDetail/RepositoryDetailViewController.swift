@@ -29,4 +29,12 @@ class RepositoryDetailViewController: UIViewController {
         hostSwiftUIView(RepositoryDetailScreen(viewModel: viewModel))
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        DispatchQueue.main.async {
+            self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        }
+    }
+
 }

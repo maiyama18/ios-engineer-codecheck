@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Repository {
+public struct Repository: Equatable {
     public let fullName: String
     public let description: String
     public let language: Language?
