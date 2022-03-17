@@ -11,4 +11,17 @@ public enum GitHubError: Error {
     case tooManyRequests
     case serverError
     case unexpectedError
+    
+    public var message: String {
+        switch self {
+        case .invalidInput:
+            return "Input may be invalid. Please review your input."
+        case .tooManyRequests:
+            return "You have sent too many request. Please try again later!"
+        case .serverError:
+            return "Server is now unavailable. Please try again later!"
+        case .unexpectedError:
+            return "Something went wrong. Please try again later!"
+        }
+    }
 }
