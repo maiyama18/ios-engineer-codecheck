@@ -10,7 +10,7 @@ import Foundation
 
 public struct Repository: Equatable {
     public let fullName: String
-    public let description: String
+    public let description: String?
     public let language: Language?
     public let avatarURL: URL?
     public let starsCount: Int
@@ -19,7 +19,7 @@ public struct Repository: Equatable {
     public let openIssuesCount: Int
 
     public init(
-        fullName: String, description: String, language: Language?, avatarURL: URL?,
+        fullName: String, description: String?, language: Language?, avatarURL: URL?,
         starsCount: Int, watchersCount: Int, forksCount: Int, openIssuesCount: Int
     ) {
         self.fullName = fullName

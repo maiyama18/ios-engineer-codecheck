@@ -15,6 +15,7 @@ struct RepositorySearchFormSection: View {
 
     var body: some View {
         TextField("Search...", text: $query)
+            .disableAutocorrection(true)
             .textFieldStyle(SearchFieldStyle())
             .submitLabel(.search)
             .onSubmit {

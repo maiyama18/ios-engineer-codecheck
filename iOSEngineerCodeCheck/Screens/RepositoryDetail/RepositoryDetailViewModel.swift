@@ -32,7 +32,7 @@ final class RepositoryDetailViewModel {
         String(repository.fullName.split(separator: "/")[safe: 1] ?? "")
     }
 
-    var description: String {
+    var description: String? {
         repository.description
     }
 
