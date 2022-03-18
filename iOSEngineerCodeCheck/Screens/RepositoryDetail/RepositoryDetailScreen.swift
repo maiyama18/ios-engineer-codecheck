@@ -30,7 +30,8 @@ struct RepositoryDetailScreen: View {
                 )
 
                 RepositoryDetailActionsSection(
-                    onOpenURLTapped: viewModel.onOpenURLTapped
+                    onOpenURLTapped: viewModel.onOpenURLTapped,
+                    onShareURLTapped: viewModel.onShareURLTapped
                 )
             }
             .padding()

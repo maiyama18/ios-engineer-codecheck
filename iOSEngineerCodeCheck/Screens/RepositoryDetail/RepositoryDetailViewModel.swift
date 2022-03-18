@@ -14,6 +14,7 @@ final class RepositoryDetailViewModel {
 
     enum Event: Equatable {
         case openURL(url: URL)
+        case shareURL(url: URL)
     }
 
     private let repository: Repository
@@ -66,6 +67,11 @@ final class RepositoryDetailViewModel {
     func onOpenURLTapped() {
         guard let url = repository.repositoryURL else { return }
         eventSubject.send(.openURL(url: url))
+    }
+
+    func onShareURLTapped() {
+        guard let url = repository.repositoryURL else { return }
+        eventSubject.send(.shareURL(url: url))
     }
 
 }

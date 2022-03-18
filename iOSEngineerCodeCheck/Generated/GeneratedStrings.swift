@@ -34,6 +34,8 @@ internal enum L10n {
   internal enum RepositoryDetail {
     /// Open URL
     internal static let openUrl = L10n.tr("Localizable", "repository_detail.open_url")
+    /// Share URL
+    internal static let shareUrl = L10n.tr("Localizable", "repository_detail.share_url")
   }
 
   internal enum SearchBar {

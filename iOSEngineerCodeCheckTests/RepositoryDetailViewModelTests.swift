@@ -56,4 +56,22 @@ class RepositoryDetailViewModelTests: XCTestCase {
             }
         )
     }
+
+    func testShareURLTapped() async throws {
+        viewModel = RepositoryDetailViewModel(repository: mockRepository)
+
+        try await asyncTest(
+            operation: { self.viewModel.onShareURLTapped() },
+            assertions: {
+                try await XCTAssertAwaitEqual(
+                    try await nextValues(of: viewModel.events, count: 1),
+                    [.shareURL(url: URL(string: "https://github.com/apple/swift")!)]
+                )
+
+                try await XCTAssertAwaitTrue(
+                    try await noNextValue(of: viewModel.events)
+                )
+            }
+        )
+    }
 }

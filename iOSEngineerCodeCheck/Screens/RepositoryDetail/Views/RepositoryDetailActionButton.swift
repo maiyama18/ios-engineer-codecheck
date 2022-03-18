@@ -12,7 +12,7 @@ struct RepositoryDetailActionButton: View {
     let iconSystemName: String
     let title: String
     let onTapped: () -> Void
-    
+
     var body: some View {
         Button(
             action: {
@@ -22,7 +22,7 @@ struct RepositoryDetailActionButton: View {
                 HStack(spacing: 8) {
                     Image(systemName: iconSystemName)
                         .frame(width: 24)
-                    
+
                     Text(title)
                         .font(.callout)
                         .minimumScaleFactor(0.5)
@@ -30,7 +30,7 @@ struct RepositoryDetailActionButton: View {
                 }
                 .padding(12)
                 .frame(maxWidth: .infinity)
-                .background(Color.gray.opacity(0.1))
+                .background(Color.gray.opacity(0.15))
                 .cornerRadius(8)
             }
         )
