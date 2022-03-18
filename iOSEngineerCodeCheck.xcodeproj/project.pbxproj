@@ -470,6 +470,7 @@
 				BFD945D9244DC5E80012785A /* Resources */,
 				38EC924E27DF4CCE0077BD1F /* Execute Format & Lint */,
 				38EC929B27E15D680077BD1F /* Generate Mocks */,
+				38EC92ED27E41DEA0077BD1F /* Generate Resource Objects */,
 				38EC927427E01CEC0077BD1F /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -654,6 +655,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "PATH=$PATH:/opt/homebrew/bin\n\nif which mint >/dev/null; then\n  mint run mockolo --sourcedirs GitHub --destination GitHub/Generated/GeneratedMocks.swift --enable-args-history\nelse\n  echo \"warning: mint not installed. generating mock skipped\"\nfi\n\n";
+		};
+		38EC92ED27E41DEA0077BD1F /* Generate Resource Objects */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Resource Objects";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH=$PATH:/opt/homebrew/bin\n\nif which mint >/dev/null; then\n  mint run mockolo --sourcedirs GitHub --destination GitHub/Generated/GeneratedMocks.swift --enable-args-history\nelse\n  echo \"warning: mint not installed. generating resource objects skipped\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
