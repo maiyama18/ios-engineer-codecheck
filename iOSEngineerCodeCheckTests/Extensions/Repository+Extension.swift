@@ -19,7 +19,8 @@ extension Repository {
             starsCount: 100,
             watchersCount: 50,
             forksCount: 10,
-            openIssuesCount: 5
+            openIssuesCount: 5,
+            repositoryURL: URL(string: "https://github.com/apple/swift")
         )
     }
 }

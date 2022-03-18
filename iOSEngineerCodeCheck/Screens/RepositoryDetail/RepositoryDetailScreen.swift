@@ -28,6 +28,10 @@ struct RepositoryDetailScreen: View {
                     issuesCount: viewModel.issuesCount,
                     watchesCount: viewModel.watchesCount
                 )
+
+                RepositoryDetailActionsSection(
+                    onOpenURLTapped: viewModel.onOpenURLTapped
+                )
             }
             .padding()
         }

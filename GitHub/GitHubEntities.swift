@@ -17,10 +17,12 @@ public struct Repository: Equatable {
     public let watchersCount: Int
     public let forksCount: Int
     public let openIssuesCount: Int
+    public let repositoryURL: URL?
 
     public init(
         fullName: String, description: String?, language: Language?, avatarURL: URL?,
-        starsCount: Int, watchersCount: Int, forksCount: Int, openIssuesCount: Int
+        starsCount: Int, watchersCount: Int, forksCount: Int, openIssuesCount: Int,
+        repositoryURL: URL?
     ) {
         self.fullName = fullName
         self.description = description
@@ -30,6 +32,7 @@ public struct Repository: Equatable {
         self.watchersCount = watchersCount
         self.forksCount = forksCount
         self.openIssuesCount = openIssuesCount
+        self.repositoryURL = repositoryURL
     }
 }
 

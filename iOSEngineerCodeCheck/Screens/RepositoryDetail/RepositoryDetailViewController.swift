@@ -12,6 +12,8 @@ import UIKit
 
 class RepositoryDetailViewController: UIViewController {
 
+    private var cancellables: [AnyCancellable] = []
+
     private let viewModel: RepositoryDetailViewModel
 
     init(viewModel: RepositoryDetailViewModel) {
@@ -26,6 +28,7 @@ class RepositoryDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        subscribe()
         hostSwiftUIView(RepositoryDetailScreen(viewModel: viewModel))
     }
 
@@ -35,6 +38,18 @@ class RepositoryDetailViewController: UIViewController {
         DispatchQueue.main.async {
             self.navigationController?.setNavigationBarHidden(false, animated: animated)
         }
+    }
+
+    private func subscribe() {
+        viewModel.events
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] event in
+                switch event {
+                case .openURL(let url):
+                    UIApplication.shared.open(url)
+                }
+            }
+            .store(in: &cancellables)
     }
 
 }

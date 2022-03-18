@@ -69,7 +69,8 @@ public final class GitHubClient: GitHubClientProtocol {
                     starsCount: item.starsCount,
                     watchersCount: item.watchersCount,
                     forksCount: item.forksCount,
-                    openIssuesCount: item.openIssuesCount
+                    openIssuesCount: item.openIssuesCount,
+                    repositoryURL: URL(string: item.htmlURL)
                 )
             }
         case 400..<500:

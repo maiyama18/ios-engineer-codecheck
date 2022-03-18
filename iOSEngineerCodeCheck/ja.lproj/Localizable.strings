@@ -16,3 +16,5 @@
 "error.unexpected_error" = "予期しないエラーが発生しました。時間をおいてお試しください。";
 
 "search_bar.placeholder" = "検索";
+
+"repository_detail.open_url" = "URL を開く";
