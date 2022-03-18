@@ -41,6 +41,14 @@ public final class GitHubClient: GitHubClientProtocol {
         guard let response = response as? HTTPURLResponse else {
             throw GitHubError.unexpectedError
         }
+        if let method = request.httpMethod,
+            let url = request.url?.absoluteString,
+            let json = data.prettyPrintedJSONString
+        {
+            logger.info(
+                "request: \(method) \(url)\nresponse: \(response.statusCode) \(json)"
+            )
+        }
 
         switch response.statusCode {
         case 200:
