@@ -31,7 +31,7 @@ struct RepositoryDetailPropertyView: View {
                 .lineLimit(1)
         }
         .padding(12)
-        .background(Color.gray.opacity(0.1))
+        .background(Color.gray.opacity(0.15))
         .cornerRadius(8)
     }
 }
