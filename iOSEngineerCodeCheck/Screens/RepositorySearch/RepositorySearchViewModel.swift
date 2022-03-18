@@ -11,7 +11,7 @@ import GitHub
 
 final class RepositorySearchViewModel: ObservableObject {
 
-    enum Event {
+    enum Event: Equatable {
         case navigateToDetail(repository: Repository)
         case showErrorAlert(message: String)
     }
