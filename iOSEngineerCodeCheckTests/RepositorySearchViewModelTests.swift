@@ -62,7 +62,7 @@ class RepositorySearchViewModelTests: XCTestCase {
             assertions: {
                 try await XCTAssertAwaitEqual(
                     try await nextValues(of: viewModel.events, count: 1),
-                    [.showErrorAlert(message: GitHubError.unexpectedError.message)]
+                    [.showErrorAlert(message: L10n.Error.unexpectedError)]
                 )
 
                 try await XCTAssertAwaitEqual(

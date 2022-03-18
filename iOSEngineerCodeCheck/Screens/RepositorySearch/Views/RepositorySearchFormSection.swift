@@ -14,13 +14,14 @@ struct RepositorySearchFormSection: View {
     @State private var query = ""
 
     var body: some View {
-        TextField("Search...", text: $query)
+        TextField(L10n.SearchBar.placeholder, text: $query)
             .disableAutocorrection(true)
             .textFieldStyle(SearchFieldStyle())
             .submitLabel(.search)
             .onSubmit {
                 onSearchButtonTapped(query)
             }
+            .accessibilityIdentifier("searchField")
     }
 }
 

@@ -17,10 +17,11 @@ extension UIViewController {
         hostingVC.view.translatesAutoresizingMaskIntoConstraints = false
         hostingVC.view.pinEdgesToSuperView()
     }
-    
+
     public func showErrorAlert(message: String) {
-        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alertController.addAction(.init(title: "OK", style: .default, handler: nil))
+        let alertController = UIAlertController(
+            title: L10n.Common.error, message: message, preferredStyle: .alert)
+        alertController.addAction(.init(title: L10n.Common.ok, style: .default, handler: nil))
         present(alertController, animated: true)
     }
 }

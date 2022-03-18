@@ -47,6 +47,9 @@
 		38EC92D827E333C20077BD1F /* RepositorySearchResultsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC92D727E333C20077BD1F /* RepositorySearchResultsSection.swift */; };
 		38EC92DA27E339D10077BD1F /* SearchFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC92D927E339D10077BD1F /* SearchFieldStyle.swift */; };
 		38EC92DC27E3777D0077BD1F /* Error+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC92DB27E3777D0077BD1F /* Error+Extension.swift */; };
+		38EC92DF27E414D50077BD1F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 38EC92E127E414D50077BD1F /* Localizable.strings */; };
+		38EC92E427E416530077BD1F /* GeneratedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC92E327E416530077BD1F /* GeneratedStrings.swift */; };
+		38EC92EC27E4186B0077BD1F /* GeneratedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC92EB27E4186B0077BD1F /* GeneratedStrings.swift */; };
 		BF0A658D244F2A3B00280FA6 /* RepositoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */; };
 		BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945DE244DC5E80012785A /* AppDelegate.swift */; };
 		BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945E0244DC5E80012785A /* SceneDelegate.swift */; };
@@ -149,6 +152,10 @@
 		38EC92D727E333C20077BD1F /* RepositorySearchResultsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositorySearchResultsSection.swift; sourceTree = "<group>"; };
 		38EC92D927E339D10077BD1F /* SearchFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFieldStyle.swift; sourceTree = "<group>"; };
 		38EC92DB27E3777D0077BD1F /* Error+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Extension.swift"; sourceTree = "<group>"; };
+		38EC92E027E414D50077BD1F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		38EC92E227E414FA0077BD1F /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		38EC92E327E416530077BD1F /* GeneratedStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedStrings.swift; sourceTree = "<group>"; };
+		38EC92EB27E4186B0077BD1F /* GeneratedStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedStrings.swift; sourceTree = "<group>"; };
 		BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailViewController.swift; sourceTree = "<group>"; };
 		BFD945DB244DC5E80012785A /* iOSEngineerCodeCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSEngineerCodeCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFD945DE244DC5E80012785A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -209,6 +216,7 @@
 		38EC925427E011420077BD1F /* Generated */ = {
 			isa = PBXGroup;
 			children = (
+				38EC92E327E416530077BD1F /* GeneratedStrings.swift */,
 			);
 			path = Generated;
 			sourceTree = "<group>";
@@ -284,6 +292,7 @@
 		38EC928F27E0A3C20077BD1F /* Generated */ = {
 			isa = PBXGroup;
 			children = (
+				38EC92EB27E4186B0077BD1F /* GeneratedStrings.swift */,
 				38EC929027E0A3E50077BD1F /* GeneratedMocks.swift */,
 			);
 			path = Generated;
@@ -377,6 +386,7 @@
 				BFD945E7244DC5EB0012785A /* Assets.xcassets */,
 				BFD945E9244DC5EB0012785A /* LaunchScreen.storyboard */,
 				BFD945EC244DC5EB0012785A /* Info.plist */,
+				38EC92E127E414D50077BD1F /* Localizable.strings */,
 			);
 			path = iOSEngineerCodeCheck;
 			sourceTree = "<group>";
@@ -546,6 +556,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = BFD945D2244DC5E80012785A;
 			productRefGroup = BFD945DC244DC5E80012785A /* Products */;
@@ -585,6 +596,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFD945EB244DC5EB0012785A /* LaunchScreen.storyboard in Resources */,
+				38EC92DF27E414D50077BD1F /* Localizable.strings in Resources */,
 				BFD945E8244DC5EB0012785A /* Assets.xcassets in Resources */,
 				38EC924D27DF471C0077BD1F /* README.md in Resources */,
 			);
@@ -652,6 +664,7 @@
 			files = (
 				38EC92BD27E22CE40077BD1F /* GitHubColors.swift in Sources */,
 				38EC927C27E01E7D0077BD1F /* GitHubReponses.swift in Sources */,
+				38EC92EC27E4186B0077BD1F /* GeneratedStrings.swift in Sources */,
 				38EC92BB27E2297E0077BD1F /* GitHubEntities.swift in Sources */,
 				38EC928027E020100077BD1F /* GitHubError.swift in Sources */,
 				38EC927E27E01FB20077BD1F /* GitHubClient.swift in Sources */,
@@ -681,6 +694,7 @@
 				38EC92CD27E32A940077BD1F /* AvatarImage.swift in Sources */,
 				38EC928927E04C350077BD1F /* RepositoryDetailRouting.swift in Sources */,
 				38EC92AE27E210230077BD1F /* RepositoryDetailScreen.swift in Sources */,
+				38EC92E427E416530077BD1F /* GeneratedStrings.swift in Sources */,
 				38EC92D427E333970077BD1F /* RepositoryListItemView.swift in Sources */,
 				38EC928527E0460E0077BD1F /* Collection+Extension.swift in Sources */,
 				38EC92D127E3337D0077BD1F /* RepositorySearchScreen.swift in Sources */,
@@ -750,6 +764,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		38EC92E127E414D50077BD1F /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				38EC92E027E414D50077BD1F /* en */,
+				38EC92E227E414FA0077BD1F /* ja */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		BFD945E9244DC5EB0012785A /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -872,6 +895,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -933,6 +957,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
