@@ -13,7 +13,7 @@ struct RepositoryDetailHeaderSection: View {
     let avatarURL: URL?
     let organization: String
     let repositoryName: String
-    let description: String
+    let description: String?
     let language: Language?
 
     var body: some View {
@@ -38,7 +38,7 @@ struct RepositoryDetailHeaderSection: View {
                 .minimumScaleFactor(0.5)
                 .lineLimit(1)
 
-            if !description.isEmpty {
+            if let description = description {
                 Text(description)
                     .font(.callout)
                     .foregroundColor(.secondary)

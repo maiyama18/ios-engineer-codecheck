@@ -16,7 +16,7 @@ struct RepositorySearchResponse: Decodable {
 
 struct RepositoryResponse: Decodable {
     public let fullName: String
-    public let description: String
+    public let description: String?
     public let language: String?
     public let owner: UserResponse
     public let starsCount: Int
