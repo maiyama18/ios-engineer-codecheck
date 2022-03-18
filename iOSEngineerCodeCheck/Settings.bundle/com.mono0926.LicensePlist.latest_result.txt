@@ -1,0 +1,13 @@
+name: LicensePlist, nameSpecified: , owner: mono0926, version: 3.19.1, source: https://github.com/mono0926/LicensePlist
+
+name: mockolo, nameSpecified: , owner: uber, version: 1.6.3, source: https://github.com/uber/mockolo
+
+name: swift-format, nameSpecified: , owner: apple, version: 0.50500.0, source: https://github.com/apple/swift-format
+
+name: SwiftGen, nameSpecified: , owner: SwiftGen, version: 6.5.1, source: https://github.com/SwiftGen/SwiftGen
+
+name: PKHUD, nameSpecified: PKHUD, owner: pkluz, version: 5.4.0, source: https://github.com/pkluz/PKHUD
+
+add-version-numbers: false
+
+LicensePlist Version: 3.19.1
