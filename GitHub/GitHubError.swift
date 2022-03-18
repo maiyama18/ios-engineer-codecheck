@@ -7,13 +7,16 @@
 //
 
 public enum GitHubError: Error {
+    case emptySearchQuery
     case invalidInput
     case tooManyRequests
     case serverError
     case unexpectedError
-    
+
     public var message: String {
         switch self {
+        case .emptySearchQuery:
+            return "Search query is empty. Please input some words."
         case .invalidInput:
             return "Input may be invalid. Please review your input."
         case .tooManyRequests:
