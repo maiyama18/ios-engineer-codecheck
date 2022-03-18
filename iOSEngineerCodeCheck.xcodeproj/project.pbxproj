@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -53,6 +53,7 @@
 		38EC92F127E494600077BD1F /* GitHubLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC92F027E494600077BD1F /* GitHubLogger.swift */; };
 		38EC92F327E494970077BD1F /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC92F227E494970077BD1F /* AppLogger.swift */; };
 		38EC92F627E497000077BD1F /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC92F527E497000077BD1F /* Data+Extension.swift */; };
+		38EC92F927E49B1E0077BD1F /* PKHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 38EC92F827E49B1E0077BD1F /* PKHUD */; };
 		BF0A658D244F2A3B00280FA6 /* RepositoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */; };
 		BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945DE244DC5E80012785A /* AppDelegate.swift */; };
 		BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945E0244DC5E80012785A /* SceneDelegate.swift */; };
@@ -199,6 +200,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				38EC927227E01CEC0077BD1F /* GitHub.framework in Frameworks */,
+				38EC92F927E49B1E0077BD1F /* PKHUD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,6 +498,9 @@
 				38EC927127E01CEC0077BD1F /* PBXTargetDependency */,
 			);
 			name = iOSEngineerCodeCheck;
+			packageProductDependencies = (
+				38EC92F827E49B1E0077BD1F /* PKHUD */,
+			);
 			productName = iOSEngineerCodeCheck;
 			productReference = BFD945DB244DC5E80012785A /* iOSEngineerCodeCheck.app */;
 			productType = "com.apple.product-type.application";
@@ -577,6 +582,9 @@
 				ja,
 			);
 			mainGroup = BFD945D2244DC5E80012785A;
+			packageReferences = (
+				38EC92F727E49B1E0077BD1F /* XCRemoteSwiftPackageReference "PKHUD" */,
+			);
 			productRefGroup = BFD945DC244DC5E80012785A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1226,6 +1234,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		38EC92F727E49B1E0077BD1F /* XCRemoteSwiftPackageReference "PKHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pkluz/PKHUD.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		38EC92F827E49B1E0077BD1F /* PKHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 38EC92F727E49B1E0077BD1F /* XCRemoteSwiftPackageReference "PKHUD" */;
+			productName = PKHUD;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BFD945D3244DC5E80012785A /* Project object */;
 }

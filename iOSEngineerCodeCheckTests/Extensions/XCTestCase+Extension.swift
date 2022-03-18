@@ -28,7 +28,11 @@ extension XCTestCase {
         try await withThrowingTaskGroup(of: [P.Output].self) { group in
             group.addTask {
                 var values: [P.Output] = []
-                for try await value in publisher.values {
+                // AsyncStream への変換を行なっていると publisher が連続して値を publish したときに
+                // 値を取りこぼしてしまうので buffering しておく
+                for try await value in publisher.buffer(
+                    size: 10, prefetch: .byRequest, whenFull: .dropOldest
+                ).values {
                     values.append(value)
                     if values.count >= count {
                         return values
@@ -39,7 +43,6 @@ extension XCTestCase {
 
             group.addTask {
                 try await Task.sleep(nanoseconds: UInt64(timeout * 1_000_000_000))
-                print("sleep finished")
                 try Task.checkCancellation()
                 throw TimeoutError()
             }
@@ -48,7 +51,6 @@ extension XCTestCase {
                 throw "unexpected nil result in noNextValue"
             }
             group.cancelAll()
-            print("next")
             return next
         }
     }
