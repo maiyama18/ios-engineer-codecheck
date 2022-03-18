@@ -33,7 +33,9 @@ class GitHubClientTests: XCTestCase {
         XCTAssertEqual(first.watchersCount, 58955)
         XCTAssertEqual(first.forksCount, 9465)
         XCTAssertEqual(first.openIssuesCount, 505)
-        XCTAssertEqual(first.avatarURL?.absoluteString, "https://avatars.githubusercontent.com/u/10639145?v=4")
+        XCTAssertEqual(
+            first.avatarURL?.absoluteString, "https://avatars.githubusercontent.com/u/10639145?v=4")
+        XCTAssertEqual(first.repositoryURL?.absoluteString, "https://github.com/apple/swift")
     }
 
     func testSearchFailureEmptySearchQuery() async throws {

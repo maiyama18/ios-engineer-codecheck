@@ -23,6 +23,7 @@ struct RepositoryResponse: Decodable {
     public let watchersCount: Int
     public let forksCount: Int
     public let openIssuesCount: Int
+    public let htmlURL: String
 
     private enum CodingKeys: String, CodingKey {
         case fullName = "full_name"
@@ -33,6 +34,7 @@ struct RepositoryResponse: Decodable {
         case watchersCount = "watchers_count"
         case forksCount = "forks_count"
         case openIssuesCount = "open_issues_count"
+        case htmlURL = "html_url"
     }
 }
 

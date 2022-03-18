@@ -35,11 +35,12 @@ class RepositoryDetailViewModelTests: XCTestCase {
                 fullName: "apple/swift",
                 description: "Swift compiler",
                 language: Language(name: "C++", colorCode: "6866fb"),
-                avatarURL: URL(string: "http://example.com"),
+                avatarURL: URL(string: "http://example.com/avatars/1"),
                 starsCount: 50000,
                 watchersCount: 10000,
                 forksCount: 2000,
-                openIssuesCount: 200
+                openIssuesCount: 200,
+                repositoryURL: URL(string: "https://github.com/apple/swift")
             ),
             session: session
         )
@@ -47,7 +48,7 @@ class RepositoryDetailViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.organization, "apple")
         XCTAssertEqual(viewModel.repositoryName, "swift")
         XCTAssertEqual(viewModel.language, Language(name: "C++", colorCode: "6866fb"))
-        XCTAssertEqual(viewModel.avatarURL, URL(string: "http://example.com"))
+        XCTAssertEqual(viewModel.avatarURL, URL(string: "http://example.com/avatars/1"))
         XCTAssertEqual(viewModel.starsCount, "50000")
         XCTAssertEqual(viewModel.watchesCount, "10000")
         XCTAssertEqual(viewModel.forksCount, "2000")
