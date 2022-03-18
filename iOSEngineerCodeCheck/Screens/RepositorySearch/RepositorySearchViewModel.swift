@@ -15,6 +15,8 @@ final class RepositorySearchViewModel: ObservableObject {
     enum Event: Equatable {
         case navigateToDetail(repository: Repository)
         case showErrorAlert(message: String)
+        case showLoading
+        case hideLoading
     }
 
     @MainActor @Published var repositories: [Repository] = []
@@ -35,6 +37,7 @@ final class RepositorySearchViewModel: ObservableObject {
     }
 
     func onSearchButtonTapped(query: String) {
+        eventSubject.send(.showLoading)
         task = Task { @MainActor in
             do {
                 repositories = try await githubClient.search(query: query)
@@ -43,6 +46,7 @@ final class RepositorySearchViewModel: ObservableObject {
                     "failed to search repository: \(error.userMessage, privacy: .public)")
                 eventSubject.send(.showErrorAlert(message: error.userMessage))
             }
+            eventSubject.send(.hideLoading)
         }
     }
 

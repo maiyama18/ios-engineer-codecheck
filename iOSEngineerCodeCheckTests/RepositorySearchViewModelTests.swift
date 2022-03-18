@@ -43,8 +43,20 @@ class RepositorySearchViewModelTests: XCTestCase {
             },
             assertions: {
                 try await XCTAssertAwaitEqual(
-                    try await nextValues(of: viewModel.$repositories, count: 2),
-                    [[], mockRepositories]
+                    try await nextValues(of: viewModel.events, count: 2),
+                    [
+                        .showLoading,
+                        .hideLoading,
+                    ]
+                )
+
+                try await XCTAssertAwaitEqual(
+                    await viewModel.repositories,
+                    mockRepositories
+                )
+
+                try await XCTAssertAwaitTrue(
+                    try await noNextValue(of: viewModel.events)
                 )
             }
         )
@@ -61,13 +73,17 @@ class RepositorySearchViewModelTests: XCTestCase {
             },
             assertions: {
                 try await XCTAssertAwaitEqual(
-                    try await nextValues(of: viewModel.events, count: 1),
-                    [.showErrorAlert(message: L10n.Error.unexpectedError)]
+                    try await nextValues(of: viewModel.events, count: 3),
+                    [
+                        .showLoading,
+                        .showErrorAlert(message: L10n.Error.unexpectedError),
+                        .hideLoading,
+                    ]
                 )
 
                 try await XCTAssertAwaitEqual(
-                    try await nextValues(of: viewModel.$repositories, count: 1),
-                    [[]]
+                    await viewModel.repositories,
+                    []
                 )
 
                 try await XCTAssertAwaitTrue(

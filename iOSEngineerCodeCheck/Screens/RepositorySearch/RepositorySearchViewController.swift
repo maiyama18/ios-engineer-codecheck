@@ -8,6 +8,7 @@
 
 import Combine
 import GitHub
+import PKHUD
 import UIKit
 
 class RepositorySearchViewController: UIViewController, RepositoryDetailRouting {
@@ -50,6 +51,10 @@ class RepositorySearchViewController: UIViewController, RepositoryDetailRouting 
                     self.pushRepositoryDetail(from: self, repository: repository)
                 case .showErrorAlert(let message):
                     self.showErrorAlert(message: message)
+                case .showLoading:
+                    HUD.show(.progress)
+                case .hideLoading:
+                    HUD.hide()
                 }
             }
             .store(in: &cancellables)
