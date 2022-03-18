@@ -36,15 +36,15 @@ class GitHubClientTests: XCTestCase {
         XCTAssertEqual(first.avatarURL?.absoluteString, "https://avatars.githubusercontent.com/u/10639145?v=4")
     }
 
-    func testSearchFailureInvalidInput() async throws {
+    func testSearchFailureEmptySearchQuery() async throws {
         try setUpMockSession(
-            responseFileName: "search_failure_invalid_input", statusCode: 400,
+            responseFileName: "search_failure_empty_search_query", statusCode: 400,
             rateLimitRemaining: 9)
 
         do {
             let _ = try await client.search(query: "")
         } catch {
-            XCTAssertEqual(error as? GitHubError, GitHubError.invalidInput)
+            XCTAssertEqual(error as? GitHubError, GitHubError.emptySearchQuery)
             return
         }
         XCTFail("expected an error to be thrown, but not.")

@@ -24,7 +24,7 @@ public final class GitHubClient: GitHubClientProtocol {
 
     public func search(query: String) async throws -> [Repository] {
         guard !query.isEmpty else {
-            throw GitHubError.invalidInput
+            throw GitHubError.emptySearchQuery
         }
 
         var components = URLComponents(string: "https://api.github.com/search/repositories")!

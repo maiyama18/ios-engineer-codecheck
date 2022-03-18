@@ -11,8 +11,9 @@ import GitHub
 
 final class RepositorySearchViewModel: ObservableObject {
 
-    enum Event {
+    enum Event: Equatable {
         case navigateToDetail(repository: Repository)
+        case showErrorAlert(message: String)
     }
 
     @MainActor @Published var repositories: [Repository] = []
@@ -37,7 +38,7 @@ final class RepositorySearchViewModel: ObservableObject {
             do {
                 repositories = try await githubClient.search(query: query)
             } catch {
-                // TODO: エラーハンドリング
+                eventSubject.send(.showErrorAlert(message: error.userMessage))
             }
         }
     }

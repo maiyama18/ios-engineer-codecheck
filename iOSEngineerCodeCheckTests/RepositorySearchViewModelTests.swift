@@ -61,8 +61,35 @@ class RepositorySearchViewModelTests: XCTestCase {
             },
             assertions: {
                 try await XCTAssertAwaitEqual(
+                    try await nextValues(of: viewModel.events, count: 1),
+                    [.showErrorAlert(message: GitHubError.unexpectedError.message)]
+                )
+
+                try await XCTAssertAwaitEqual(
                     try await nextValues(of: viewModel.$repositories, count: 1),
                     [[]]
+                )
+
+                try await XCTAssertAwaitTrue(
+                    try await noNextValue(of: viewModel.events)
+                )
+            }
+        )
+    }
+
+    func testRepositoryTap() async throws {
+        try await asyncTest(
+            operation: {
+                self.viewModel.onRepositoryTapped(repository: .mock(fullName: "apple/swift"))
+            },
+            assertions: {
+                try await XCTAssertAwaitEqual(
+                    try await nextValues(of: viewModel.events, count: 1),
+                    [.navigateToDetail(repository: .mock(fullName: "apple/swift"))]
+                )
+
+                try await XCTAssertAwaitTrue(
+                    try await noNextValue(of: viewModel.events)
                 )
             }
         )

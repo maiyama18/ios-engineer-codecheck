@@ -48,6 +48,8 @@ class RepositorySearchViewController: UIViewController, RepositoryDetailRouting 
                 switch event {
                 case .navigateToDetail(let repository):
                     self.pushRepositoryDetail(from: self, repository: repository)
+                case .showErrorAlert(let message):
+                    self.showErrorAlert(message: message)
                 }
             }
             .store(in: &cancellables)
