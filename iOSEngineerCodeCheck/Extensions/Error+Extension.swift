@@ -12,9 +12,20 @@ extension Error {
     var userMessage: String {
         switch self {
         case let githubError as GitHubError:
-            return githubError.message
+            switch githubError {
+            case .emptySearchQuery:
+                return L10n.Error.emptySearchQuery
+            case .invalidInput:
+                return L10n.Error.invalidInput
+            case .tooManyRequests:
+                return L10n.Error.tooManyRequest
+            case .serverError:
+                return L10n.Error.serverError
+            case .unexpectedError:
+                return L10n.Error.unexpectedError
+            }
         default:
-            return "Something went wrong. Please try again later!"
+            return L10n.Error.unexpectedError
         }
     }
 }

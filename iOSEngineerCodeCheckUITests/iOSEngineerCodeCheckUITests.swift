@@ -13,7 +13,7 @@ class iOSEngineerCodeCheckUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        let searchField = app.textFields["Search..."]
+        let searchField = app.textFields["searchField"]
         searchField.tap()
         searchField.typeText("swift\n")
 

@@ -1,0 +1,18 @@
+/* 
+  Localizable.strings
+  iOSEngineerCodeCheck
+
+  Created by maiyama on 2022/03/18.
+  Copyright © 2022 YUMEMI Inc. All rights reserved.
+*/
+
+"common.error" = "エラー";
+"common.ok" = "OK";
+
+"error.empty_search_query" = "検索ワードが空です。好きなキーワードを入れてみてください。";
+"error.invalid_input" = "入力が不正です。おかしいところがないかご確認お願いします。";
+"error.too_many_request" = "検索のリクエストを送りすぎました。時間をおいてお試しください。";
+"error.server_error" = "サーバーでトラブルが起きているようです。時間をおいてお試しください。";
+"error.unexpected_error" = "予期しないエラーが発生しました。時間をおいてお試しください。";
+
+"search_bar.placeholder" = "検索";
