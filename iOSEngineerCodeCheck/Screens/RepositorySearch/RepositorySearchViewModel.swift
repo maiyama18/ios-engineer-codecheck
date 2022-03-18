@@ -8,6 +8,7 @@
 
 import Combine
 import GitHub
+import OSLog
 
 final class RepositorySearchViewModel: ObservableObject {
 
@@ -38,6 +39,8 @@ final class RepositorySearchViewModel: ObservableObject {
             do {
                 repositories = try await githubClient.search(query: query)
             } catch {
+                logger.warning(
+                    "failed to search repository: \(error.userMessage, privacy: .public)")
                 eventSubject.send(.showErrorAlert(message: error.userMessage))
             }
         }
