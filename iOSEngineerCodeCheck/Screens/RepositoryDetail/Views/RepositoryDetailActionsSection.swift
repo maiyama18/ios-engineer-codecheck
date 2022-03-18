@@ -9,13 +9,23 @@
 import SwiftUI
 
 struct RepositoryDetailActionsSection: View {
+    let onOpenURLTapped: () -> Void
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 8) {
+            RepositoryDetailActionButton(
+                iconSystemName: "safari",
+                title: L10n.RepositoryDetail.openUrl,
+                onTapped: onOpenURLTapped
+            )
+        }
     }
 }
 
 struct RepositoryDetailActionsSection_Previews: PreviewProvider {
     static var previews: some View {
-        RepositoryDetailActionsSection()
+        RepositoryDetailActionsSection(
+            onOpenURLTapped: {}
+        )
     }
 }

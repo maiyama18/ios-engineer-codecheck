@@ -31,6 +31,11 @@ internal enum L10n {
     internal static let unexpectedError = L10n.tr("Localizable", "error.unexpected_error")
   }
 
+  internal enum RepositoryDetail {
+    /// Open URL
+    internal static let openUrl = L10n.tr("Localizable", "repository_detail.open_url")
+  }
+
   internal enum SearchBar {
     /// Search
     internal static let placeholder = L10n.tr("Localizable", "search_bar.placeholder")

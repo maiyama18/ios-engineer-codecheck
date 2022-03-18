@@ -12,8 +12,15 @@ import UIKit
 
 final class RepositoryDetailViewModel {
 
+    enum Event: Equatable {
+        case openURL(url: URL)
+    }
+
     private let repository: Repository
     private let session: Networking
+
+    private let eventSubject: PassthroughSubject<Event, Never> = .init()
+    var events: AnyPublisher<Event, Never> { eventSubject.eraseToAnyPublisher() }
 
     init(repository: Repository, session: Networking = URLSession.shared) {
         self.repository = repository
@@ -54,6 +61,11 @@ final class RepositoryDetailViewModel {
 
     var issuesCount: String {
         String(repository.openIssuesCount)
+    }
+
+    func onOpenURLTapped() {
+        guard let url = repository.repositoryURL else { return }
+        eventSubject.send(.openURL(url: url))
     }
 
 }
