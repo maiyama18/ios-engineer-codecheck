@@ -10,6 +10,7 @@ import SwiftUI
 
 struct RepositoryDetailActionsSection: View {
     let onOpenURLTapped: () -> Void
+    let onShareURLTapped: () -> Void
 
     var body: some View {
         VStack(spacing: 8) {
@@ -18,6 +19,12 @@ struct RepositoryDetailActionsSection: View {
                 title: L10n.RepositoryDetail.openUrl,
                 onTapped: onOpenURLTapped
             )
+
+            RepositoryDetailActionButton(
+                iconSystemName: "square.and.arrow.up",
+                title: L10n.RepositoryDetail.shareUrl,
+                onTapped: onShareURLTapped
+            )
         }
     }
 }
@@ -25,7 +32,8 @@ struct RepositoryDetailActionsSection: View {
 struct RepositoryDetailActionsSection_Previews: PreviewProvider {
     static var previews: some View {
         RepositoryDetailActionsSection(
-            onOpenURLTapped: {}
+            onOpenURLTapped: {},
+            onShareURLTapped: {}
         )
     }
 }

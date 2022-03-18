@@ -44,9 +44,15 @@ class RepositoryDetailViewController: UIViewController {
         viewModel.events
             .receive(on: DispatchQueue.main)
             .sink { [weak self] event in
+                guard let self = self else { return }
+
                 switch event {
                 case .openURL(let url):
                     UIApplication.shared.open(url)
+                case .shareURL(let url):
+                    let shareVC = UIActivityViewController(
+                        activityItems: [url], applicationActivities: nil)
+                    self.present(shareVC, animated: true)
                 }
             }
             .store(in: &cancellables)
