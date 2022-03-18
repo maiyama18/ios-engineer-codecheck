@@ -13,23 +13,8 @@ import XCTest
 
 class RepositoryDetailViewModelTests: XCTestCase {
     private var viewModel: RepositoryDetailViewModel!
-    private var session: NetworkingMock!
 
-    private let mockImageData = UIImage(systemName: "applelogo")!.pngData()!
-
-    override func setUp() {
-        session = NetworkingMock()
-    }
-
-    func testImageLoadSuccess() async throws {
-        session.dataHandler = { request, _ in
-            (
-                self.mockImageData,
-                HTTPURLResponse(
-                    url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
-            )
-        }
-
+    func testProperties() async throws {
         viewModel = RepositoryDetailViewModel(
             repository: Repository(
                 fullName: "apple/swift",
@@ -41,8 +26,7 @@ class RepositoryDetailViewModelTests: XCTestCase {
                 forksCount: 2000,
                 openIssuesCount: 200,
                 repositoryURL: URL(string: "https://github.com/apple/swift")
-            ),
-            session: session
+            )
         )
 
         XCTAssertEqual(viewModel.organization, "apple")
