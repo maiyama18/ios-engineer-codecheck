@@ -54,6 +54,7 @@
 		38EC92F327E494970077BD1F /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC92F227E494970077BD1F /* AppLogger.swift */; };
 		38EC92F627E497000077BD1F /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC92F527E497000077BD1F /* Data+Extension.swift */; };
 		38EC92F927E49B1E0077BD1F /* PKHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 38EC92F827E49B1E0077BD1F /* PKHUD */; };
+		38EC92FB27E4C08F0077BD1F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 38EC92FA27E4C08F0077BD1F /* Settings.bundle */; };
 		BF0A658D244F2A3B00280FA6 /* RepositoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */; };
 		BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945DE244DC5E80012785A /* AppDelegate.swift */; };
 		BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945E0244DC5E80012785A /* SceneDelegate.swift */; };
@@ -163,6 +164,7 @@
 		38EC92F027E494600077BD1F /* GitHubLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubLogger.swift; sourceTree = "<group>"; };
 		38EC92F227E494970077BD1F /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
 		38EC92F527E497000077BD1F /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
+		38EC92FA27E4C08F0077BD1F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		BF0A658C244F2A3B00280FA6 /* RepositoryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailViewController.swift; sourceTree = "<group>"; };
 		BFD945DB244DC5E80012785A /* iOSEngineerCodeCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSEngineerCodeCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFD945DE244DC5E80012785A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 				BFD945E9244DC5EB0012785A /* LaunchScreen.storyboard */,
 				BFD945EC244DC5EB0012785A /* Info.plist */,
 				38EC92E127E414D50077BD1F /* Localizable.strings */,
+				38EC92FA27E4C08F0077BD1F /* Settings.bundle */,
 			);
 			path = iOSEngineerCodeCheck;
 			sourceTree = "<group>";
@@ -623,6 +626,7 @@
 			files = (
 				BFD945EB244DC5EB0012785A /* LaunchScreen.storyboard in Resources */,
 				38EC92DF27E414D50077BD1F /* Localizable.strings in Resources */,
+				38EC92FB27E4C08F0077BD1F /* Settings.bundle in Resources */,
 				BFD945E8244DC5EB0012785A /* Assets.xcassets in Resources */,
 				38EC924D27DF471C0077BD1F /* README.md in Resources */,
 			);
