@@ -12,6 +12,7 @@ import SwiftUI
 struct RepositorySearchResultsSection: View {
     let repositories: [Repository]
     let onRepositoryTapped: @MainActor (Repository) -> Void
+    let onScrollBottomReached: @MainActor () -> Void
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -28,6 +29,12 @@ struct RepositorySearchResultsSection: View {
                         Divider()
                     }
                 }
+
+                Color.clear
+                    .frame(width: 0, height: 0, alignment: .bottom)
+                    .onAppear {
+                        onScrollBottomReached()
+                    }
             }
         }
     }
@@ -37,7 +44,8 @@ struct RepositorySearchResultsSection_Previews: PreviewProvider {
     static var previews: some View {
         RepositorySearchResultsSection(
             repositories: [],
-            onRepositoryTapped: { _ in }
+            onRepositoryTapped: { _ in },
+            onScrollBottomReached: {}
         )
     }
 }
