@@ -11,6 +11,7 @@ import XCTest
 
 @testable import iOSEngineerCodeCheck
 
+@MainActor
 class RepositoryDetailViewModelTests: XCTestCase {
     private var viewModel: RepositoryDetailViewModel!
 
@@ -46,13 +47,11 @@ class RepositoryDetailViewModelTests: XCTestCase {
             operation: { self.viewModel.onOpenURLTapped() },
             assertions: {
                 try await XCTAssertAwaitEqual(
-                    try await nextValues(of: viewModel.events, count: 1),
-                    [.openURL(url: URL(string: "https://github.com/apple/swift")!)]
+                    try await awaitValue(of: viewModel.eventStream),
+                    .openURL(url: URL(string: "https://github.com/apple/swift")!)
                 )
 
-                try await XCTAssertAwaitTrue(
-                    try await noNextValue(of: viewModel.events)
-                )
+                try await XCTAssertAwaitTrue(try await noValue(of: viewModel.eventStream))
             }
         )
     }
@@ -64,13 +63,11 @@ class RepositoryDetailViewModelTests: XCTestCase {
             operation: { self.viewModel.onShareURLTapped() },
             assertions: {
                 try await XCTAssertAwaitEqual(
-                    try await nextValues(of: viewModel.events, count: 1),
-                    [.shareURL(url: URL(string: "https://github.com/apple/swift")!)]
+                    try await awaitValue(of: viewModel.eventStream),
+                    .shareURL(url: URL(string: "https://github.com/apple/swift")!)
                 )
 
-                try await XCTAssertAwaitTrue(
-                    try await noNextValue(of: viewModel.events)
-                )
+                try await XCTAssertAwaitTrue(try await noValue(of: viewModel.eventStream))
             }
         )
     }
