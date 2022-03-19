@@ -12,6 +12,8 @@ import Foundation
 internal enum L10n {
 
   internal enum Common {
+    /// Cancel
+    internal static let cancel = L10n.tr("Localizable", "common.cancel")
     /// Error
     internal static let error = L10n.tr("Localizable", "common.error")
     /// OK
