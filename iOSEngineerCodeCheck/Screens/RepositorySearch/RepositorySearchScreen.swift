@@ -12,7 +12,7 @@ struct RepositorySearchScreen: View {
     @ObservedObject var viewModel: RepositorySearchViewModel
 
     var body: some View {
-        VStack {
+        VStack(spacing: 12) {
             RepositorySearchFormSection(
                 onSearchButtonTapped: viewModel.onSearchButtonTapped(query:))
 
