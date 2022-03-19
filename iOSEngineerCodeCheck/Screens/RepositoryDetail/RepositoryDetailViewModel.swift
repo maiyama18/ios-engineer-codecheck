@@ -20,12 +20,16 @@ final class RepositoryDetailViewModel {
     private let repository: Repository
     private let session: Networking
 
-    private let eventSubject: PassthroughSubject<Event, Never> = .init()
-    var events: AnyPublisher<Event, Never> { eventSubject.eraseToAnyPublisher() }
+    private var eventContinuation: AsyncStream<Event>.Continuation?
+    var eventStream: AsyncStream<Event>!
 
     init(repository: Repository, session: Networking = URLSession.shared) {
         self.repository = repository
         self.session = session
+
+        eventStream = .init(Event.self, bufferingPolicy: .bufferingNewest(10)) { c in
+            eventContinuation = c
+        }
     }
 
     var avatarURL: URL? {
@@ -66,12 +70,12 @@ final class RepositoryDetailViewModel {
 
     func onOpenURLTapped() {
         guard let url = repository.repositoryURL else { return }
-        eventSubject.send(.openURL(url: url))
+        eventContinuation?.yield(.openURL(url: url))
     }
 
     func onShareURLTapped() {
         guard let url = repository.repositoryURL else { return }
-        eventSubject.send(.shareURL(url: url))
+        eventContinuation?.yield(.shareURL(url: url))
     }
 
 }

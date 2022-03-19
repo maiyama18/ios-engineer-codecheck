@@ -12,7 +12,7 @@ import UIKit
 
 class RepositoryDetailViewController: UIViewController {
 
-    private var cancellables: [AnyCancellable] = []
+    private var eventSubscription: Task<Void, Never>?
 
     private let viewModel: RepositoryDetailViewModel
 
@@ -40,22 +40,26 @@ class RepositoryDetailViewController: UIViewController {
         }
     }
 
-    private func subscribe() {
-        viewModel.events
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] event in
-                guard let self = self else { return }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
 
+        eventSubscription?.cancel()
+    }
+
+    private func subscribe() {
+        eventSubscription?.cancel()
+        eventSubscription = Task {
+            for await event in viewModel.eventStream {
                 switch event {
                 case .openURL(let url):
-                    UIApplication.shared.open(url)
+                    await UIApplication.shared.open(url)
                 case .shareURL(let url):
                     let shareVC = UIActivityViewController(
                         activityItems: [url], applicationActivities: nil)
                     self.present(shareVC, animated: true)
                 }
             }
-            .store(in: &cancellables)
+        }
     }
 
 }
