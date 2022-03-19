@@ -37,9 +37,13 @@ class RepositorySearchViewModelTests: XCTestCase {
             return self.mockRepositories
         }
 
+        await MainActor.run {
+            viewModel.query = "swift"
+        }
+
         try await asyncTest(
             operation: {
-                self.viewModel.onSearchButtonTapped(query: "swift")
+                self.viewModel.onSearchButtonTapped()
             },
             assertions: {
                 try await XCTAssertAwaitEqual(
@@ -67,9 +71,13 @@ class RepositorySearchViewModelTests: XCTestCase {
             throw GitHubError.unexpectedError
         }
 
+        await MainActor.run {
+            viewModel.query = "swift"
+        }
+
         try await asyncTest(
             operation: {
-                self.viewModel.onSearchButtonTapped(query: "swift")
+                self.viewModel.onSearchButtonTapped()
             },
             assertions: {
                 try await XCTAssertAwaitEqual(

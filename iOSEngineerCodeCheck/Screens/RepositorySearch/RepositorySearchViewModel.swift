@@ -20,6 +20,7 @@ final class RepositorySearchViewModel: ObservableObject {
     }
 
     @MainActor @Published var repositories: [Repository] = []
+    @MainActor @Published var query: String = ""
 
     private var task: Task<Void, Never>?
 
@@ -36,7 +37,7 @@ final class RepositorySearchViewModel: ObservableObject {
         task?.cancel()
     }
 
-    func onSearchButtonTapped(query: String) {
+    func onSearchButtonTapped() {
         eventSubject.send(.showLoading)
         task = Task { @MainActor in
             do {
