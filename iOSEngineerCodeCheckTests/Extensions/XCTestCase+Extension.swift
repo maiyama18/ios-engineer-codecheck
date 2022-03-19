@@ -21,24 +21,15 @@ extension XCTestCase {
         let _ = try await (assertionsResult, operationResult)
     }
 
-    func nextValues<P: Publisher>(of publisher: P, count: Int, timeout: TimeInterval = 3)
-        async throws
-        -> [P.Output]
+    func awaitValue<S: AsyncSequence>(of stream: S, timeout: TimeInterval = 3) async throws
+        -> S.Element
     {
-        try await withThrowingTaskGroup(of: [P.Output].self) { group in
+        try await withThrowingTaskGroup(of: S.Element.self) { group in
             group.addTask {
-                var values: [P.Output] = []
-                // AsyncStream への変換を行なっていると publisher が連続して値を publish したときに
-                // 値を取りこぼしてしまうので buffering しておく
-                for try await value in publisher.buffer(
-                    size: 10, prefetch: .byRequest, whenFull: .dropOldest
-                ).values {
-                    values.append(value)
-                    if values.count >= count {
-                        return values
-                    }
+                for try await value in stream.prefix(1) {
+                    return value
                 }
-                throw "publisher is unexpectedly completed"
+                throw "stream is unexpectedly completed"
             }
 
             group.addTask {
@@ -48,18 +39,17 @@ extension XCTestCase {
             }
 
             guard let next = try await group.next() else {
-                throw "unexpected nil result in noNextValue"
+                throw "unexpected nil result in awaitValue"
             }
             group.cancelAll()
             return next
         }
     }
 
-    func noNextValue<P: Publisher>(of publisher: P, waitTime: TimeInterval = 0.1) async throws
-        -> Bool
+    func noValue<S: AsyncSequence>(of stream: S, waitTime: TimeInterval = 0.1) async throws -> Bool
     {
         do {
-            let _ = try await self.nextValues(of: publisher, count: 1, timeout: waitTime)
+            let _ = try await awaitValue(of: stream, timeout: waitTime)
             return false
         } catch {
             return error is TimeoutError
