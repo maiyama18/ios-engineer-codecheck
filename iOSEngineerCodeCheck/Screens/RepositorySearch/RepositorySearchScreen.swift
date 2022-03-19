@@ -28,6 +28,7 @@ struct RepositorySearchScreen: View {
                 onScrollBottomReached: viewModel.onScrollBottomReached
             )
         }
-        .padding()
+        .padding(.top)
+        .padding(.horizontal)
     }
 }
