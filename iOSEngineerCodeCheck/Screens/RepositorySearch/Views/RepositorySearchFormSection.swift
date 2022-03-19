@@ -10,7 +10,7 @@ import GitHub
 import SwiftUI
 
 struct RepositorySearchFormSection: View {
-    let onSearchButtonTapped: () -> Void
+    let onSearchButtonTapped: @MainActor () -> Void
     let languageCandidates: [String]
 
     @Binding var query: String

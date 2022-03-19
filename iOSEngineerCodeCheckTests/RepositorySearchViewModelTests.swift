@@ -11,6 +11,7 @@ import XCTest
 
 @testable import iOSEngineerCodeCheck
 
+@MainActor
 class RepositorySearchViewModelTests: XCTestCase {
     private var viewModel: RepositorySearchViewModel!
     private var githubClient: GitHubClientProtocolMock!
@@ -29,6 +30,7 @@ class RepositorySearchViewModelTests: XCTestCase {
             language: Language(name: "Swift", colorCode: "223344")),
     ]
 
+    @MainActor
     override func setUp() {
         githubClient = GitHubClientProtocolMock()
         viewModel = RepositorySearchViewModel(githubClient: githubClient)
@@ -43,9 +45,7 @@ class RepositorySearchViewModelTests: XCTestCase {
             return self.mockRepositories
         }
 
-        await MainActor.run {
-            viewModel.query = "swift"
-        }
+        viewModel.query = "swift"
 
         try await asyncTest(
             operation: {
@@ -53,21 +53,14 @@ class RepositorySearchViewModelTests: XCTestCase {
             },
             assertions: {
                 try await XCTAssertAwaitEqual(
-                    try await nextValues(of: viewModel.events, count: 2),
-                    [
-                        .showLoading,
-                        .hideLoading,
-                    ]
-                )
+                    try await awaitValue(of: viewModel.eventStream), .showLoading)
 
                 try await XCTAssertAwaitEqual(
-                    await viewModel.repositories,
-                    mockRepositories
-                )
+                    try await awaitValue(of: viewModel.eventStream), .hideLoading)
 
-                try await XCTAssertAwaitTrue(
-                    try await noNextValue(of: viewModel.events)
-                )
+                try await XCTAssertAwaitEqual(viewModel.repositories, mockRepositories)
+
+                try await XCTAssertAwaitTrue(try await noValue(of: viewModel.eventStream))
             }
         )
     }
@@ -77,9 +70,7 @@ class RepositorySearchViewModelTests: XCTestCase {
             throw GitHubError.unexpectedError
         }
 
-        await MainActor.run {
-            viewModel.query = "swift"
-        }
+        viewModel.query = "swift"
 
         try await asyncTest(
             operation: {
@@ -87,21 +78,20 @@ class RepositorySearchViewModelTests: XCTestCase {
             },
             assertions: {
                 try await XCTAssertAwaitEqual(
-                    try await nextValues(of: viewModel.events, count: 3),
-                    [
-                        .showLoading,
-                        .showErrorAlert(message: L10n.Error.unexpectedError),
-                        .hideLoading,
-                    ]
+                    try await awaitValue(of: viewModel.eventStream), .showLoading)
+
+                try await XCTAssertAwaitEqual(
+                    try await awaitValue(of: viewModel.eventStream),
+                    .showErrorAlert(message: L10n.Error.unexpectedError)
                 )
 
                 try await XCTAssertAwaitEqual(
-                    await viewModel.repositories,
-                    []
-                )
+                    try await awaitValue(of: viewModel.eventStream), .hideLoading)
+
+                try await XCTAssertAwaitEqual(viewModel.repositories, [])
 
                 try await XCTAssertAwaitTrue(
-                    try await noNextValue(of: viewModel.events)
+                    try await noValue(of: viewModel.eventStream)
                 )
             }
         )
@@ -120,9 +110,7 @@ class RepositorySearchViewModelTests: XCTestCase {
             }
         }
 
-        await MainActor.run {
-            viewModel.query = "swift"
-        }
+        viewModel.query = "swift"
 
         try await asyncTest(
             operation: {
@@ -130,47 +118,32 @@ class RepositorySearchViewModelTests: XCTestCase {
             },
             assertions: {
                 try await XCTAssertAwaitEqual(
-                    try await nextValues(of: viewModel.events, count: 2),
-                    [
-                        .showLoading,
-                        .hideLoading,
-                    ]
-                )
+                    try await awaitValue(of: viewModel.eventStream), .showLoading)
 
                 try await XCTAssertAwaitEqual(
-                    await viewModel.repositories,
-                    mockRepositories
-                )
+                    try await awaitValue(of: viewModel.eventStream), .hideLoading)
 
-                try await XCTAssertAwaitTrue(
-                    try await noNextValue(of: viewModel.events)
-                )
+                try await XCTAssertAwaitEqual(viewModel.repositories, mockRepositories)
             }
         )
 
         try await asyncTest(
             operation: {
-                Task { @MainActor in
-                    self.viewModel.sortOrder = .stars
-                }
+                self.viewModel.sortOrder = .stars
             },
             assertions: {
                 try await XCTAssertAwaitEqual(
-                    try await nextValues(of: viewModel.events, count: 2),
-                    [
-                        .showLoading,
-                        .hideLoading,
-                    ]
-                )
+                    try await awaitValue(of: viewModel.eventStream), .showLoading)
 
                 try await XCTAssertAwaitEqual(
-                    await viewModel.repositories,
+                    try await awaitValue(of: viewModel.eventStream), .hideLoading)
+
+                try await XCTAssertAwaitEqual(
+                    viewModel.repositories,
                     mockRepositories.sorted(by: { $0.starsCount > $1.starsCount })
                 )
 
-                try await XCTAssertAwaitTrue(
-                    try await noNextValue(of: viewModel.events)
-                )
+                try await XCTAssertAwaitTrue(try await noValue(of: viewModel.eventStream))
             }
         )
     }
@@ -188,9 +161,7 @@ class RepositorySearchViewModelTests: XCTestCase {
             }
         }
 
-        await MainActor.run {
-            viewModel.query = "swift"
-        }
+        viewModel.query = "swift"
 
         try await asyncTest(
             operation: {
@@ -198,38 +169,24 @@ class RepositorySearchViewModelTests: XCTestCase {
             },
             assertions: {
                 try await XCTAssertAwaitEqual(
-                    try await nextValues(of: viewModel.events, count: 2),
-                    [
-                        .showLoading,
-                        .hideLoading,
-                    ]
-                )
+                    try await awaitValue(of: viewModel.eventStream), .showLoading)
 
                 try await XCTAssertAwaitEqual(
-                    await viewModel.repositories,
-                    mockRepositories
-                )
+                    try await awaitValue(of: viewModel.eventStream), .hideLoading)
 
-                try await XCTAssertAwaitTrue(
-                    try await noNextValue(of: viewModel.events)
-                )
+                try await XCTAssertAwaitEqual(viewModel.repositories, mockRepositories)
             }
         )
 
-        await MainActor.run {
-            viewModel.query = "updated query"
-        }
-
         try await asyncTest(
             operation: {
-                Task { @MainActor in
+                Task {
+                    self.viewModel.query = "updated"
                     self.viewModel.sortOrder = .stars
                 }
             },
             assertions: {
-                try await XCTAssertAwaitTrue(
-                    try await noNextValue(of: viewModel.events)
-                )
+                try await XCTAssertAwaitTrue(try await noValue(of: viewModel.eventStream))
             }
         )
     }
@@ -252,9 +209,7 @@ class RepositorySearchViewModelTests: XCTestCase {
             }
         }
 
-        await MainActor.run {
-            viewModel.query = "swift"
-        }
+        viewModel.query = "swift"
 
         try await asyncTest(
             operation: {
@@ -262,47 +217,32 @@ class RepositorySearchViewModelTests: XCTestCase {
             },
             assertions: {
                 try await XCTAssertAwaitEqual(
-                    try await nextValues(of: viewModel.events, count: 2),
-                    [
-                        .showLoading,
-                        .hideLoading,
-                    ]
-                )
+                    try await awaitValue(of: viewModel.eventStream), .showLoading)
 
                 try await XCTAssertAwaitEqual(
-                    await viewModel.repositories,
-                    mockRepositories
-                )
+                    try await awaitValue(of: viewModel.eventStream), .hideLoading)
 
-                try await XCTAssertAwaitTrue(
-                    try await noNextValue(of: viewModel.events)
-                )
+                try await XCTAssertAwaitEqual(viewModel.repositories, mockRepositories)
             }
         )
 
         try await asyncTest(
             operation: {
-                Task { @MainActor in
-                    self.viewModel.language = "Swift"
-                }
+                self.viewModel.language = "Swift"
             },
             assertions: {
                 try await XCTAssertAwaitEqual(
-                    try await nextValues(of: viewModel.events, count: 2),
-                    [
-                        .showLoading,
-                        .hideLoading,
-                    ]
-                )
+                    try await awaitValue(of: viewModel.eventStream), .showLoading)
 
                 try await XCTAssertAwaitEqual(
-                    await viewModel.repositories,
+                    try await awaitValue(of: viewModel.eventStream), .hideLoading)
+
+                try await XCTAssertAwaitEqual(
+                    viewModel.repositories,
                     mockRepositories.filter { $0.language?.name == "Swift" }
                 )
 
-                try await XCTAssertAwaitTrue(
-                    try await noNextValue(of: viewModel.events)
-                )
+                try await XCTAssertAwaitTrue(try await noValue(of: viewModel.eventStream))
             }
         )
     }
@@ -314,13 +254,11 @@ class RepositorySearchViewModelTests: XCTestCase {
             },
             assertions: {
                 try await XCTAssertAwaitEqual(
-                    try await nextValues(of: viewModel.events, count: 1),
-                    [.navigateToDetail(repository: .mock(fullName: "apple/swift"))]
+                    try await awaitValue(of: viewModel.eventStream),
+                    .navigateToDetail(repository: .mock(fullName: "apple/swift"))
                 )
 
-                try await XCTAssertAwaitTrue(
-                    try await noNextValue(of: viewModel.events)
-                )
+                try await XCTAssertAwaitTrue(try await noValue(of: viewModel.eventStream))
             }
         )
     }

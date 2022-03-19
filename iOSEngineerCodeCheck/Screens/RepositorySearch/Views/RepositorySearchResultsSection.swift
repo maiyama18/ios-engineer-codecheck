@@ -11,7 +11,7 @@ import SwiftUI
 
 struct RepositorySearchResultsSection: View {
     let repositories: [Repository]
-    let onRepositoryTapped: (Repository) -> Void
+    let onRepositoryTapped: @MainActor (Repository) -> Void
 
     var body: some View {
         ScrollView(showsIndicators: false) {
