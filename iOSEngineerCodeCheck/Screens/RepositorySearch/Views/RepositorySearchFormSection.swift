@@ -11,9 +11,11 @@ import SwiftUI
 
 struct RepositorySearchFormSection: View {
     let onSearchButtonTapped: () -> Void
+    let languageCandidates: [String]
 
     @Binding var query: String
     @Binding var sortOrder: GitHub.SortOrder
+    @Binding var language: String
 
     @FocusState private var focused: Bool
     @State private var isEditingQuery: Bool = false
@@ -43,7 +45,7 @@ struct RepositorySearchFormSection: View {
                 }
             }
 
-            HStack {
+            HStack(spacing: 16) {
                 HStack(spacing: 4) {
                     Image(systemName: "arrow.down")
                         .font(.callout)
@@ -54,10 +56,19 @@ struct RepositorySearchFormSection: View {
                             Text(order.string)
                         }
                     }
+                    .pickerStyle(.menu)
                 }
 
-                Spacer()
+                HStack {
+                    Picker("", selection: $language) {
+                        ForEach(languageCandidates, id: \.self) { language in
+                            Text(language)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                }
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .onChange(of: focused) { focused in
             withAnimation(.easeInOut(duration: 0.1)) {
@@ -71,8 +82,10 @@ struct RepositorySearchFormSection_Previews: PreviewProvider {
     static var previews: some View {
         RepositorySearchFormSection(
             onSearchButtonTapped: {},
+            languageCandidates: ["Swift", "Kotlin"],
             query: .constant("swift"),
-            sortOrder: .constant(.bestMatch)
+            sortOrder: .constant(.bestMatch),
+            language: .constant("Swift")
         )
     }
 }

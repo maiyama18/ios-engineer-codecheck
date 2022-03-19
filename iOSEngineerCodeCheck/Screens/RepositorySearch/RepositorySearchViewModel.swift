@@ -29,6 +29,11 @@ final class RepositorySearchViewModel: ObservableObject {
             onSortOrderChanged()
         }
     }
+    @MainActor @Published var language: String = L10n.GitHub.Search.allLanguages {
+        didSet {
+            onLanguageChanged()
+        }
+    }
 
     private var task: Task<Void, Never>?
     private var lastSearchedQuery: String?
@@ -40,6 +45,10 @@ final class RepositorySearchViewModel: ObservableObject {
 
     init(githubClient: GitHubClientProtocol = GitHubClient.shared) {
         self.githubClient = githubClient
+    }
+
+    var languageCandidates: [String] {
+        [L10n.GitHub.Search.allLanguages] + githubSearchLanguages
     }
 
     func onSearchButtonTapped() {
@@ -64,6 +73,16 @@ final class RepositorySearchViewModel: ObservableObject {
         }
     }
 
+    private func onLanguageChanged() {
+        Task { @MainActor in
+            // 前回の検索時からクエリが変わっていない場合、言語の変更で即座に検索し直すことが期待されていると考え検索を実行する
+            // クエリが変わっている場合は次に検索ボタンがタップされるまで検索しない
+            if let lastSearchedQuery = lastSearchedQuery, query == lastSearchedQuery {
+                search()
+            }
+        }
+    }
+
     private func search() {
         task?.cancel()
         task = Task { @MainActor in
@@ -71,7 +90,9 @@ final class RepositorySearchViewModel: ObservableObject {
 
             eventSubject.send(.showLoading)
             do {
-                repositories = try await githubClient.search(query: query, sortOrder: sortOrder)
+                let lang = language == L10n.GitHub.Search.allLanguages ? nil : language
+                repositories = try await githubClient.search(
+                    query: query, sortOrder: sortOrder, language: lang)
                 lastSearchedQuery = query
             } catch {
                 logger.warning(

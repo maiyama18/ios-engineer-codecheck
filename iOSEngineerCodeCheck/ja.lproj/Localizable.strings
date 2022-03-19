@@ -15,6 +15,8 @@
 "git_hub.sort_order.forks" = "Fork数順";
 "git_hub.sort_order.updated" = "更新順";
 
+"git_hub.search.all_languages" = "すべての言語";
+
 "error.empty_search_query" = "検索ワードが空です。好きなキーワードを入れてみてください。";
 "error.invalid_input" = "入力が不正です。おかしいところがないかご確認お願いします。";
 "error.too_many_request" = "検索のリクエストを送りすぎました。時間をおいてお試しください。";

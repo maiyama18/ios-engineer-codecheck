@@ -34,6 +34,10 @@ internal enum L10n {
   }
 
   internal enum GitHub {
+    internal enum Search {
+      /// All Languages
+      internal static let allLanguages = L10n.tr("Localizable", "git_hub.search.all_languages")
+    }
     internal enum SortOrder {
       /// Best Match
       internal static let bestMatch = L10n.tr("Localizable", "git_hub.sort_order.best_match")
