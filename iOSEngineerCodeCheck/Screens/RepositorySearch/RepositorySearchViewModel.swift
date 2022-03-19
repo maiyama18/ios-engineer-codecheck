@@ -8,7 +8,6 @@
 
 import Combine
 import GitHub
-import OSLog
 
 final class RepositorySearchViewModel: ObservableObject {
 
@@ -20,6 +19,11 @@ final class RepositorySearchViewModel: ObservableObject {
     }
 
     @MainActor @Published var repositories: [Repository] = []
+    @MainActor @Published var query: String = "" {
+        didSet {
+            onQueryChanged()
+        }
+    }
 
     private var task: Task<Void, Never>?
 
@@ -32,11 +36,7 @@ final class RepositorySearchViewModel: ObservableObject {
         self.githubClient = githubClient
     }
 
-    func onSearchTextChanged() {
-        task?.cancel()
-    }
-
-    func onSearchButtonTapped(query: String) {
+    func onSearchButtonTapped() {
         eventSubject.send(.showLoading)
         task = Task { @MainActor in
             do {
@@ -52,6 +52,10 @@ final class RepositorySearchViewModel: ObservableObject {
 
     func onRepositoryTapped(repository: Repository) {
         eventSubject.send(.navigateToDetail(repository: repository))
+    }
+
+    private func onQueryChanged() {
+        task?.cancel()
     }
 
 }

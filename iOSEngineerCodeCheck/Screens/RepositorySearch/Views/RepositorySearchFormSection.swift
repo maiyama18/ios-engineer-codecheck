@@ -9,12 +9,12 @@
 import SwiftUI
 
 struct RepositorySearchFormSection: View {
-    let onSearchButtonTapped: (String) -> Void
+    let onSearchButtonTapped: () -> Void
 
-    @State private var query = ""
-    @State private var isSearching: Bool = false
+    @Binding var query: String
 
     @FocusState private var focused: Bool
+    @State private var isEditingQuery: Bool = false
 
     var body: some View {
         HStack {
@@ -23,12 +23,12 @@ struct RepositorySearchFormSection: View {
                 .textFieldStyle(SearchFieldStyle())
                 .submitLabel(.search)
                 .onSubmit {
-                    onSearchButtonTapped(query)
+                    onSearchButtonTapped()
                 }
                 .accessibilityIdentifier("searchField")
                 .focused($focused)
 
-            if isSearching {
+            if isEditingQuery {
                 Button(
                     action: {
                         focused = false
@@ -41,7 +41,7 @@ struct RepositorySearchFormSection: View {
         }
         .onChange(of: focused) { focused in
             withAnimation(.easeInOut(duration: 0.1)) {
-                isSearching = focused
+                isEditingQuery = focused
             }
         }
     }
@@ -50,7 +50,8 @@ struct RepositorySearchFormSection: View {
 struct RepositorySearchFormSection_Previews: PreviewProvider {
     static var previews: some View {
         RepositorySearchFormSection(
-            onSearchButtonTapped: { _ in }
+            onSearchButtonTapped: {},
+            query: .constant("swift")
         )
     }
 }

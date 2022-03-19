@@ -14,7 +14,7 @@ struct RepositorySearchScreen: View {
     var body: some View {
         VStack(spacing: 12) {
             RepositorySearchFormSection(
-                onSearchButtonTapped: viewModel.onSearchButtonTapped(query:))
+                onSearchButtonTapped: viewModel.onSearchButtonTapped, query: $viewModel.query)
 
             RepositorySearchResultsSection(
                 repositories: viewModel.repositories,
