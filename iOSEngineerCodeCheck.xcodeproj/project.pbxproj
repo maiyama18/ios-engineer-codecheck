@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		38EC924D27DF471C0077BD1F /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 38EC924C27DF471C0077BD1F /* README.md */; };
-		38EC925027DF807C0077BD1F /* SubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC924F27DF807C0077BD1F /* SubtitleTableViewCell.swift */; };
 		38EC926727E01CEC0077BD1F /* GitHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38EC925F27E01CEC0077BD1F /* GitHub.framework */; };
 		38EC926E27E01CEC0077BD1F /* GitHubClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC926D27E01CEC0077BD1F /* GitHubClientTests.swift */; };
 		38EC927227E01CEC0077BD1F /* GitHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38EC925F27E01CEC0077BD1F /* GitHub.framework */; };
@@ -121,7 +120,6 @@
 
 /* Begin PBXFileReference section */
 		38EC924C27DF471C0077BD1F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		38EC924F27DF807C0077BD1F /* SubtitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTableViewCell.swift; sourceTree = "<group>"; };
 		38EC925F27E01CEC0077BD1F /* GitHub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GitHub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		38EC926627E01CEC0077BD1F /* GitHubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitHubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		38EC926D27E01CEC0077BD1F /* GitHubClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubClientTests.swift; sourceTree = "<group>"; };
@@ -287,7 +285,6 @@
 				38EC92D227E3338E0077BD1F /* Views */,
 				BFD945E2244DC5E80012785A /* RepositorySearchViewController.swift */,
 				38EC928127E043760077BD1F /* RepositorySearchViewModel.swift */,
-				38EC924F27DF807C0077BD1F /* SubtitleTableViewCell.swift */,
 				38EC92D027E3337D0077BD1F /* RepositorySearchScreen.swift */,
 			);
 			path = RepositorySearch;
@@ -758,7 +755,6 @@
 				38EC92D127E3337D0077BD1F /* RepositorySearchScreen.swift in Sources */,
 				38EC92DA27E339D10077BD1F /* SearchFieldStyle.swift in Sources */,
 				BF0A658D244F2A3B00280FA6 /* RepositoryDetailViewController.swift in Sources */,
-				38EC925027DF807C0077BD1F /* SubtitleTableViewCell.swift in Sources */,
 				38EC92AC27E20E070077BD1F /* UIView+Extension.swift in Sources */,
 				38EC92D827E333C20077BD1F /* RepositorySearchResultsSection.swift in Sources */,
 				38EC92FD27E4C53C0077BD1F /* RepositoryDetailActionButton.swift in Sources */,
