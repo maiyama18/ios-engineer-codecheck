@@ -10,6 +10,11 @@
 "common.ok" = "OK";
 "common.cancel" = "Cancel";
 
+"git_hub.sort_order.best_match" = "Best Match";
+"git_hub.sort_order.stars" = "Stars";
+"git_hub.sort_order.forks" = "Forks";
+"git_hub.sort_order.updated" = "Updated";
+
 "error.empty_search_query" = "Search query is empty. Please input some words.";
 "error.invalid_input" = "Input may be invalid. Please review your input.";
 "error.too_many_request" = "You have sent too many request. Please try again later!";

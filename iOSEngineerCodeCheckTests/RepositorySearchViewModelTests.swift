@@ -16,11 +16,11 @@ class RepositorySearchViewModelTests: XCTestCase {
     private var githubClient: GitHubClientProtocolMock!
 
     private let mockRepositories: [Repository] = [
-        .mock(fullName: "apple/swift"),
-        .mock(fullName: "openstack/swift"),
-        .mock(fullName: "tensorflow/swift"),
-        .mock(fullName: "SwiftyJSON/SwiftyJSON"),
-        .mock(fullName: "ipader/SwiftGuide"),
+        .mock(fullName: "apple/swift", starsCount: 10000),
+        .mock(fullName: "openstack/swift", starsCount: 1000),
+        .mock(fullName: "tensorflow/swift", starsCount: 20000),
+        .mock(fullName: "SwiftyJSON/SwiftyJSON", starsCount: 500),
+        .mock(fullName: "ipader/SwiftGuide", starsCount: 5000),
     ]
 
     override func setUp() {
@@ -29,7 +29,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testSearchSuccess() async throws {
-        githubClient.searchHandler = { query in
+        githubClient.searchHandler = { query, _ in
             guard query == "swift" else {
                 XCTFail("unexpected query")
                 return []
@@ -67,7 +67,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testSearchFailure() async throws {
-        githubClient.searchHandler = { _ in
+        githubClient.searchHandler = { _, _ in
             throw GitHubError.unexpectedError
         }
 
@@ -94,6 +94,133 @@ class RepositorySearchViewModelTests: XCTestCase {
                     []
                 )
 
+                try await XCTAssertAwaitTrue(
+                    try await noNextValue(of: viewModel.events)
+                )
+            }
+        )
+    }
+
+    func testSortOrderChange() async throws {
+        githubClient.searchHandler = { query, sortOrder in
+            guard query == "swift" else {
+                XCTFail("unexpected query")
+                return []
+            }
+            if sortOrder == .stars {
+                return self.mockRepositories.sorted(by: { $0.starsCount > $1.starsCount })
+            } else {
+                return self.mockRepositories
+            }
+        }
+
+        await MainActor.run {
+            viewModel.query = "swift"
+        }
+
+        try await asyncTest(
+            operation: {
+                self.viewModel.onSearchButtonTapped()
+            },
+            assertions: {
+                try await XCTAssertAwaitEqual(
+                    try await nextValues(of: viewModel.events, count: 2),
+                    [
+                        .showLoading,
+                        .hideLoading,
+                    ]
+                )
+
+                try await XCTAssertAwaitEqual(
+                    await viewModel.repositories,
+                    mockRepositories
+                )
+
+                try await XCTAssertAwaitTrue(
+                    try await noNextValue(of: viewModel.events)
+                )
+            }
+        )
+
+        try await asyncTest(
+            operation: {
+                Task { @MainActor in
+                    self.viewModel.sortOrder = .stars
+                }
+            },
+            assertions: {
+                try await XCTAssertAwaitEqual(
+                    try await nextValues(of: viewModel.events, count: 2),
+                    [
+                        .showLoading,
+                        .hideLoading,
+                    ]
+                )
+
+                try await XCTAssertAwaitEqual(
+                    await viewModel.repositories,
+                    mockRepositories.sorted(by: { $0.starsCount > $1.starsCount })
+                )
+
+                try await XCTAssertAwaitTrue(
+                    try await noNextValue(of: viewModel.events)
+                )
+            }
+        )
+    }
+
+    func testSortOrderChangeAfterQueryChange() async throws {
+        githubClient.searchHandler = { query, sortOrder in
+            guard query == "swift" else {
+                XCTFail("unexpected query")
+                return []
+            }
+            if sortOrder == .stars {
+                return self.mockRepositories.sorted(by: { $0.starsCount > $1.starsCount })
+            } else {
+                return self.mockRepositories
+            }
+        }
+
+        await MainActor.run {
+            viewModel.query = "swift"
+        }
+
+        try await asyncTest(
+            operation: {
+                self.viewModel.onSearchButtonTapped()
+            },
+            assertions: {
+                try await XCTAssertAwaitEqual(
+                    try await nextValues(of: viewModel.events, count: 2),
+                    [
+                        .showLoading,
+                        .hideLoading,
+                    ]
+                )
+
+                try await XCTAssertAwaitEqual(
+                    await viewModel.repositories,
+                    mockRepositories
+                )
+
+                try await XCTAssertAwaitTrue(
+                    try await noNextValue(of: viewModel.events)
+                )
+            }
+        )
+
+        await MainActor.run {
+            viewModel.query = "updated query"
+        }
+
+        try await asyncTest(
+            operation: {
+                Task { @MainActor in
+                    self.viewModel.sortOrder = .stars
+                }
+            },
+            assertions: {
                 try await XCTAssertAwaitTrue(
                     try await noNextValue(of: viewModel.events)
                 )

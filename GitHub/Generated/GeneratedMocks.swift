@@ -33,13 +33,13 @@ public class GitHubClientProtocolMock: GitHubClientProtocol {
 
 
     public private(set) var searchCallCount = 0
-    public var searchArgValues = [String]()
-    public var searchHandler: ((String) async throws -> ([Repository]))?
-    public func search(query: String) async throws -> [Repository] {
+    public var searchArgValues = [(String, SortOrder)]()
+    public var searchHandler: ((String, SortOrder) async throws -> ([Repository]))?
+    public func search(query: String, sortOrder: SortOrder) async throws -> [Repository] {
         searchCallCount += 1
-        searchArgValues.append(query)
+        searchArgValues.append((query, sortOrder))
         if let searchHandler = searchHandler {
-            return try await searchHandler(query)
+            return try await searchHandler(query, sortOrder)
         }
         return [Repository]()
     }

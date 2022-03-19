@@ -10,7 +10,7 @@ import Foundation
 
 /// @mockable
 public protocol GitHubClientProtocol {
-    func search(query: String) async throws -> [Repository]
+    func search(query: String, sortOrder: SortOrder) async throws -> [Repository]
 }
 
 public final class GitHubClient: GitHubClientProtocol {
@@ -22,14 +22,15 @@ public final class GitHubClient: GitHubClientProtocol {
         self.session = session
     }
 
-    public func search(query: String) async throws -> [Repository] {
+    public func search(query: String, sortOrder: SortOrder) async throws -> [Repository] {
         guard !query.isEmpty else {
             throw GitHubError.emptySearchQuery
         }
 
         var components = URLComponents(string: "https://api.github.com/search/repositories")!
         components.queryItems = [
-            URLQueryItem(name: "q", value: query)
+            .init(name: "q", value: query),
+            .init(name: "sort", value: sortOrder.rawValue),
         ]
 
         guard let url = components.url else { throw GitHubError.invalidInput }
