@@ -24,8 +24,14 @@ final class RepositorySearchViewModel: ObservableObject {
             onQueryChanged()
         }
     }
+    @MainActor @Published var sortOrder: SortOrder = .bestMatch {
+        didSet {
+            onSortOrderChanged()
+        }
+    }
 
     private var task: Task<Void, Never>?
+    private var lastSearchedQuery: String?
 
     private let eventSubject: PassthroughSubject<Event, Never> = .init()
     var events: AnyPublisher<Event, Never> { eventSubject.eraseToAnyPublisher() }
@@ -37,17 +43,7 @@ final class RepositorySearchViewModel: ObservableObject {
     }
 
     func onSearchButtonTapped() {
-        eventSubject.send(.showLoading)
-        task = Task { @MainActor in
-            do {
-                repositories = try await githubClient.search(query: query, sortOrder: .bestMatch)
-            } catch {
-                logger.warning(
-                    "failed to search repository: \(error.userMessage, privacy: .public)")
-                eventSubject.send(.showErrorAlert(message: error.userMessage))
-            }
-            eventSubject.send(.hideLoading)
-        }
+        search()
     }
 
     func onRepositoryTapped(repository: Repository) {
@@ -56,6 +52,34 @@ final class RepositorySearchViewModel: ObservableObject {
 
     private func onQueryChanged() {
         task?.cancel()
+    }
+
+    private func onSortOrderChanged() {
+        Task { @MainActor in
+            // 前回の検索時からクエリが変わっていない場合、ソート順の変更で即座に検索し直すことが期待されていると考え検索を実行する
+            // クエリが変わっている場合は次に検索ボタンがタップされるまで検索しない
+            if let lastSearchedQuery = lastSearchedQuery, query == lastSearchedQuery {
+                search()
+            }
+        }
+    }
+
+    private func search() {
+        task?.cancel()
+        task = Task { @MainActor in
+            guard !query.isEmpty else { return }
+
+            eventSubject.send(.showLoading)
+            do {
+                repositories = try await githubClient.search(query: query, sortOrder: sortOrder)
+                lastSearchedQuery = query
+            } catch {
+                logger.warning(
+                    "failed to search repository: \(error.userMessage, privacy: .public)")
+                eventSubject.send(.showErrorAlert(message: error.userMessage))
+            }
+            eventSubject.send(.hideLoading)
+        }
     }
 
 }
