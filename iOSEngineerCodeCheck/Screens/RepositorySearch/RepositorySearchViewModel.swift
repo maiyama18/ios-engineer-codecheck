@@ -8,7 +8,6 @@
 
 import Combine
 import GitHub
-import OSLog
 
 final class RepositorySearchViewModel: ObservableObject {
 
