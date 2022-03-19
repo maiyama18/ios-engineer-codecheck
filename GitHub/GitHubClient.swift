@@ -10,7 +10,7 @@ import Foundation
 
 /// @mockable
 public protocol GitHubClientProtocol {
-    func search(query: String, sortOrder: SortOrder) async throws -> [Repository]
+    func search(query: String, sortOrder: SortOrder, language: String?) async throws -> [Repository]
 }
 
 public final class GitHubClient: GitHubClientProtocol {
@@ -22,14 +22,23 @@ public final class GitHubClient: GitHubClientProtocol {
         self.session = session
     }
 
-    public func search(query: String, sortOrder: SortOrder) async throws -> [Repository] {
+    public func search(query: String, sortOrder: SortOrder, language: String? = nil) async throws
+        -> [Repository]
+    {
         guard !query.isEmpty else {
             throw GitHubError.emptySearchQuery
         }
 
         var components = URLComponents(string: "https://api.github.com/search/repositories")!
+
+        let q: String
+        if let language = language {
+            q = "\(query) language:\(language)"
+        } else {
+            q = query
+        }
         components.queryItems = [
-            .init(name: "q", value: query),
+            .init(name: "q", value: q),
             .init(name: "sort", value: sortOrder.rawValue),
         ]
 
