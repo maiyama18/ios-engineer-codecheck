@@ -13,8 +13,6 @@ import UIKit
 
 class RepositorySearchViewController: UIViewController, RepositoryDetailRouting {
 
-    private var cancellables: [AnyCancellable] = []
-
     init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -41,11 +39,8 @@ class RepositorySearchViewController: UIViewController, RepositoryDetailRouting 
     }
 
     private func subscribe() {
-        viewModel.events
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] event in
-                guard let self = self else { return }
-
+        Task {
+            for await event in viewModel.eventStream {
                 switch event {
                 case .navigateToDetail(let repository):
                     self.pushRepositoryDetail(from: self, repository: repository)
@@ -57,7 +52,7 @@ class RepositorySearchViewController: UIViewController, RepositoryDetailRouting 
                     HUD.hide()
                 }
             }
-            .store(in: &cancellables)
+        }
     }
 
 }

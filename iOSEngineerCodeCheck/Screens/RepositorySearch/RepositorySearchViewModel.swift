@@ -38,13 +38,17 @@ final class RepositorySearchViewModel: ObservableObject {
     private var task: Task<Void, Never>?
     private var lastSearchedQuery: String?
 
-    private let eventSubject: PassthroughSubject<Event, Never> = .init()
-    var events: AnyPublisher<Event, Never> { eventSubject.eraseToAnyPublisher() }
+    private var eventContinuation: AsyncStream<Event>.Continuation?
+    var eventStream: AsyncStream<Event>!
 
     private let githubClient: GitHubClientProtocol
 
     init(githubClient: GitHubClientProtocol = GitHubClient.shared) {
         self.githubClient = githubClient
+
+        eventStream = .init(Event.self, bufferingPolicy: .bufferingNewest(10)) { c in
+            eventContinuation = c
+        }
     }
 
     var languageCandidates: [String] {
@@ -56,7 +60,7 @@ final class RepositorySearchViewModel: ObservableObject {
     }
 
     func onRepositoryTapped(repository: Repository) {
-        eventSubject.send(.navigateToDetail(repository: repository))
+        eventContinuation?.yield(.navigateToDetail(repository: repository))
     }
 
     private func onQueryChanged() {
@@ -88,7 +92,7 @@ final class RepositorySearchViewModel: ObservableObject {
         task = Task { @MainActor in
             guard !query.isEmpty else { return }
 
-            eventSubject.send(.showLoading)
+            eventContinuation?.yield(.showLoading)
             do {
                 let lang = language == L10n.GitHub.Search.allLanguages ? nil : language
                 repositories = try await githubClient.search(
@@ -97,9 +101,9 @@ final class RepositorySearchViewModel: ObservableObject {
             } catch {
                 logger.warning(
                     "failed to search repository: \(error.userMessage, privacy: .public)")
-                eventSubject.send(.showErrorAlert(message: error.userMessage))
+                eventContinuation?.yield(.showErrorAlert(message: error.userMessage))
             }
-            eventSubject.send(.hideLoading)
+            eventContinuation?.yield(.hideLoading)
         }
     }
 
