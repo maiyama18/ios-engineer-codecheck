@@ -13,7 +13,8 @@ import UIKit
 
 class RepositorySearchViewController: UIViewController, RepositoryDetailRouting {
 
-    init() {
+    init(viewModel: RepositorySearchViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -21,7 +22,7 @@ class RepositorySearchViewController: UIViewController, RepositoryDetailRouting 
         fatalError("init(coder:) has not been implemented")
     }
 
-    private let viewModel = RepositorySearchViewModel()
+    private let viewModel: RepositorySearchViewModel
 
     override func viewDidLoad() {
         super.viewDidLoad()
