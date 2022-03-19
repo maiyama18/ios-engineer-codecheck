@@ -17,11 +17,11 @@ class iOSEngineerCodeCheckUITests: XCTestCase {
         searchField.tap()
         searchField.typeText("swift\n")
 
-        XCTAssertTrue(app.staticTexts["listRepositoryTitle"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["listRepositoryTitle"].waitForExistence(timeout: 10))
         let titles = app.staticTexts.matching(identifier: "listRepositoryTitle")
 
         titles.element(boundBy: 0).tap()
 
-        XCTAssertTrue(app.staticTexts["organizationText"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["organizationText"].waitForExistence(timeout: 10))
     }
 }
