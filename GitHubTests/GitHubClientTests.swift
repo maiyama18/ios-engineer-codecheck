@@ -23,7 +23,7 @@ class GitHubClientTests: XCTestCase {
         try setUpMockSession(
             responseFileName: "search_success", statusCode: 200, rateLimitRemaining: 9)
 
-        let repositories = try await client.search(query: "swift")
+        let repositories = try await client.search(query: "swift", sortOrder: .bestMatch)
         XCTAssertEqual(repositories.count, 30)
 
         let first = repositories[0]
@@ -44,7 +44,7 @@ class GitHubClientTests: XCTestCase {
             rateLimitRemaining: 9)
 
         do {
-            let _ = try await client.search(query: "")
+            let _ = try await client.search(query: "", sortOrder: .bestMatch)
         } catch {
             XCTAssertEqual(error as? GitHubError, GitHubError.emptySearchQuery)
             return
@@ -58,7 +58,7 @@ class GitHubClientTests: XCTestCase {
             rateLimitRemaining: 0)
 
         do {
-            let _ = try await client.search(query: "swift")
+            let _ = try await client.search(query: "swift", sortOrder: .bestMatch)
         } catch {
             XCTAssertEqual(error as? GitHubError, GitHubError.tooManyRequests)
             return
@@ -72,7 +72,7 @@ class GitHubClientTests: XCTestCase {
             rateLimitRemaining: 9)
 
         do {
-            let _ = try await client.search(query: "swift")
+            let _ = try await client.search(query: "swift", sortOrder: .bestMatch)
         } catch {
             XCTAssertEqual(error as? GitHubError, GitHubError.serverError)
             return

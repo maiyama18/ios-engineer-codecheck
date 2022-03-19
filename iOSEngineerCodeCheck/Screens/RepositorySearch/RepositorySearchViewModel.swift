@@ -40,7 +40,7 @@ final class RepositorySearchViewModel: ObservableObject {
         eventSubject.send(.showLoading)
         task = Task { @MainActor in
             do {
-                repositories = try await githubClient.search(query: query)
+                repositories = try await githubClient.search(query: query, sortOrder: .bestMatch)
             } catch {
                 logger.warning(
                     "failed to search repository: \(error.userMessage, privacy: .public)")

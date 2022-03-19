@@ -29,7 +29,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testSearchSuccess() async throws {
-        githubClient.searchHandler = { query in
+        githubClient.searchHandler = { query, _ in
             guard query == "swift" else {
                 XCTFail("unexpected query")
                 return []
@@ -67,7 +67,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testSearchFailure() async throws {
-        githubClient.searchHandler = { _ in
+        githubClient.searchHandler = { _, _ in
             throw GitHubError.unexpectedError
         }
 
