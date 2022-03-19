@@ -15,8 +15,10 @@ struct RepositorySearchScreen: View {
         VStack(spacing: 12) {
             RepositorySearchFormSection(
                 onSearchButtonTapped: viewModel.onSearchButtonTapped,
+                languageCandidates: viewModel.languageCandidates,
                 query: $viewModel.query,
-                sortOrder: $viewModel.sortOrder
+                sortOrder: $viewModel.sortOrder,
+                language: $viewModel.language
             )
 
             RepositorySearchResultsSection(

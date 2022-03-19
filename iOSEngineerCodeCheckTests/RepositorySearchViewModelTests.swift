@@ -17,10 +17,16 @@ class RepositorySearchViewModelTests: XCTestCase {
 
     private let mockRepositories: [Repository] = [
         .mock(fullName: "apple/swift", starsCount: 10000),
-        .mock(fullName: "openstack/swift", starsCount: 1000),
+        .mock(
+            fullName: "openstack/swift", starsCount: 1000,
+            language: Language(name: "Swift", colorCode: "223344")),
         .mock(fullName: "tensorflow/swift", starsCount: 20000),
-        .mock(fullName: "SwiftyJSON/SwiftyJSON", starsCount: 500),
-        .mock(fullName: "ipader/SwiftGuide", starsCount: 5000),
+        .mock(
+            fullName: "SwiftyJSON/SwiftyJSON", starsCount: 500,
+            language: Language(name: "Swift", colorCode: "223344")),
+        .mock(
+            fullName: "ipader/SwiftGuide", starsCount: 5000,
+            language: Language(name: "Swift", colorCode: "223344")),
     ]
 
     override func setUp() {
@@ -29,7 +35,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testSearchSuccess() async throws {
-        githubClient.searchHandler = { query, _ in
+        githubClient.searchHandler = { query, _, _ in
             guard query == "swift" else {
                 XCTFail("unexpected query")
                 return []
@@ -67,7 +73,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testSearchFailure() async throws {
-        githubClient.searchHandler = { _, _ in
+        githubClient.searchHandler = { _, _, _ in
             throw GitHubError.unexpectedError
         }
 
@@ -102,7 +108,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testSortOrderChange() async throws {
-        githubClient.searchHandler = { query, sortOrder in
+        githubClient.searchHandler = { query, sortOrder, _ in
             guard query == "swift" else {
                 XCTFail("unexpected query")
                 return []
@@ -170,7 +176,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testSortOrderChangeAfterQueryChange() async throws {
-        githubClient.searchHandler = { query, sortOrder in
+        githubClient.searchHandler = { query, sortOrder, _ in
             guard query == "swift" else {
                 XCTFail("unexpected query")
                 return []
@@ -221,6 +227,79 @@ class RepositorySearchViewModelTests: XCTestCase {
                 }
             },
             assertions: {
+                try await XCTAssertAwaitTrue(
+                    try await noNextValue(of: viewModel.events)
+                )
+            }
+        )
+    }
+
+    func testLanguageChange() async throws {
+        githubClient.searchHandler = { query, _, language in
+            guard query == "swift" else {
+                XCTFail("unexpected query")
+                return []
+            }
+            if let language = language {
+                if language == "Swift" {
+                    return self.mockRepositories.filter { $0.language?.name == "Swift" }
+                } else {
+                    XCTFail("unexpected language: \(language)")
+                    return []
+                }
+            } else {
+                return self.mockRepositories
+            }
+        }
+
+        await MainActor.run {
+            viewModel.query = "swift"
+        }
+
+        try await asyncTest(
+            operation: {
+                self.viewModel.onSearchButtonTapped()
+            },
+            assertions: {
+                try await XCTAssertAwaitEqual(
+                    try await nextValues(of: viewModel.events, count: 2),
+                    [
+                        .showLoading,
+                        .hideLoading,
+                    ]
+                )
+
+                try await XCTAssertAwaitEqual(
+                    await viewModel.repositories,
+                    mockRepositories
+                )
+
+                try await XCTAssertAwaitTrue(
+                    try await noNextValue(of: viewModel.events)
+                )
+            }
+        )
+
+        try await asyncTest(
+            operation: {
+                Task { @MainActor in
+                    self.viewModel.language = "Swift"
+                }
+            },
+            assertions: {
+                try await XCTAssertAwaitEqual(
+                    try await nextValues(of: viewModel.events, count: 2),
+                    [
+                        .showLoading,
+                        .hideLoading,
+                    ]
+                )
+
+                try await XCTAssertAwaitEqual(
+                    await viewModel.repositories,
+                    mockRepositories.filter { $0.language?.name == "Swift" }
+                )
+
                 try await XCTAssertAwaitTrue(
                     try await noNextValue(of: viewModel.events)
                 )
