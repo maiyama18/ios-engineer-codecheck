@@ -23,6 +23,7 @@ struct RepositorySearchScreen: View {
 
             RepositorySearchResultsSection(
                 repositories: viewModel.repositories,
+                searchedPage: viewModel.lastSearchedPage,
                 onRepositoryTapped: viewModel.onRepositoryTapped(repository:),
                 onScrollBottomReached: viewModel.onScrollBottomReached
             )
