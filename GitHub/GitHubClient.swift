@@ -10,7 +10,8 @@ import Foundation
 
 /// @mockable
 public protocol GitHubClientProtocol {
-    func search(query: String, sortOrder: SortOrder, language: String?) async throws -> [Repository]
+    func search(query: String, sortOrder: SortOrder, page: Int, language: String?) async throws
+        -> [Repository]
 }
 
 public final class GitHubClient: GitHubClientProtocol {
@@ -22,7 +23,8 @@ public final class GitHubClient: GitHubClientProtocol {
         self.session = session
     }
 
-    public func search(query: String, sortOrder: SortOrder, language: String? = nil) async throws
+    public func search(query: String, sortOrder: SortOrder, page: Int, language: String? = nil)
+        async throws
         -> [Repository]
     {
         guard !query.isEmpty else {
@@ -40,6 +42,8 @@ public final class GitHubClient: GitHubClientProtocol {
         components.queryItems = [
             .init(name: "q", value: q),
             .init(name: "sort", value: sortOrder.rawValue),
+            .init(name: "page", value: String(page)),
+            .init(name: "per_page", value: String(githubSearchPerPage)),
         ]
 
         guard let url = components.url else { throw GitHubError.invalidInput }

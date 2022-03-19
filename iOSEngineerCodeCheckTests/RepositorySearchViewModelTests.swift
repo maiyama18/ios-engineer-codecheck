@@ -37,7 +37,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testSearchSuccess() async throws {
-        githubClient.searchHandler = { query, _, _ in
+        githubClient.searchHandler = { query, _, _, _ in
             guard query == "swift" else {
                 XCTFail("unexpected query")
                 return []
@@ -66,7 +66,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testSearchFailure() async throws {
-        githubClient.searchHandler = { _, _, _ in
+        githubClient.searchHandler = { _, _, _, _ in
             throw GitHubError.unexpectedError
         }
 
@@ -98,7 +98,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testSortOrderChange() async throws {
-        githubClient.searchHandler = { query, sortOrder, _ in
+        githubClient.searchHandler = { query, sortOrder, _, _ in
             guard query == "swift" else {
                 XCTFail("unexpected query")
                 return []
@@ -149,7 +149,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testSortOrderChangeAfterQueryChange() async throws {
-        githubClient.searchHandler = { query, sortOrder, _ in
+        githubClient.searchHandler = { query, sortOrder, _, _ in
             guard query == "swift" else {
                 XCTFail("unexpected query")
                 return []
@@ -192,7 +192,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testLanguageChange() async throws {
-        githubClient.searchHandler = { query, _, language in
+        githubClient.searchHandler = { query, _, _, language in
             guard query == "swift" else {
                 XCTFail("unexpected query")
                 return []

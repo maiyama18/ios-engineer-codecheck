@@ -13,6 +13,8 @@ public enum SortOrder: String, CaseIterable {
     case updated
 }
 
+public let githubSearchPerPage = 30
+
 public let githubSearchLanguages: [String] = [
     "Assembly",
     "BASIC",
