@@ -33,6 +33,19 @@ internal enum L10n {
     internal static let unexpectedError = L10n.tr("Localizable", "error.unexpected_error")
   }
 
+  internal enum GitHub {
+    internal enum SortOrder {
+      /// Best Match
+      internal static let bestMatch = L10n.tr("Localizable", "git_hub.sort_order.best_match")
+      /// Forks
+      internal static let forks = L10n.tr("Localizable", "git_hub.sort_order.forks")
+      /// Stars
+      internal static let stars = L10n.tr("Localizable", "git_hub.sort_order.stars")
+      /// Updated
+      internal static let updated = L10n.tr("Localizable", "git_hub.sort_order.updated")
+    }
+  }
+
   internal enum RepositoryDetail {
     /// Open URL
     internal static let openUrl = L10n.tr("Localizable", "repository_detail.open_url")
