@@ -14,7 +14,7 @@ struct RepositorySearchFormSection: View {
     @Binding var query: String
 
     @FocusState private var focused: Bool
-    @State private var isSearching: Bool = false
+    @State private var isEditingQuery: Bool = false
 
     var body: some View {
         HStack {
@@ -28,7 +28,7 @@ struct RepositorySearchFormSection: View {
                 .accessibilityIdentifier("searchField")
                 .focused($focused)
 
-            if isSearching {
+            if isEditingQuery {
                 Button(
                     action: {
                         focused = false
@@ -41,7 +41,7 @@ struct RepositorySearchFormSection: View {
         }
         .onChange(of: focused) { focused in
             withAnimation(.easeInOut(duration: 0.1)) {
-                isSearching = focused
+                isEditingQuery = focused
             }
         }
     }
