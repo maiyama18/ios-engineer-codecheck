@@ -8,6 +8,7 @@
 
 "common.error" = "Error";
 "common.ok" = "OK";
+"common.cancel" = "Cancel";
 
 "error.empty_search_query" = "Search query is empty. Please input some words.";
 "error.invalid_input" = "Input may be invalid. Please review your input.";

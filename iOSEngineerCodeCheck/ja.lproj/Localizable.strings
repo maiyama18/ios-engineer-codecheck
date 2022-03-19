@@ -8,6 +8,7 @@
 
 "common.error" = "エラー";
 "common.ok" = "OK";
+"common.cancel" = "キャンセル";
 
 "error.empty_search_query" = "検索ワードが空です。好きなキーワードを入れてみてください。";
 "error.invalid_input" = "入力が不正です。おかしいところがないかご確認お願いします。";

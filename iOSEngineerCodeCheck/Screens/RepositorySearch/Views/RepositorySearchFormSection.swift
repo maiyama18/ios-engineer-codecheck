@@ -12,16 +12,38 @@ struct RepositorySearchFormSection: View {
     let onSearchButtonTapped: (String) -> Void
 
     @State private var query = ""
+    @State private var isSearching: Bool = false
+
+    @FocusState private var focused: Bool
 
     var body: some View {
-        TextField(L10n.SearchBar.placeholder, text: $query)
-            .disableAutocorrection(true)
-            .textFieldStyle(SearchFieldStyle())
-            .submitLabel(.search)
-            .onSubmit {
-                onSearchButtonTapped(query)
+        HStack {
+            TextField(L10n.SearchBar.placeholder, text: $query)
+                .disableAutocorrection(true)
+                .textFieldStyle(SearchFieldStyle())
+                .submitLabel(.search)
+                .onSubmit {
+                    onSearchButtonTapped(query)
+                }
+                .accessibilityIdentifier("searchField")
+                .focused($focused)
+
+            if isSearching {
+                Button(
+                    action: {
+                        focused = false
+                    },
+                    label: {
+                        Text(L10n.Common.cancel)
+                    }
+                )
             }
-            .accessibilityIdentifier("searchField")
+        }
+        .onChange(of: focused) { focused in
+            withAnimation(.easeInOut(duration: 0.1)) {
+                isSearching = focused
+            }
+        }
     }
 }
 
