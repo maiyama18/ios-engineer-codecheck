@@ -23,9 +23,12 @@ struct RepositorySearchScreen: View {
 
             RepositorySearchResultsSection(
                 repositories: viewModel.repositories,
-                onRepositoryTapped: viewModel.onRepositoryTapped(repository:)
+                searchedPage: viewModel.lastSearchedPage,
+                onRepositoryTapped: viewModel.onRepositoryTapped(repository:),
+                onScrollBottomReached: viewModel.onScrollBottomReached
             )
         }
-        .padding()
+        .padding(.top)
+        .padding(.horizontal)
     }
 }

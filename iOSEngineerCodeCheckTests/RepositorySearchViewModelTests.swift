@@ -30,6 +30,11 @@ class RepositorySearchViewModelTests: XCTestCase {
             language: Language(name: "Swift", colorCode: "223344")),
     ]
 
+    private let moreMockRepositories: [Repository] = [
+        .mock(fullName: "SwiftGen/SwiftGen"),
+        .mock(fullName: "SwiftLint/SwiftLint"),
+    ]
+
     @MainActor
     override func setUp() {
         githubClient = GitHubClientProtocolMock()
@@ -37,7 +42,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testSearchSuccess() async throws {
-        githubClient.searchHandler = { query, _, _ in
+        githubClient.searchHandler = { query, _, _, _ in
             guard query == "swift" else {
                 XCTFail("unexpected query")
                 return []
@@ -66,7 +71,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testSearchFailure() async throws {
-        githubClient.searchHandler = { _, _, _ in
+        githubClient.searchHandler = { _, _, _, _ in
             throw GitHubError.unexpectedError
         }
 
@@ -98,7 +103,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testSortOrderChange() async throws {
-        githubClient.searchHandler = { query, sortOrder, _ in
+        githubClient.searchHandler = { query, sortOrder, _, _ in
             guard query == "swift" else {
                 XCTFail("unexpected query")
                 return []
@@ -149,7 +154,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testSortOrderChangeAfterQueryChange() async throws {
-        githubClient.searchHandler = { query, sortOrder, _ in
+        githubClient.searchHandler = { query, sortOrder, _, _ in
             guard query == "swift" else {
                 XCTFail("unexpected query")
                 return []
@@ -192,7 +197,7 @@ class RepositorySearchViewModelTests: XCTestCase {
     }
 
     func testLanguageChange() async throws {
-        githubClient.searchHandler = { query, _, language in
+        githubClient.searchHandler = { query, _, _, language in
             guard query == "swift" else {
                 XCTFail("unexpected query")
                 return []
@@ -243,6 +248,58 @@ class RepositorySearchViewModelTests: XCTestCase {
                 )
 
                 try await XCTAssertAwaitTrue(try await noValue(of: viewModel.eventStream))
+            }
+        )
+    }
+
+    func testSearchMore() async throws {
+        let firstMockRepositories: [Repository] = Array(
+            repeating: self.mockRepositories[0], count: githubSearchPerPage)
+
+        githubClient.searchHandler = { query, _, page, _ in
+            guard query == "swift" else {
+                XCTFail("unexpected query")
+                return []
+            }
+            switch page {
+            case 1:
+                return firstMockRepositories
+            case 2:
+                return self.moreMockRepositories
+            default:
+                XCTFail("unexpected page: \(page)")
+                return []
+            }
+        }
+
+        viewModel.query = "swift"
+
+        try await asyncTest(
+            operation: {
+                self.viewModel.onSearchButtonTapped()
+            },
+            assertions: {
+                try await XCTAssertAwaitEqual(
+                    try await awaitValue(of: viewModel.eventStream), .showLoading)
+
+                try await XCTAssertAwaitEqual(
+                    try await awaitValue(of: viewModel.eventStream), .hideLoading)
+
+                try await XCTAssertAwaitEqual(viewModel.repositories, firstMockRepositories)
+            }
+        )
+
+        try await asyncTest(
+            operation: {
+                self.viewModel.onScrollBottomReached()
+            },
+            assertions: {
+                try await XCTAssertAwaitTrue(try await noValue(of: viewModel.eventStream))
+
+                XCTAssertEqual(
+                    viewModel.repositories,
+                    firstMockRepositories + moreMockRepositories
+                )
             }
         )
     }

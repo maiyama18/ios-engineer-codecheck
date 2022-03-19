@@ -36,6 +36,8 @@ final class RepositorySearchViewModel: ObservableObject {
         }
     }
 
+    var lastSearchedPage: Int?
+    
     private var task: Task<Void, Never>?
     private var lastSearchedQuery: String?
 
@@ -62,6 +64,13 @@ final class RepositorySearchViewModel: ObservableObject {
 
     func onRepositoryTapped(repository: Repository) {
         eventContinuation?.yield(.navigateToDetail(repository: repository))
+    }
+
+    func onScrollBottomReached() {
+        guard !repositories.isEmpty, repositories.count % githubSearchPerPage == 0 else {
+            return
+        }
+        searchMore()
     }
 
     private func onQueryChanged() {
@@ -93,14 +102,36 @@ final class RepositorySearchViewModel: ObservableObject {
             do {
                 let lang = language == L10n.GitHub.Search.allLanguages ? nil : language
                 repositories = try await githubClient.search(
-                    query: query, sortOrder: sortOrder, language: lang)
+                    query: query, sortOrder: sortOrder, page: 1, language: lang)
                 lastSearchedQuery = query
+                lastSearchedPage = 1
             } catch {
                 logger.warning(
                     "failed to search repository: \(error.userMessage, privacy: .public)")
                 eventContinuation?.yield(.showErrorAlert(message: error.userMessage))
             }
             eventContinuation?.yield(.hideLoading)
+        }
+    }
+
+    private func searchMore() {
+        task?.cancel()
+        task = Task {
+            guard !query.isEmpty else { return }
+
+            do {
+                let lang = language == L10n.GitHub.Search.allLanguages ? nil : language
+                guard let lastSearchedPage = lastSearchedPage else { return }
+
+                let repos = try await githubClient.search(
+                    query: query, sortOrder: sortOrder, page: lastSearchedPage + 1, language: lang)
+                repositories = repositories + repos
+                lastSearchedQuery = query
+                self.lastSearchedPage = lastSearchedPage + 1
+            } catch {
+                logger.warning(
+                    "failed to read more repository: \(error.userMessage, privacy: .public)")
+            }
         }
     }
 
