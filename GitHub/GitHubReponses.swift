@@ -11,19 +11,19 @@ import Foundation
 // ref: https://docs.github.com/ja/rest/reference/search#search-repositories
 
 struct RepositorySearchResponse: Decodable {
-    public let items: [RepositoryResponse]
+    let items: [RepositoryResponse]
 }
 
 struct RepositoryResponse: Decodable {
-    public let fullName: String
-    public let description: String?
-    public let language: String?
-    public let owner: UserResponse
-    public let starsCount: Int
-    public let watchersCount: Int
-    public let forksCount: Int
-    public let openIssuesCount: Int
-    public let htmlURL: String
+    let fullName: String
+    let description: String?
+    let language: String?
+    let owner: UserResponse
+    let starsCount: Int
+    let watchersCount: Int
+    let forksCount: Int
+    let openIssuesCount: Int
+    let htmlURL: String
 
     private enum CodingKeys: String, CodingKey {
         case fullName = "full_name"
@@ -39,11 +39,7 @@ struct RepositoryResponse: Decodable {
 }
 
 struct UserResponse: Decodable {
-    public let avatarURL: String
-
-    public init(avatarURL: String) {
-        self.avatarURL = avatarURL
-    }
+    let avatarURL: String
 
     private enum CodingKeys: String, CodingKey {
         case avatarURL = "avatar_url"
