@@ -41,6 +41,14 @@ struct RepositoryListItemView: View {
                         .font(.callout)
                 }
                 .foregroundColor(.secondary)
+
+                HStack(spacing: 4) {
+                    Image(systemName: "tuningfork")
+
+                    Text(String(repository.forksCount))
+                        .font(.callout)
+                }
+                .foregroundColor(.secondary)
             }
         }
         .padding(.vertical, 8)
