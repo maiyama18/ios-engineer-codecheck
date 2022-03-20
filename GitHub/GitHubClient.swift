@@ -15,6 +15,8 @@ public protocol GitHubClientProtocol {
         -> [Repository]
     /// 検索クエリの履歴を最大100件まで返す
     func getSearchHistory(maxCount: Int) -> [String]
+    /// 検索クエリの履歴を消去する
+    func clearSearchHistory()
 }
 
 public final class GitHubClient: GitHubClientProtocol {
@@ -118,6 +120,10 @@ public final class GitHubClient: GitHubClientProtocol {
         // 渡された maxCount を 0...100 の範囲に clamp する
         let count = max(0, min(searchHistoryCapacity, maxCount))
         return Array(userDefaults.searchHistory.prefix(count))
+    }
+
+    public func clearSearchHistory() {
+        userDefaults.searchHistory = []
     }
 
     private func addToSearchHistory(query: String) {

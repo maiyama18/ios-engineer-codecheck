@@ -55,5 +55,15 @@ public class GitHubClientProtocolMock: GitHubClientProtocol {
         }
         return [String]()
     }
+
+    public private(set) var clearSearchHistoryCallCount = 0
+    public var clearSearchHistoryHandler: (() -> ())?
+    public func clearSearchHistory()  {
+        clearSearchHistoryCallCount += 1
+        if let clearSearchHistoryHandler = clearSearchHistoryHandler {
+            clearSearchHistoryHandler()
+        }
+        
+    }
 }
 

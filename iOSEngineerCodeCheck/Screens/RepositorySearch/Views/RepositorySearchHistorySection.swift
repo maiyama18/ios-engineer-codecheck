@@ -11,39 +11,56 @@ import SwiftUI
 struct RepositorySearchHistorySection: View {
     let searchHistory: [String]
     let onSearchHistoryTapped: @MainActor (String) -> Void
+    let onSearchHistoryClearButtonTapped: @MainActor () -> Void
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                Text(L10n.RepositorySearch.history)
-                    .font(.footnote)
-                    .foregroundColor(.secondary)
+            if !searchHistory.isEmpty {
+                VStack(alignment: .leading, spacing: 0) {
+                    HStack {
+                        Text(L10n.RepositorySearch.history)
+                            .font(.callout)
+                            .foregroundColor(.secondary)
 
-                Spacer()
-                    .frame(height: 8)
+                        Spacer()
 
-                Divider()
+                        Button(
+                            action: {
+                                onSearchHistoryClearButtonTapped()
+                            },
+                            label: {
+                                Text(L10n.Common.clear)
+                                    .font(.callout)
+                            })
+                    }
 
-                ForEach(searchHistory, id: \.self) { history in
-                    VStack(alignment: .leading, spacing: 0) {
-                        HStack(spacing: 4) {
-                            Image(systemName: "magnifyingglass")
-                                .foregroundColor(.secondary)
+                    Spacer()
+                        .frame(height: 8)
 
-                            Text(history)
+                    Divider()
+
+                    ForEach(searchHistory, id: \.self) { history in
+                        VStack(alignment: .leading, spacing: 0) {
+                            HStack(spacing: 4) {
+                                Image(systemName: "magnifyingglass")
+                                    .foregroundColor(.secondary)
+
+                                Text(history)
+                            }
+                            .padding(.vertical, 12)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                onSearchHistoryTapped(history)
+                            }
+
+                            Divider()
                         }
-                        .padding(.vertical, 12)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            onSearchHistoryTapped(history)
-                        }
-
-                        Divider()
                     }
                 }
+                .padding(.top, 24)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }
@@ -52,7 +69,8 @@ struct RepositorySearchHistorySection_Previews: PreviewProvider {
     static var previews: some View {
         RepositorySearchHistorySection(
             searchHistory: ["swift", "tableview", "type safe"],
-            onSearchHistoryTapped: { _ in }
+            onSearchHistoryTapped: { _ in },
+            onSearchHistoryClearButtonTapped: {}
         )
     }
 }
