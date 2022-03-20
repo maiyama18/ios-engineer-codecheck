@@ -59,6 +59,10 @@ final class RepositorySearchViewModel: ObservableObject {
         [L10n.GitHub.Search.allLanguages] + githubSearchLanguages
     }
 
+    var recentSearchHistory: [String] {
+        githubClient.getSearchHistory(maxCount: 5)
+    }
+
     func onSearchButtonTapped() {
         search()
     }

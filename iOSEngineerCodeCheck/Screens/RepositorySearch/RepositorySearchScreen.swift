@@ -22,12 +22,18 @@ struct RepositorySearchScreen: View {
                 language: $viewModel.language
             )
 
-            RepositorySearchResultsSection(
-                repositories: viewModel.repositories,
-                searchedPage: viewModel.lastSearchedPage,
-                onRepositoryTapped: viewModel.onRepositoryTapped(repository:),
-                onScrollBottomReached: viewModel.onScrollBottomReached
-            )
+            if viewModel.isEditingQuery {
+                RepositorySearchHistorySection(
+                    searchHistory: viewModel.recentSearchHistory
+                )
+            } else {
+                RepositorySearchResultsSection(
+                    repositories: viewModel.repositories,
+                    searchedPage: viewModel.lastSearchedPage,
+                    onRepositoryTapped: viewModel.onRepositoryTapped(repository:),
+                    onScrollBottomReached: viewModel.onScrollBottomReached
+                )
+            }
         }
         .padding(.top)
         .padding(.horizontal)
