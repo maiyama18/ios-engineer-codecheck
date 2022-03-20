@@ -319,4 +319,31 @@ class RepositorySearchViewModelTests: XCTestCase {
             }
         )
     }
+
+    func testSearchRepositoryTap() async throws {
+        githubClient.searchHandler = { query, _, _, _ in
+            guard query == "swift" else {
+                XCTFail("unexpected query")
+                return []
+            }
+            return self.mockRepositories
+        }
+
+        try await asyncTest(
+            operation: {
+                self.viewModel.onSearchHistoryTapped(query: "swift")
+            },
+            assertions: {
+                try await XCTAssertAwaitEqual(
+                    try await awaitValue(of: viewModel.eventStream), .showLoading)
+
+                try await XCTAssertAwaitEqual(
+                    try await awaitValue(of: viewModel.eventStream), .hideLoading)
+
+                try await XCTAssertAwaitEqual(viewModel.repositories, mockRepositories)
+
+                try await XCTAssertAwaitTrue(try await noValue(of: viewModel.eventStream))
+            }
+        )
+    }
 }

@@ -75,6 +75,9 @@ struct RepositorySearchFormSection: View {
                 isEditingQuery = focused
             }
         }
+        .onChange(of: isEditingQuery) { isEditingQuery in
+            focused = isEditingQuery
+        }
     }
 }
 

@@ -20,11 +20,7 @@ final class RepositorySearchViewModel: ObservableObject {
     }
 
     @Published var repositories: [Repository] = []
-    @Published var query: String = "" {
-        didSet {
-            onQueryChanged()
-        }
-    }
+    @Published var query: String = ""
     @Published var isEditingQuery: Bool = false
     @Published var sortOrder: SortOrder = .bestMatch {
         didSet {
@@ -78,8 +74,10 @@ final class RepositorySearchViewModel: ObservableObject {
         searchMore()
     }
 
-    private func onQueryChanged() {
-        task?.cancel()
+    func onSearchHistoryTapped(query: String) {
+        self.query = query
+        isEditingQuery = false
+        search()
     }
 
     private func onSortOrderChanged() {

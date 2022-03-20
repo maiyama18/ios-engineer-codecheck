@@ -24,7 +24,8 @@ struct RepositorySearchScreen: View {
 
             if viewModel.isEditingQuery {
                 RepositorySearchHistorySection(
-                    searchHistory: viewModel.recentSearchHistory
+                    searchHistory: viewModel.recentSearchHistory,
+                    onSearchHistoryTapped: viewModel.onSearchHistoryTapped(query:)
                 )
             } else {
                 RepositorySearchResultsSection(

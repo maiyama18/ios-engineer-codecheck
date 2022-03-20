@@ -10,6 +10,7 @@ import SwiftUI
 
 struct RepositorySearchHistorySection: View {
     let searchHistory: [String]
+    let onSearchHistoryTapped: @MainActor (String) -> Void
 
     var body: some View {
         ScrollView {
@@ -32,10 +33,14 @@ struct RepositorySearchHistorySection: View {
                             Text(history)
                         }
                         .padding(.vertical, 12)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            onSearchHistoryTapped(history)
+                        }
 
                         Divider()
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -46,7 +51,8 @@ struct RepositorySearchHistorySection: View {
 struct RepositorySearchHistorySection_Previews: PreviewProvider {
     static var previews: some View {
         RepositorySearchHistorySection(
-            searchHistory: ["swift", "tableview", "type safe"]
+            searchHistory: ["swift", "tableview", "type safe"],
+            onSearchHistoryTapped: { _ in }
         )
     }
 }
