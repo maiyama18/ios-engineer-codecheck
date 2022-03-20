@@ -127,8 +127,9 @@ public final class GitHubClient: GitHubClientProtocol {
     }
 
     private func addToSearchHistory(query: String) {
-        let currentHistory = userDefaults.searchHistory
-        // 最新の検索履歴を最大100件まで保持する
+        // 同じクエリが重複しないように追加前に filter しておく
+        let currentHistory = userDefaults.searchHistory.filter { $0 != query }
+        // 最新の検索履歴を最大 `searchHistoryCapacity` 件まで保持する
         userDefaults.searchHistory = Array(([query] + currentHistory).prefix(searchHistoryCapacity))
     }
 }
