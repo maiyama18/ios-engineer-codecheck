@@ -4,7 +4,10 @@
 
 GitHub 上に存在するレポジトリを検索する iOS アプリです。
 
+![app](https://user-images.githubusercontent.com/22269397/159150810-4e5b92cc-46cf-4a7b-9f46-09b82aa50c71.gif)
+
 ## 環境
+
 
 - Xcode 13.2.1
 - Swift 5.5
