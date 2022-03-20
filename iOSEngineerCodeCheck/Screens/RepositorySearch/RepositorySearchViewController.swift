@@ -35,7 +35,9 @@ class RepositorySearchViewController: UIViewController, RepositoryDetailRouting 
         super.viewWillAppear(animated)
 
         DispatchQueue.main.async {
-            self.navigationController?.setNavigationBarHidden(true, animated: animated)
+            // animated を true にすると RepositoryDetailViewController から
+            // edge swipe で戻ってきたときに freeze する問題がある。これを避けるために animated を false にしている
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
         }
     }
 
