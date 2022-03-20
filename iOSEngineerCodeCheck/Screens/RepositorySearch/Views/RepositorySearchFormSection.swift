@@ -14,11 +14,11 @@ struct RepositorySearchFormSection: View {
     let languageCandidates: [String]
 
     @Binding var query: String
+    @Binding var isEditingQuery: Bool
     @Binding var sortOrder: GitHub.SortOrder
     @Binding var language: String
 
     @FocusState private var focused: Bool
-    @State private var isEditingQuery: Bool = false
 
     var body: some View {
         VStack(spacing: 8) {
@@ -45,35 +45,40 @@ struct RepositorySearchFormSection: View {
                 }
             }
 
-            HStack(spacing: 16) {
-                HStack(spacing: 4) {
-                    Image(systemName: "arrow.down")
-                        .font(.callout)
-                        .foregroundColor(.accentColor)
+            if !isEditingQuery {
+                HStack(spacing: 16) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "arrow.down")
+                            .font(.callout)
+                            .foregroundColor(.accentColor)
 
-                    Picker("", selection: $sortOrder) {
-                        ForEach(SortOrder.allCases, id: \.self) { order in
-                            Text(order.string)
+                        Picker("", selection: $sortOrder) {
+                            ForEach(SortOrder.allCases, id: \.self) { order in
+                                Text(order.string)
+                            }
                         }
+                        .pickerStyle(.menu)
                     }
-                    .pickerStyle(.menu)
-                }
 
-                HStack {
-                    Picker("", selection: $language) {
-                        ForEach(languageCandidates, id: \.self) { language in
-                            Text(language)
+                    HStack {
+                        Picker("", selection: $language) {
+                            ForEach(languageCandidates, id: \.self) { language in
+                                Text(language)
+                            }
                         }
+                        .pickerStyle(.menu)
                     }
-                    .pickerStyle(.menu)
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .onChange(of: focused) { focused in
             withAnimation(.easeInOut(duration: 0.1)) {
                 isEditingQuery = focused
             }
+        }
+        .onChange(of: isEditingQuery) { isEditingQuery in
+            focused = isEditingQuery
         }
     }
 }
@@ -84,6 +89,7 @@ struct RepositorySearchFormSection_Previews: PreviewProvider {
             onSearchButtonTapped: {},
             languageCandidates: ["Swift", "Kotlin"],
             query: .constant("swift"),
+            isEditingQuery: .constant(true),
             sortOrder: .constant(.bestMatch),
             language: .constant("Swift")
         )

@@ -13,10 +13,15 @@ import XCTest
 class GitHubClientTests: XCTestCase {
     private var client: GitHubClient!
     private var session: NetworkingMock!
+    private var userDefaults: UserDefaults!
 
     override func setUp() {
         session = NetworkingMock()
-        client = GitHubClient(session: session)
+
+        userDefaults = UserDefaults(suiteName: #file)
+        userDefaults.removePersistentDomain(forName: #file)
+
+        client = GitHubClient(session: session, userDefaults: userDefaults)
     }
 
     func testSearchSuccess() async throws {
@@ -36,6 +41,8 @@ class GitHubClientTests: XCTestCase {
         XCTAssertEqual(
             first.avatarURL?.absoluteString, "https://avatars.githubusercontent.com/u/10639145?v=4")
         XCTAssertEqual(first.repositoryURL?.absoluteString, "https://github.com/apple/swift")
+
+        XCTAssertEqual(client.getSearchHistory(maxCount: 100), ["swift"])
     }
 
     func testSearchFailureEmptySearchQuery() async throws {
@@ -47,6 +54,7 @@ class GitHubClientTests: XCTestCase {
             let _ = try await client.search(query: "", sortOrder: .bestMatch, page: 1)
         } catch {
             XCTAssertEqual(error as? GitHubError, GitHubError.emptySearchQuery)
+            XCTAssertEqual(client.getSearchHistory(maxCount: 100), [])
             return
         }
         XCTFail("expected an error to be thrown, but not.")
@@ -61,6 +69,7 @@ class GitHubClientTests: XCTestCase {
             let _ = try await client.search(query: "swift", sortOrder: .bestMatch, page: 1)
         } catch {
             XCTAssertEqual(error as? GitHubError, GitHubError.tooManyRequests)
+            XCTAssertEqual(client.getSearchHistory(maxCount: 100), [])
             return
         }
         XCTFail("expected an error to be thrown, but not.")
@@ -75,9 +84,63 @@ class GitHubClientTests: XCTestCase {
             let _ = try await client.search(query: "swift", sortOrder: .bestMatch, page: 1)
         } catch {
             XCTAssertEqual(error as? GitHubError, GitHubError.serverError)
+            XCTAssertEqual(client.getSearchHistory(maxCount: 100), [])
             return
         }
         XCTFail("expected an error to be thrown, but not.")
+    }
+
+    func testSearchHistory() async throws {
+        try setUpMockSession(
+            responseFileName: "search_success", statusCode: 200, rateLimitRemaining: 9)
+
+        for i in 1...5 {
+            let _ = try await client.search(query: "query \(i)", sortOrder: .bestMatch, page: 1)
+        }
+        XCTAssertEqual(
+            client.getSearchHistory(maxCount: 10),
+            (1...5).reversed().map { "query \($0)" }
+        )
+    }
+
+    func testSearchHistoryOldestQueryDiscarded() async throws {
+        try setUpMockSession(
+            responseFileName: "search_success", statusCode: 200, rateLimitRemaining: 9)
+
+        for i in 1...101 {
+            let _ = try await client.search(query: "query \(i)", sortOrder: .bestMatch, page: 1)
+        }
+        XCTAssertEqual(
+            client.getSearchHistory(maxCount: 100),
+            (2...101).reversed().map { "query \($0)" }
+        )
+    }
+
+    func testSearchHistoryReturnsMaxCountQueries() async throws {
+        try setUpMockSession(
+            responseFileName: "search_success", statusCode: 200, rateLimitRemaining: 9)
+
+        for i in 1...101 {
+            let _ = try await client.search(query: "query \(i)", sortOrder: .bestMatch, page: 1)
+        }
+        XCTAssertEqual(
+            client.getSearchHistory(maxCount: 5),
+            (97...101).reversed().map { "query \($0)" }
+        )
+    }
+
+    func testSearchHistoryNegativeMaxCountReturnsEmptyArray() async throws {
+        try setUpMockSession(
+            responseFileName: "search_success", statusCode: 200, rateLimitRemaining: 9)
+
+        let _ = try await client.search(query: "query", sortOrder: .bestMatch, page: 1)
+        for i in 1...101 {
+            let _ = try await client.search(query: "query \(i)", sortOrder: .bestMatch, page: 1)
+        }
+        XCTAssertEqual(
+            client.getSearchHistory(maxCount: -1),
+            []
+        )
     }
 
     private func setUpMockSession(

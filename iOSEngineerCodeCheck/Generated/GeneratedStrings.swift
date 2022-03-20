@@ -57,6 +57,11 @@ internal enum L10n {
     internal static let shareUrl = L10n.tr("Localizable", "repository_detail.share_url")
   }
 
+  internal enum RepositorySearch {
+    /// History
+    internal static let history = L10n.tr("Localizable", "repository_search.history")
+  }
+
   internal enum SearchBar {
     /// Search
     internal static let placeholder = L10n.tr("Localizable", "search_bar.placeholder")

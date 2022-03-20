@@ -20,11 +20,8 @@ final class RepositorySearchViewModel: ObservableObject {
     }
 
     @Published var repositories: [Repository] = []
-    @Published var query: String = "" {
-        didSet {
-            onQueryChanged()
-        }
-    }
+    @Published var query: String = ""
+    @Published var isEditingQuery: Bool = false
     @Published var sortOrder: SortOrder = .bestMatch {
         didSet {
             onSortOrderChanged()
@@ -37,7 +34,7 @@ final class RepositorySearchViewModel: ObservableObject {
     }
 
     var lastSearchedPage: Int?
-    
+
     private var task: Task<Void, Never>?
     private var lastSearchedQuery: String?
 
@@ -58,6 +55,10 @@ final class RepositorySearchViewModel: ObservableObject {
         [L10n.GitHub.Search.allLanguages] + githubSearchLanguages
     }
 
+    var recentSearchHistory: [String] {
+        githubClient.getSearchHistory(maxCount: 5)
+    }
+
     func onSearchButtonTapped() {
         search()
     }
@@ -73,8 +74,10 @@ final class RepositorySearchViewModel: ObservableObject {
         searchMore()
     }
 
-    private func onQueryChanged() {
-        task?.cancel()
+    func onSearchHistoryTapped(query: String) {
+        self.query = query
+        isEditingQuery = false
+        search()
     }
 
     private func onSortOrderChanged() {

@@ -17,16 +17,24 @@ struct RepositorySearchScreen: View {
                 onSearchButtonTapped: viewModel.onSearchButtonTapped,
                 languageCandidates: viewModel.languageCandidates,
                 query: $viewModel.query,
+                isEditingQuery: $viewModel.isEditingQuery,
                 sortOrder: $viewModel.sortOrder,
                 language: $viewModel.language
             )
 
-            RepositorySearchResultsSection(
-                repositories: viewModel.repositories,
-                searchedPage: viewModel.lastSearchedPage,
-                onRepositoryTapped: viewModel.onRepositoryTapped(repository:),
-                onScrollBottomReached: viewModel.onScrollBottomReached
-            )
+            if viewModel.isEditingQuery {
+                RepositorySearchHistorySection(
+                    searchHistory: viewModel.recentSearchHistory,
+                    onSearchHistoryTapped: viewModel.onSearchHistoryTapped(query:)
+                )
+            } else {
+                RepositorySearchResultsSection(
+                    repositories: viewModel.repositories,
+                    searchedPage: viewModel.lastSearchedPage,
+                    onRepositoryTapped: viewModel.onRepositoryTapped(repository:),
+                    onScrollBottomReached: viewModel.onScrollBottomReached
+                )
+            }
         }
         .padding(.top)
         .padding(.horizontal)

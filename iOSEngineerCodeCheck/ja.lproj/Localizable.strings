@@ -25,5 +25,7 @@
 
 "search_bar.placeholder" = "検索";
 
+"repository_search.history" = "履歴";
+
 "repository_detail.open_url" = "URL を開く";
 "repository_detail.share_url" = "URL をシェアする";
