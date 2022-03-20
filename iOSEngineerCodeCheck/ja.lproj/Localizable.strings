@@ -9,6 +9,7 @@
 "common.error" = "エラー";
 "common.ok" = "OK";
 "common.cancel" = "キャンセル";
+"common.clear" = "クリア";
 
 "git_hub.sort_order.best_match" = "関連順";
 "git_hub.sort_order.stars" = "Star数順";

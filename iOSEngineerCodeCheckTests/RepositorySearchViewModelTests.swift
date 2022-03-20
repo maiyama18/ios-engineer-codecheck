@@ -346,4 +346,32 @@ class RepositorySearchViewModelTests: XCTestCase {
             }
         )
     }
+
+    func testSearchClearSearchHistoryTap() async throws {
+        githubClient.getSearchHistoryHandler = { _ in
+            if self.githubClient.clearSearchHistoryCallCount > 0 {
+                return []
+            } else {
+                return ["swift", "ui"]
+            }
+        }
+
+        self.viewModel = RepositorySearchViewModel(githubClient: githubClient)
+
+        XCTAssertEqual(
+            self.viewModel.searchHistory,
+            ["swift", "ui"]
+        )
+
+        viewModel.onSearchHistoryClearButtonTapped()
+
+        XCTAssertEqual(
+            self.viewModel.searchHistory,
+            []
+        )
+        XCTAssertEqual(
+            githubClient.clearSearchHistoryCallCount,
+            1
+        )
+    }
 }

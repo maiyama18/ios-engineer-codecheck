@@ -9,6 +9,7 @@
 "common.error" = "Error";
 "common.ok" = "OK";
 "common.cancel" = "Cancel";
+"common.clear" = "Clear";
 
 "git_hub.sort_order.best_match" = "Best Match";
 "git_hub.sort_order.stars" = "Stars";

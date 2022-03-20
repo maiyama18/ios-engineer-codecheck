@@ -14,6 +14,8 @@ internal enum L10n {
   internal enum Common {
     /// Cancel
     internal static let cancel = L10n.tr("Localizable", "common.cancel")
+    /// Clear
+    internal static let clear = L10n.tr("Localizable", "common.clear")
     /// Error
     internal static let error = L10n.tr("Localizable", "common.error")
     /// OK

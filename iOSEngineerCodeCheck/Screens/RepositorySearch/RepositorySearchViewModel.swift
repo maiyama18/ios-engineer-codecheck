@@ -79,6 +79,11 @@ final class RepositorySearchViewModel: ObservableObject {
         search()
     }
 
+    func onSearchHistoryClearButtonTapped() {
+        githubClient.clearSearchHistory()
+        updateSearchHistory()
+    }
+
     private func onSortOrderChanged() {
         // 前回の検索時からクエリが変わっていない場合、ソート順の変更で即座に検索し直すことが期待されていると考え検索を実行する
         // クエリが変わっている場合は次に検索ボタンがタップされるまで検索しない
