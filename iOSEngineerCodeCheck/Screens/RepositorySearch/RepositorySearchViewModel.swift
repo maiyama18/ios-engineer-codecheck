@@ -39,10 +39,9 @@ final class RepositorySearchViewModel: ObservableObject {
     }
     @Published var searchHistory: [String] = []
 
-    var lastSearchedPage: Int?
-
     private var task: Task<Void, Never>?
     private var lastSearchedQuery: String?
+    private var lastSearchedPage: Int?
 
     private var eventContinuation: AsyncStream<Event>.Continuation?
     var eventStream: AsyncStream<Event>!
@@ -93,6 +92,7 @@ final class RepositorySearchViewModel: ObservableObject {
         // 前回の検索時からクエリが変わっていない場合、ソート順の変更で即座に検索し直すことが期待されていると考え検索を実行する
         // クエリが変わっている場合は次に検索ボタンがタップされるまで検索しない
         if let lastSearchedQuery = lastSearchedQuery, query == lastSearchedQuery {
+            repositories = []
             search()
         }
     }
@@ -101,6 +101,7 @@ final class RepositorySearchViewModel: ObservableObject {
         // 前回の検索時からクエリが変わっていない場合、言語の変更で即座に検索し直すことが期待されていると考え検索を実行する
         // クエリが変わっている場合は次に検索ボタンがタップされるまで検索しない
         if let lastSearchedQuery = lastSearchedQuery, query == lastSearchedQuery {
+            repositories = []
             search()
         }
     }

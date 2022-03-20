@@ -32,7 +32,6 @@ struct RepositorySearchScreen: View {
                 RepositorySearchResultsSection(
                     repositories: viewModel.repositories,
                     isSearching: viewModel.isSearching,
-                    searchedPage: viewModel.lastSearchedPage,
                     onRepositoryTapped: viewModel.onRepositoryTapped(repository:),
                     onScrollBottomReached: viewModel.onScrollBottomReached
                 )
