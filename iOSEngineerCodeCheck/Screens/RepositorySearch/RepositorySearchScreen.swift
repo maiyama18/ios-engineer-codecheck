@@ -17,6 +17,7 @@ struct RepositorySearchScreen: View {
                 onSearchButtonTapped: viewModel.onSearchButtonTapped,
                 languageCandidates: viewModel.languageCandidates,
                 query: $viewModel.query,
+                isEditingQuery: $viewModel.isEditingQuery,
                 sortOrder: $viewModel.sortOrder,
                 language: $viewModel.language
             )

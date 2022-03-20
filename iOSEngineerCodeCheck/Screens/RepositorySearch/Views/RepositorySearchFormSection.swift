@@ -14,11 +14,11 @@ struct RepositorySearchFormSection: View {
     let languageCandidates: [String]
 
     @Binding var query: String
+    @Binding var isEditingQuery: Bool
     @Binding var sortOrder: GitHub.SortOrder
     @Binding var language: String
 
     @FocusState private var focused: Bool
-    @State private var isEditingQuery: Bool = false
 
     var body: some View {
         VStack(spacing: 8) {
@@ -84,6 +84,7 @@ struct RepositorySearchFormSection_Previews: PreviewProvider {
             onSearchButtonTapped: {},
             languageCandidates: ["Swift", "Kotlin"],
             query: .constant("swift"),
+            isEditingQuery: .constant(true),
             sortOrder: .constant(.bestMatch),
             language: .constant("Swift")
         )

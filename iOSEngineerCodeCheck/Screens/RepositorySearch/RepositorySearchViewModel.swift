@@ -25,6 +25,7 @@ final class RepositorySearchViewModel: ObservableObject {
             onQueryChanged()
         }
     }
+    @Published var isEditingQuery: Bool = false
     @Published var sortOrder: SortOrder = .bestMatch {
         didSet {
             onSortOrderChanged()
@@ -37,7 +38,7 @@ final class RepositorySearchViewModel: ObservableObject {
     }
 
     var lastSearchedPage: Int?
-    
+
     private var task: Task<Void, Never>?
     private var lastSearchedQuery: String?
 
