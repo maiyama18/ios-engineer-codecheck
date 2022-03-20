@@ -62,6 +62,8 @@ internal enum L10n {
   internal enum RepositorySearch {
     /// History
     internal static let history = L10n.tr("Localizable", "repository_search.history")
+    /// Search GitHub repositories...
+    internal static let searchRepositories = L10n.tr("Localizable", "repository_search.search_repositories")
   }
 
   internal enum SearchBar {

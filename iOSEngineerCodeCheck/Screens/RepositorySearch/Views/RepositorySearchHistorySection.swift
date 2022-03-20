@@ -14,53 +14,58 @@ struct RepositorySearchHistorySection: View {
     let onSearchHistoryClearButtonTapped: @MainActor () -> Void
 
     var body: some View {
-        ScrollView {
-            if !searchHistory.isEmpty {
-                VStack(alignment: .leading, spacing: 0) {
-                    HStack {
-                        Text(L10n.RepositorySearch.history)
-                            .font(.callout)
-                            .foregroundColor(.secondary)
+        if searchHistory.isEmpty {
+            RepositorySearchEmptyView()
+        } else {
+            ScrollView {
+                if !searchHistory.isEmpty {
+                    VStack(alignment: .leading, spacing: 0) {
+                        HStack {
+                            Text(L10n.RepositorySearch.history)
+                                .font(.callout)
+                                .foregroundColor(.secondary)
+
+                            Spacer()
+
+                            Button(
+                                action: {
+                                    onSearchHistoryClearButtonTapped()
+                                },
+                                label: {
+                                    Text(L10n.Common.clear)
+                                        .font(.callout)
+                                })
+                        }
 
                         Spacer()
+                            .frame(height: 8)
 
-                        Button(
-                            action: {
-                                onSearchHistoryClearButtonTapped()
-                            },
-                            label: {
-                                Text(L10n.Common.clear)
-                                    .font(.callout)
-                            })
-                    }
+                        Divider()
 
-                    Spacer()
-                        .frame(height: 8)
+                        ForEach(searchHistory, id: \.self) { history in
+                            VStack(alignment: .leading, spacing: 0) {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "magnifyingglass")
+                                        .foregroundColor(.secondary)
 
-                    Divider()
+                                    Text(history)
+                                }
+                                .padding(.vertical, 12)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    onSearchHistoryTapped(history)
+                                }
 
-                    ForEach(searchHistory, id: \.self) { history in
-                        VStack(alignment: .leading, spacing: 0) {
-                            HStack(spacing: 4) {
-                                Image(systemName: "magnifyingglass")
-                                    .foregroundColor(.secondary)
-
-                                Text(history)
+                                Divider()
                             }
-                            .padding(.vertical, 12)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                onSearchHistoryTapped(history)
-                            }
-
-                            Divider()
                         }
                     }
+                    .padding(.top, 24)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .padding(.top, 24)
-                .frame(maxWidth: .infinity, alignment: .leading)
             }
+
         }
     }
 }

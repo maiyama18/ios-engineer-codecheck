@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		387FFBC927E6FA3800E8957A /* RepositorySearchEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387FFBC827E6FA3800E8957A /* RepositorySearchEmptyView.swift */; };
 		389D1D4227E6AAF300EF28B2 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389D1D4127E6AAF300EF28B2 /* UserDefaults+Extension.swift */; };
 		389D1D4627E6B63500EF28B2 /* RepositorySearchHistorySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389D1D4527E6B63500EF28B2 /* RepositorySearchHistorySection.swift */; };
 		38EC924D27DF471C0077BD1F /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 38EC924C27DF471C0077BD1F /* README.md */; };
@@ -123,6 +124,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		387FFBC827E6FA3800E8957A /* RepositorySearchEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositorySearchEmptyView.swift; sourceTree = "<group>"; };
 		389D1D4127E6AAF300EF28B2 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		389D1D4527E6B63500EF28B2 /* RepositorySearchHistorySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositorySearchHistorySection.swift; sourceTree = "<group>"; };
 		38EC924C27DF471C0077BD1F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				38EC92D327E333970077BD1F /* RepositoryListItemView.swift */,
+				387FFBC827E6FA3800E8957A /* RepositorySearchEmptyView.swift */,
 				38EC92D527E333AC0077BD1F /* RepositorySearchFormSection.swift */,
 				38EC92D727E333C20077BD1F /* RepositorySearchResultsSection.swift */,
 				389D1D4527E6B63500EF28B2 /* RepositorySearchHistorySection.swift */,
@@ -776,6 +779,7 @@
 				38EC92FD27E4C53C0077BD1F /* RepositoryDetailActionButton.swift in Sources */,
 				38EC92B327E21B1B0077BD1F /* RepositoryDetailHeaderSection.swift in Sources */,
 				38EC928227E043760077BD1F /* RepositorySearchViewModel.swift in Sources */,
+				387FFBC927E6FA3800E8957A /* RepositorySearchEmptyView.swift in Sources */,
 				BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */,
 				BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */,
 				38EC928727E047D80077BD1F /* RepositoryDetailViewModel.swift in Sources */,

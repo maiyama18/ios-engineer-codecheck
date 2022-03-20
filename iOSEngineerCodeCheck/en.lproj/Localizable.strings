@@ -27,6 +27,7 @@
 "search_bar.placeholder" = "Search";
 
 "repository_search.history" = "History";
+"repository_search.search_repositories" = "Search GitHub repositories...";
 
 "repository_detail.open_url" = "Open URL";
 "repository_detail.share_url" = "Share URL";

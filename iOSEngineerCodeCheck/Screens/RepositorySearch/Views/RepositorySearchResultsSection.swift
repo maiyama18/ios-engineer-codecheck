@@ -11,6 +11,7 @@ import SwiftUI
 
 struct RepositorySearchResultsSection: View {
     let repositories: [Repository]
+    let isSearching: Bool
     let searchedPage: Int?
     let onRepositoryTapped: @MainActor (Repository) -> Void
     let onScrollBottomReached: @MainActor () -> Void
@@ -18,36 +19,40 @@ struct RepositorySearchResultsSection: View {
     @Namespace var topViewID
 
     var body: some View {
-        ScrollViewReader { proxy in
-            ScrollView(showsIndicators: false) {
-                Color.clear
-                    .frame(width: 0, height: 0, alignment: .top)
-                    .id(topViewID)
-
-                LazyVStack {
-                    ForEach(repositories, id: \.fullName) { repository in
-                        VStack {
-                            RepositoryListItemView(
-                                repository: repository,
-                                onTapped: {
-                                    onRepositoryTapped(repository)
-                                }
-                            )
-
-                            Divider()
-                        }
-                    }
-
+        if repositories.isEmpty, !isSearching {
+            RepositorySearchEmptyView()
+        } else {
+            ScrollViewReader { proxy in
+                ScrollView(showsIndicators: false) {
                     Color.clear
-                        .frame(width: 0, height: 0, alignment: .bottom)
-                        .onAppear {
-                            onScrollBottomReached()
+                        .frame(width: 0, height: 0, alignment: .top)
+                        .id(topViewID)
+
+                    LazyVStack {
+                        ForEach(repositories, id: \.fullName) { repository in
+                            VStack {
+                                RepositoryListItemView(
+                                    repository: repository,
+                                    onTapped: {
+                                        onRepositoryTapped(repository)
+                                    }
+                                )
+
+                                Divider()
+                            }
                         }
+
+                        Color.clear
+                            .frame(width: 0, height: 0, alignment: .bottom)
+                            .onAppear {
+                                onScrollBottomReached()
+                            }
+                    }
                 }
-            }
-            .onChange(of: searchedPage) { page in
-                if page == 1 {
-                    proxy.scrollTo(topViewID)
+                .onChange(of: searchedPage) { page in
+                    if page == 1 {
+                        proxy.scrollTo(topViewID)
+                    }
                 }
             }
         }
@@ -58,6 +63,7 @@ struct RepositorySearchResultsSection_Previews: PreviewProvider {
     static var previews: some View {
         RepositorySearchResultsSection(
             repositories: [],
+            isSearching: false,
             searchedPage: 1,
             onRepositoryTapped: { _ in },
             onScrollBottomReached: {}
