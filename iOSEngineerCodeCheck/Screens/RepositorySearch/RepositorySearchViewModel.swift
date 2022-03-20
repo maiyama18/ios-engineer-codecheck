@@ -20,7 +20,11 @@ final class RepositorySearchViewModel: ObservableObject {
     }
 
     @Published var repositories: [Repository] = []
-    @Published var query: String = ""
+    @Published var query: String = "" {
+        didSet {
+            repositories = []
+        }
+    }
     @Published var isEditingQuery: Bool = false
     @Published var sortOrder: SortOrder = .bestMatch {
         didSet {
