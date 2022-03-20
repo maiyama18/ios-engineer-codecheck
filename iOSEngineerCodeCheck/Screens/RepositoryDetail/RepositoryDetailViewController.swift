@@ -28,13 +28,13 @@ class RepositoryDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        subscribe()
         hostSwiftUIView(RepositoryDetailScreen(viewModel: viewModel))
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        subscribe()
         DispatchQueue.main.async {
             self.navigationController?.setNavigationBarHidden(false, animated: animated)
         }
@@ -60,6 +60,7 @@ class RepositoryDetailViewController: UIViewController {
                 }
             }
         }
+        viewModel.initEventStream()
     }
 
 }

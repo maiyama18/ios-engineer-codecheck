@@ -27,9 +27,7 @@ final class RepositoryDetailViewModel {
         self.repository = repository
         self.session = session
 
-        eventStream = .init(Event.self, bufferingPolicy: .bufferingNewest(10)) { c in
-            eventContinuation = c
-        }
+        initEventStream()
     }
 
     var avatarURL: URL? {
@@ -76,6 +74,12 @@ final class RepositoryDetailViewModel {
     func onShareURLTapped() {
         guard let url = repository.repositoryURL else { return }
         eventContinuation?.yield(.shareURL(url: url))
+    }
+
+    func initEventStream() {
+        eventStream = .init(Event.self, bufferingPolicy: .bufferingNewest(10)) { c in
+            eventContinuation = c
+        }
     }
 
 }
