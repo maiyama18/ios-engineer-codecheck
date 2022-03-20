@@ -26,6 +26,7 @@ final class RepositorySearchViewModel: ObservableObject {
         }
     }
     @Published var isEditingQuery: Bool = false
+    @Published var isSearching: Bool = false
     @Published var sortOrder: SortOrder = .bestMatch {
         didSet {
             onSortOrderChanged()
@@ -111,6 +112,7 @@ final class RepositorySearchViewModel: ObservableObject {
 
             eventContinuation?.yield(.showLoading)
             do {
+                isSearching = true
                 let lang = language == L10n.GitHub.Search.allLanguages ? nil : language
                 repositories = try await githubClient.search(
                     query: query, sortOrder: sortOrder, page: 1, language: lang)
@@ -122,6 +124,7 @@ final class RepositorySearchViewModel: ObservableObject {
                 eventContinuation?.yield(.showErrorAlert(message: error.userMessage))
             }
             eventContinuation?.yield(.hideLoading)
+            isSearching = false
             updateSearchHistory()
         }
     }
@@ -132,6 +135,7 @@ final class RepositorySearchViewModel: ObservableObject {
             guard !query.isEmpty else { return }
 
             do {
+                isSearching = true
                 let lang = language == L10n.GitHub.Search.allLanguages ? nil : language
                 guard let lastSearchedPage = lastSearchedPage else { return }
 
@@ -144,6 +148,7 @@ final class RepositorySearchViewModel: ObservableObject {
                 logger.warning(
                     "failed to read more repository: \(error.userMessage, privacy: .public)")
             }
+            isSearching = false
         }
     }
 
