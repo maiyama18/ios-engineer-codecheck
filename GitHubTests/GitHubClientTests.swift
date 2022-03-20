@@ -143,6 +143,24 @@ class GitHubClientTests: XCTestCase {
         )
     }
 
+    func testSearchHistoryClear() async throws {
+        try setUpMockSession(
+            responseFileName: "search_success", statusCode: 200, rateLimitRemaining: 9)
+
+        for i in 1...5 {
+            let _ = try await client.search(query: "query \(i)", sortOrder: .bestMatch, page: 1)
+        }
+        XCTAssertEqual(
+            client.getSearchHistory(maxCount: 10),
+            (1...5).reversed().map { "query \($0)" }
+        )
+        client.clearSearchHistory()
+        XCTAssertEqual(
+            client.getSearchHistory(maxCount: 10),
+            []
+        )
+    }
+
     private func setUpMockSession(
         responseFileName: String, statusCode: Int, rateLimitRemaining: Int
     ) throws {
