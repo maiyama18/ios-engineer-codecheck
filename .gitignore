@@ -132,4 +132,8 @@ iOSInjectionProject/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 
+# Tests
+# generated if UserDefaults used in tests
+*Tests.swift.plist
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,swift,xcode

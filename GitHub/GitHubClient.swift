@@ -10,17 +10,25 @@ import Foundation
 
 /// @mockable
 public protocol GitHubClientProtocol {
+    /// レポジトリを検索する
     func search(query: String, sortOrder: SortOrder, page: Int, language: String?) async throws
         -> [Repository]
+    /// 検索クエリの履歴を最大100件まで返す
+    func getSearchHistory(maxCount: Int) -> [String]
 }
 
 public final class GitHubClient: GitHubClientProtocol {
-    public static let shared = GitHubClient(session: URLSession.shared)
+    public static let shared = GitHubClient(
+        session: URLSession.shared, userDefaults: UserDefaults.standard)
+
+    private let searchHistoryCapacity = 100
 
     private let session: Networking
+    private let userDefaults: UserDefaults
 
-    init(session: Networking) {
+    init(session: Networking, userDefaults: UserDefaults) {
         self.session = session
+        self.userDefaults = userDefaults
     }
 
     public func search(query: String, sortOrder: SortOrder, page: Int, language: String? = nil)
@@ -67,6 +75,8 @@ public final class GitHubClient: GitHubClientProtocol {
         switch response.statusCode {
         case 200:
             let response = try JSONDecoder().decode(RepositorySearchResponse.self, from: data)
+
+            self.addToSearchHistory(query: query)
             return response.items.map { item in
                 let language: Language?
                 if let lang = item.language {
@@ -102,5 +112,17 @@ public final class GitHubClient: GitHubClientProtocol {
         default:
             throw GitHubError.unexpectedError
         }
+    }
+
+    public func getSearchHistory(maxCount: Int) -> [String] {
+        // 渡された maxCount を 0...100 の範囲に clamp する
+        let count = max(0, min(searchHistoryCapacity, maxCount))
+        return Array(userDefaults.searchHistory.prefix(count))
+    }
+
+    private func addToSearchHistory(query: String) {
+        let currentHistory = userDefaults.searchHistory
+        // 最新の検索履歴を最大100件まで保持する
+        userDefaults.searchHistory = Array(([query] + currentHistory).prefix(searchHistoryCapacity))
     }
 }

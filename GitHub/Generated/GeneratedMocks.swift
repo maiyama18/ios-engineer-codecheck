@@ -43,5 +43,17 @@ public class GitHubClientProtocolMock: GitHubClientProtocol {
         }
         return [Repository]()
     }
+
+    public private(set) var getSearchHistoryCallCount = 0
+    public var getSearchHistoryArgValues = [Int]()
+    public var getSearchHistoryHandler: ((Int) -> ([String]))?
+    public func getSearchHistory(maxCount: Int) -> [String] {
+        getSearchHistoryCallCount += 1
+        getSearchHistoryArgValues.append(maxCount)
+        if let getSearchHistoryHandler = getSearchHistoryHandler {
+            return getSearchHistoryHandler(maxCount)
+        }
+        return [String]()
+    }
 }
 
