@@ -133,13 +133,26 @@ class GitHubClientTests: XCTestCase {
         try setUpMockSession(
             responseFileName: "search_success", statusCode: 200, rateLimitRemaining: 9)
 
-        let _ = try await client.search(query: "query", sortOrder: .bestMatch, page: 1)
         for i in 1...101 {
             let _ = try await client.search(query: "query \(i)", sortOrder: .bestMatch, page: 1)
         }
         XCTAssertEqual(
             client.getSearchHistory(maxCount: -1),
             []
+        )
+    }
+
+    func testSearchHistoryNodDuplicated() async throws {
+        try setUpMockSession(
+            responseFileName: "search_success", statusCode: 200, rateLimitRemaining: 9)
+
+        for i in 1...3 {
+            let _ = try await client.search(query: "query \(i)", sortOrder: .bestMatch, page: 1)
+        }
+        let _ = try await client.search(query: "query 2", sortOrder: .bestMatch, page: 1)
+        XCTAssertEqual(
+            client.getSearchHistory(maxCount: 5),
+            [2, 3, 1].map { "query \($0)" }
         )
     }
 
