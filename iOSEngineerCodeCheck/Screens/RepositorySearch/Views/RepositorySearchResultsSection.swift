@@ -20,11 +20,11 @@ struct RepositorySearchResultsSection: View {
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView(showsIndicators: false) {
-                LazyVStack {
-                    Color.clear
-                        .frame(width: 0, height: 0, alignment: .top)
-                        .id(topViewID)
+                Color.clear
+                    .frame(width: 0, height: 0, alignment: .top)
+                    .id(topViewID)
 
+                LazyVStack {
                     ForEach(repositories, id: \.fullName) { repository in
                         VStack {
                             RepositoryListItemView(
