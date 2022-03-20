@@ -32,6 +32,7 @@ final class RepositorySearchViewModel: ObservableObject {
             onLanguageChanged()
         }
     }
+    @Published var searchHistory: [String] = []
 
     var lastSearchedPage: Int?
 
@@ -46,6 +47,8 @@ final class RepositorySearchViewModel: ObservableObject {
     init(githubClient: GitHubClientProtocol = GitHubClient.shared) {
         self.githubClient = githubClient
 
+        updateSearchHistory()
+
         eventStream = .init(Event.self, bufferingPolicy: .bufferingNewest(10)) { c in
             eventContinuation = c
         }
@@ -53,10 +56,6 @@ final class RepositorySearchViewModel: ObservableObject {
 
     var languageCandidates: [String] {
         [L10n.GitHub.Search.allLanguages] + githubSearchLanguages
-    }
-
-    var recentSearchHistory: [String] {
-        githubClient.getSearchHistory(maxCount: 5)
     }
 
     func onSearchButtonTapped() {
@@ -114,6 +113,7 @@ final class RepositorySearchViewModel: ObservableObject {
                 eventContinuation?.yield(.showErrorAlert(message: error.userMessage))
             }
             eventContinuation?.yield(.hideLoading)
+            updateSearchHistory()
         }
     }
 
@@ -136,6 +136,10 @@ final class RepositorySearchViewModel: ObservableObject {
                     "failed to read more repository: \(error.userMessage, privacy: .public)")
             }
         }
+    }
+
+    private func updateSearchHistory() {
+        searchHistory = githubClient.getSearchHistory(maxCount: 5)
     }
 
 }
