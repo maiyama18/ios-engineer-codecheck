@@ -716,7 +716,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH=$PATH:/opt/homebrew/bin\n\nif which mint >/dev/null; then\n  mint run mockolo --sourcedirs GitHub --destination GitHub/Generated/GeneratedMocks.swift --enable-args-history\nelse\n  echo \"warning: mint not installed. generating resource objects skipped\"\nfi\n";
+			shellScript = "PATH=$PATH:/opt/homebrew/bin\n\nif which mint >/dev/null; then\n  mint run swiftgen\nelse\n  echo \"warning: mint not installed. generating resource objects skipped\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
