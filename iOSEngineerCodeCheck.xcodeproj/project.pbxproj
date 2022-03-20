@@ -466,6 +466,7 @@
 			buildConfigurationList = 38EC927927E01CEC0077BD1F /* Build configuration list for PBXNativeTarget "GitHub" */;
 			buildPhases = (
 				38EC925A27E01CEC0077BD1F /* Headers */,
+				387FFBC527E6C6E000E8957A /* Generate Mocks */,
 				38EC925B27E01CEC0077BD1F /* Sources */,
 				38EC925C27E01CEC0077BD1F /* Frameworks */,
 				38EC925D27E01CEC0077BD1F /* Resources */,
@@ -502,12 +503,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BFD94605244DC5EC0012785A /* Build configuration list for PBXNativeTarget "iOSEngineerCodeCheck" */;
 			buildPhases = (
+				38EC92ED27E41DEA0077BD1F /* Generate Resource Objects */,
 				BFD945D7244DC5E80012785A /* Sources */,
 				BFD945D8244DC5E80012785A /* Frameworks */,
 				BFD945D9244DC5E80012785A /* Resources */,
 				38EC924E27DF4CCE0077BD1F /* Execute Format & Lint */,
-				38EC929B27E15D680077BD1F /* Generate Mocks */,
-				38EC92ED27E41DEA0077BD1F /* Generate Resource Objects */,
 				38EC927427E01CEC0077BD1F /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -664,6 +664,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		387FFBC527E6C6E000E8957A /* Generate Mocks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Mocks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH=$PATH:/opt/homebrew/bin\n\nif which mint >/dev/null; then\n  mint run mockolo --sourcedirs GitHub --destination GitHub/Generated/GeneratedMocks.swift --enable-args-history\nelse\n  echo \"warning: mint not installed. generating mock skipped\"\nfi\n";
+		};
 		38EC924E27DF4CCE0077BD1F /* Execute Format & Lint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -681,24 +699,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "PATH=$PATH:/opt/homebrew/bin\n\nif which mint >/dev/null; then\n  git diff --name-only '*.swift' | grep -v 'Generated' | while read filename; do\n    mint run swift-format format --in-place \"$filename\"\n    mint run swift-format lint \"$filename\" || true\n  done\n  \nelse\n  echo \"warning: mint not installed. swift-format lint skipped\"\nfi\n";
-		};
-		38EC929B27E15D680077BD1F /* Generate Mocks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Generate Mocks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "PATH=$PATH:/opt/homebrew/bin\n\nif which mint >/dev/null; then\n  mint run mockolo --sourcedirs GitHub --destination GitHub/Generated/GeneratedMocks.swift --enable-args-history\nelse\n  echo \"warning: mint not installed. generating mock skipped\"\nfi\n\n";
 		};
 		38EC92ED27E41DEA0077BD1F /* Generate Resource Objects */ = {
 			isa = PBXShellScriptBuildPhase;
