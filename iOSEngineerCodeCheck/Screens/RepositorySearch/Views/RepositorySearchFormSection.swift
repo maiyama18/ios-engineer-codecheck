@@ -45,30 +45,32 @@ struct RepositorySearchFormSection: View {
                 }
             }
 
-            HStack(spacing: 16) {
-                HStack(spacing: 4) {
-                    Image(systemName: "arrow.down")
-                        .font(.callout)
-                        .foregroundColor(.accentColor)
+            if !isEditingQuery {
+                HStack(spacing: 16) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "arrow.down")
+                            .font(.callout)
+                            .foregroundColor(.accentColor)
 
-                    Picker("", selection: $sortOrder) {
-                        ForEach(SortOrder.allCases, id: \.self) { order in
-                            Text(order.string)
+                        Picker("", selection: $sortOrder) {
+                            ForEach(SortOrder.allCases, id: \.self) { order in
+                                Text(order.string)
+                            }
                         }
+                        .pickerStyle(.menu)
                     }
-                    .pickerStyle(.menu)
-                }
 
-                HStack {
-                    Picker("", selection: $language) {
-                        ForEach(languageCandidates, id: \.self) { language in
-                            Text(language)
+                    HStack {
+                        Picker("", selection: $language) {
+                            ForEach(languageCandidates, id: \.self) { language in
+                                Text(language)
+                            }
                         }
+                        .pickerStyle(.menu)
                     }
-                    .pickerStyle(.menu)
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .onChange(of: focused) { focused in
             withAnimation(.easeInOut(duration: 0.1)) {
