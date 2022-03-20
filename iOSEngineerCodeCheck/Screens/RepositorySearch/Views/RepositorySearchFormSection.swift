@@ -32,6 +32,20 @@ struct RepositorySearchFormSection: View {
                     }
                     .accessibilityIdentifier("searchField")
                     .focused($focused)
+                    .overlay {
+                        HStack {
+                            Button(
+                                action: {
+                                    query = ""
+                                },
+                                label: {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundColor(.secondary)
+                                        .padding(.trailing, 8)
+                                })
+                        }
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                    }
 
                 if isEditingQuery {
                     Button(
