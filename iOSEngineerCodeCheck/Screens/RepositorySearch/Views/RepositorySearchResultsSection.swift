@@ -12,7 +12,6 @@ import SwiftUI
 struct RepositorySearchResultsSection: View {
     let repositories: [Repository]
     let isSearching: Bool
-    let searchedPage: Int?
     let onRepositoryTapped: @MainActor (Repository) -> Void
     let onScrollBottomReached: @MainActor () -> Void
 
@@ -40,17 +39,16 @@ struct RepositorySearchResultsSection: View {
 
                                 Divider()
                             }
-                        }
-
-                        Color.clear
-                            .frame(width: 0, height: 0, alignment: .bottom)
                             .onAppear {
-                                onScrollBottomReached()
+                                if repository.fullName == repositories.last?.fullName {
+                                    onScrollBottomReached()
+                                }
                             }
+                        }
                     }
                 }
-                .onChange(of: searchedPage) { page in
-                    if page == 1 {
+                .onChange(of: repositories) { repositories in
+                    if repositories.count <= githubSearchPerPage {
                         proxy.scrollTo(topViewID)
                     }
                 }
@@ -64,7 +62,6 @@ struct RepositorySearchResultsSection_Previews: PreviewProvider {
         RepositorySearchResultsSection(
             repositories: [],
             isSearching: false,
-            searchedPage: 1,
             onRepositoryTapped: { _ in },
             onScrollBottomReached: {}
         )
