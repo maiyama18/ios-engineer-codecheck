@@ -1,4 +1,4 @@
-# 株式会社ゆめみ iOS エンジニアコードチェック課題
+# GitHub Repository Searcher
 
 ## 概要
 
